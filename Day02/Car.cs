@@ -1,3 +1,5 @@
+using CarComponent;
+
 namespace Vehicle;
 class Car 
 {
@@ -5,6 +7,17 @@ class Car
 	public string? color;
 	public int maxSpeed;
 	public int speed;
+	
+	public Engine engine;
+	public Tire tire;
+	public Lamp lamp;
+	
+	public Car(Engine engine, Tire tire, Lamp lamp)
+	{
+		this.engine = engine;
+		this.tire = tire;
+		this.lamp = lamp;
+	}
 	
 	public void Speeding(int s)
 	{
@@ -23,4 +36,11 @@ class Car
 				$"Speed\t: {speed}\n" +
 				$"MaxSpeed: {maxSpeed}";
 	}
+	
+	public string EngineDetails()
+	{
+		return $"Engine Type\t: {engine.engineType}\n" +
+				$"Engine Brand\t: {engine.engineBrand}\n";
+	}
+	
 }

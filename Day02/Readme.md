@@ -6,3 +6,4 @@
 - string interpolation
 - constructor
 - this keyword
+- inheritance
