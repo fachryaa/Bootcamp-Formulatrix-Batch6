@@ -1,8 +1,8 @@
 namespace Day01;
 public class Cat
 {
-    public string Name;
-    public string Colour;
+    public string? Name;
+    public string? Colour;
     public int Leg;
     public bool IsTailLong;
     public int Weight;
