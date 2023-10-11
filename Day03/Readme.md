@@ -23,7 +23,6 @@
 - `override` keyword untuk child class
 - AM private tidak bisa di override
 - `new` keyword untuk method hiding
-- 
 
 ## Others
 1. Property

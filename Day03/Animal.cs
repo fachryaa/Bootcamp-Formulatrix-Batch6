@@ -26,7 +26,7 @@ public class Animal
 	public Animal(string name)
 	{
 		Name = name;
-		Console.WriteLine($"{Name} was created");
+		Console.WriteLine($"Animal was created");
 		
 	}
 	
