@@ -1,5 +1,6 @@
 ﻿using Day04.Abstract;
 using Day04.Interface;
+using Day04.MobileLegend;
 
 namespace Day04;
 
@@ -39,9 +40,7 @@ class Program
 		Animal animal2 = new Tiger();
 		animal2.Sound();
 	}
-	
-	
-	static void Main(string[] Args)
+	static void Interface()
 	{
 		Human human = new Human();
 		human.Kerja();
@@ -62,7 +61,12 @@ class Program
 		
 		HumanSudahMenikah humanSudahMenikah = new HumanSudahMenikah();
 		IPermintaanAnak permintaanAnak = humanSudahMenikah;
-		permintaanAnak.Jajan();		
+		permintaanAnak.Jajan();	
+	}
+	static void Main(string[] Args)
+	{
+		GameController game = new(new MobileLegendPlayer());
 		
+		GameControllerOnline gameOnline = new(new MobileLegendPlayer());
 	}
 }
