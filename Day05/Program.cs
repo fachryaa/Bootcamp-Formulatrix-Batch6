@@ -75,9 +75,13 @@ class Program
 		
 		
 		// var, object, dynamic
-		// 
 		var x = 1;
 		//! x = "test";	Error
 		x = int.Parse("10");
+
+		
+
 	}
+
+	
 }
