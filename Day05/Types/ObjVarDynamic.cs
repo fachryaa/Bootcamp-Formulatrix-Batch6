@@ -25,8 +25,8 @@ static class ObjVarDynamic
 		dynamic myDynamic = 3;
 		myDynamic = "tiga";
 		myDynamic = true;
-		myDynamic.Mboh();
-		myDynamic.Wkwk();
+		// myDynamic.Mboh(); // OK
+		// myDynamic.Wkwk(); // OK
   }
 
   static void Add(object x, object y)

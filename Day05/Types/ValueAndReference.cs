@@ -50,7 +50,7 @@ static class ValueAndReference
 		// proses waktu compile dari mutable akan jauh lebih cepat dari immutable
 		// untuk mengetes nya bisa menggunakan class stopwatch dari System.Diagnostic
 		Stopwatch stopwatch = new Stopwatch();
-		const int IT = 1000000;
+		const int IT = 1000;
 		
 		// menggunakan string - immutable
 		string str3 = string.Empty;
