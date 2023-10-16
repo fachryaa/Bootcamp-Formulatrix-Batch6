@@ -8,7 +8,7 @@
 1. dynamic
 1. generic
 1. generic constraint
-1. operator overloading
+1. operator operator overloading
 
 ### Value Type
 - data type : short, long, float, decimal, double, bool, int, struct
@@ -35,7 +35,7 @@
 - namun harus di konversi dulu (boxing dan unboxing)
 
 ### generic
-- keyword `<T>`, ie : `class `
+- keyword `<T>`, ie : `class Item<T>`
 
 ### others
 - class stopwatch untuk melihat running time. using System.Diagnostic;

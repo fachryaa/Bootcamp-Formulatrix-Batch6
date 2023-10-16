@@ -6,9 +6,12 @@ public class GenericConstraint
 {
 	public static void Run()
 	{
+		// Generic Constraint
 		Combiner<int> combineInt = new();
 		var result = combineInt.Add(2,3);
 		Console.WriteLine($"Result combineInt = {result}");
+		
+		//! Combiner<string> combiner2 = new(); Error karena string tidak termasuk IAdditionOperators
 		
 		Item item1 = new(1000);
 		Item item2 = new(2000);
