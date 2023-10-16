@@ -34,7 +34,8 @@
 - sama seperti var, namun bisa ganti tipe data
 - namun harus di konversi dulu (boxing dan unboxing)
 
-
+### generic
+- keyword `<T>`, ie : `class `
 
 ### others
 - class stopwatch untuk melihat running time. using System.Diagnostic;
