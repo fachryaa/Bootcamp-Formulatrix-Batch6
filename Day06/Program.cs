@@ -1,6 +1,4 @@
-﻿using Day06;
-
-namespace Day06;
+﻿namespace Day06;
 
 static class Program{
 	static void Main(string[] Args)

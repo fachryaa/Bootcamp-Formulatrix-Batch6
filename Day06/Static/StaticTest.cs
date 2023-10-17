@@ -28,7 +28,9 @@ public class StaticTest
 		Console.WriteLine($"item 2 : {item2.GetPrice()}");
 		Console.WriteLine();
 		
-		
+		// const is static
+		int constVar = Item.ConstVar;
+		Console.WriteLine($"constVar : {constVar}");
 	}
 }
 
@@ -52,6 +54,7 @@ static class CalculatorStatic
 
 class Item
 {
+	public const int ConstVar = 10; 
 	public static int StaticPrice;
 	public int NonStaticPrice;
 	public void PriceHandler(int price)

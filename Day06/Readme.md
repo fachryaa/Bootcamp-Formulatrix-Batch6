@@ -1,9 +1,9 @@
 # Day06
 
 ## Materi
-1. Ref, In, Out
-1. Static
-1. Delegate
+1. [Ref, In, Out](#ref-out-in)
+1. [Static](#static)
+1. [Delegate](#delegate)
 
 ### Ref, Out, In
 a. Ref
@@ -60,10 +60,29 @@ class Calculator {
 ```
 
 ### Delegate
-- fungsi :
-  - sebagai publisher dan subscriber
-  - sebagai callback method
-- return type dan parameter harus sama
-  - Create Delegate
+- apa itu delegate :
+  - sebuah tipe data yang bisa menyimpan method
+  - bisa digunakan untuk membuat event
+- kenapa menggunakan delegate :
+  - untuk membuat event
+  - untuk membuat callback method
+- cara menggunakan delegate :
+  - deklarasi delegate
+    ```
+    public delegate int MyDelegate(int x, int y);
+    ```
   - add method
+    ```
+    MyDelegate myDelegate = Add;
+    myDelegate += Substract;
+    ```
   - invoke
+    ```
+    myDelegate(1,2);
+    ```
+    Argument yang di passing akan di passing ke semua method yang ada di delegate
+- delegate bisa digunakan sebagai :
+  - publisher
+  - subscriber
+  - callback method
+- delegate harus memiliki return type dan parameter yang sama
