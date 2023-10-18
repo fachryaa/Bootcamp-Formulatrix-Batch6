@@ -8,7 +8,7 @@ public class DelegateTest
 	public static void Run()
 	{
 		// Declare delegate
-		MyDelegate myDelegate = new MyDelegate(Method1);
+		MyDelegate? myDelegate = new MyDelegate(Method1);
 		myDelegate += Method2;
 		myDelegate += Method3;
 		

@@ -24,6 +24,7 @@ public class PubSub
 	}
 }
 
+public delegate void MySubscribers(string message);
 class Publisher
 {
 	public string Name { get; set; }
@@ -31,8 +32,7 @@ class Publisher
 	{
 		Name = name;
 	}
-	public delegate void MySubscribers(string message);
-	public MySubscribers mySubscribers;
+	public MySubscribers? mySubscribers;
 
 	public void AddSubscriber(Subscriber subscriber)
 	{
@@ -41,7 +41,7 @@ class Publisher
 	public void UploadVideo()
 	{
 		Console.WriteLine($"{Name} Uploading video...");
-		mySubscribers.Invoke($"{Name} uploaded a new video!");
+		mySubscribers?.Invoke($"{Name} uploaded a new video!");
 	}
 	public void RemoveSubscriber(Subscriber subscriber)
 	{
