@@ -7,7 +7,7 @@ public class EventHandlerGeneric
 		Publisher3 pub = new("Jokoyanto", 2000);
 		Subscriber3 sub = new("Sub1");
 		
-		pub.eventHandler = sub.Notification;
+		pub.eventHandler += sub.Notification;
 		pub.SendNotification();
 	}
 }
@@ -25,7 +25,7 @@ class Publisher3
 	
 	public void SendNotification()
 	{
-		eventHandler?.Invoke(this, new EventData
+		eventHandler?.Invoke(this, new EventData()
 		{
 			Name = _name,
 			Price = _price

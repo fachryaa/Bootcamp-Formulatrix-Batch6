@@ -15,7 +15,10 @@ class Program
 		// // EventHandler
 		// EventHandlerTest.Run();
 		
-		// EventHandlerGeneric
-		EventHandlerGeneric.Run();
+		// // EventHandlerGeneric
+		// EventHandlerGeneric.Run();
+		
+		// Action
+		ActionTest.Run();
 	}
 }

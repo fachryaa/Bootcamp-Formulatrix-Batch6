@@ -26,3 +26,5 @@
 - Action adalah delegate yang sudah disediakan oleh .NET
 - Action bisa digunakan untuk menggantikan delegate yang tidak memiliki return value
 - Action bisa digunakan untuk menggantikan delegate yang memiliki parameter
+- Return value harus void
+- Parameter bisa 0, 1, 2, 3, sampai 16
