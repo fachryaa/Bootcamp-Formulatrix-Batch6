@@ -41,6 +41,7 @@ class Item : IAdditionOperators<Item, Item, Item>
 	
 	public int Price { get; set; }
 	
+	// Operator Overloading
 	public static Item operator +(Item left, Item right)
 	{
 		return new Item(left.Price + right.Price);
