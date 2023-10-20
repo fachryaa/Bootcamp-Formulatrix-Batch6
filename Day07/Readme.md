@@ -28,3 +28,4 @@
 - Action bisa digunakan untuk menggantikan delegate yang memiliki parameter
 - Return value harus void
 - Parameter bisa 0, 1, 2, 3, sampai 16
+- Action biasa dipakai untuk mengirimkan data nya saja, tanpa mengirim object yang mengirim event
