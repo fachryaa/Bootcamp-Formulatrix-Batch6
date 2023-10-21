@@ -13,7 +13,14 @@ class Program
 		// // Extension Method
 		// ExtensionMethodTest.Run();
 		
-		// Params
-		ParamsTest.Run();
+		// // Params
+		// ParamsTest.Run();
+		
+		// // Enum
+		// EnumTest.Run();
+		// EnumTest2.Run();
+		
+		// Anonymous Delegate (Lambda Expression)
+		AnonymousTest.Run();
 	}
 }

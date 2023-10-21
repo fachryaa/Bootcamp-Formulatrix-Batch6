@@ -71,8 +71,11 @@
 - Digunakan untuk membuat delegate tanpa harus membuat method terlebih dahulu
 - Contoh
   ```csharp
-    
-  
+    // (parameter) => return value
+    Func<int, int, int> add = (a, b) => a + b;
+
+    // or
+    var add = (a, b) => a + b;
   ```
 
 ## Enum
