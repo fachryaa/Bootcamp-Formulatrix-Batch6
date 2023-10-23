@@ -103,3 +103,13 @@
         InternalServerError = 500
     }
     ```
+- Contoh penggunaan
+    ```csharp
+    var status = Status.Success;
+    var httpStatus = HTTPStatus.OK;
+    ```
+- Contoh penggunaan dengan casting
+    ```csharp
+    var status = (Status)1;
+    var httpStatus = (HTTPStatus)200;
+    ```

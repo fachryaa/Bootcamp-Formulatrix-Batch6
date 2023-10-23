@@ -22,5 +22,7 @@ class Program
 		
 		// Anonymous Delegate (Lambda Expression)
 		AnonymousTest.Run();
+		
+		
 	}
 }
