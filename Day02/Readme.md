@@ -7,3 +7,7 @@
 - constructor
 - this keyword
 - inheritance
+
+## Class
+- Class adalah blueprint untuk membuat object
+- Class bisa memiliki variable dan method

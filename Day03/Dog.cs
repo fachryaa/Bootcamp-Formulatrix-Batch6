@@ -7,4 +7,12 @@ public class Dog : Animal
 		Console.WriteLine($"Dog was created");
 		
 	}
+	
+	// Overriding method from parent class using new keyword
+	public new void Eat()
+	{
+		// Call method from parent
+		base.Eat();
+		Console.WriteLine("new method Eat");
+	}
 }

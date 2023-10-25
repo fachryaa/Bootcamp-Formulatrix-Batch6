@@ -42,5 +42,9 @@ class Program
 		Animal parentBird = new Animal("Parent Kakatua");
 		parentBird.MakeSound();
 		Console.WriteLine();
+		
+		// Test AM protected
+		Animal a = new("test");
+		//! a.Eat(); Error
 	}
 }

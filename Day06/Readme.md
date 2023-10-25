@@ -8,7 +8,7 @@
 ### Ref, Out, In
 a. Ref
 - keyword ref digunakan untuk Pass By Reference
-  ```
+  ```csharp
   int a;
   multiple(ref a);
 
@@ -17,7 +17,7 @@ a. Ref
 b. Out
 - pass by reference juga, tapi harus di assign di dalam method
 - variable di dalam argument bisa digunakan diluar scope
-  ```
+  ```csharp
   multiple(out int a);
   // a = 10
 
@@ -27,7 +27,7 @@ b. Out
   ```
 c. In
 - pass by reference juga, tapi read-only
-  ```
+  ```csharp
   int a = 10;
 
   void multiple(in int a){
@@ -46,7 +46,7 @@ d. Menggunakan Ref, In, Out dapat mempercepat proses komputasi karena hanya mema
 - method static hanya bisa dipanggil dari class nya langsung
 - default Access Modifier static adalah global
 - `const` termasuk static
-```
+```csharp
 void Main() {
   Calculator.Add(1,2);
   Calculator c = new();
@@ -68,16 +68,16 @@ class Calculator {
   - untuk membuat callback method
 - cara menggunakan delegate :
   - deklarasi delegate
-    ```
+    ```csharp
     public delegate int MyDelegate(int x, int y);
     ```
   - add method
-    ```
+    ```csharp
     MyDelegate myDelegate = Add;
     myDelegate += Substract;
     ```
   - invoke
-    ```
+    ```csharp
     myDelegate(1,2);
     ```
     Argument yang di passing akan di passing ke semua method yang ada di delegate
