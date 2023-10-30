@@ -70,7 +70,8 @@ namespace Block {
     }
 
     class ChanceBlock{
-        - _listOfCard : List<object>
+        - _listOfCard : List<BaseChanceCard>
+
         + ChanceBlock(int pos)
         + BlockAction(GameController game)
         - GetRandomCard() : BaseChanceCard
@@ -219,6 +220,7 @@ namespace Game{
         + PlayerMove(IPlayer player, int dice) : bool
         + PlayerAction(IPlayer player, BaseBlock block) : bool
         + NextTurn() : IPlayer
+        + GetBoard() : BaseBlock[32]
         + GetCurrentPlayer() IPlayer
         + GetPlayers() : IEnumerable~IPlayer~
         + GetPlayer(int id) IPlayer
