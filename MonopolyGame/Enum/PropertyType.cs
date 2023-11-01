@@ -2,8 +2,10 @@ namespace MonopolyGame.Enum;
 
 public enum PropertyType
 {
-	Tanah,
-	Rumah,
-	Gedung,
+	Land = 1,
+	Villa,
+	Building,
+	Hotel,
 	Landmark
+	
 }

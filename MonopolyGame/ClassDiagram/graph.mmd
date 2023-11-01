@@ -24,6 +24,7 @@ namespace Block {
         + ~readonly~ Position : int
         + ~readonly~ Line : BlockLine
         + ~readonly~ Type : BlockType
+        + ~readonly~ NextTurnAction : bool
 
         + BlockAction(GameController game)*
     }
@@ -37,11 +38,7 @@ namespace Block {
         + BuildingEffect : BuildingEffect
         + EffectCount : int
 
-
-        + GetPropertyRent() : int
-        + Sell() : int
-        + Buy(IPlayer player, PropertyType type)
-        + SetEffect(BuildingEffect effect)
+        + GetPropertyRent()* : int
     }
 
 
@@ -49,16 +46,15 @@ namespace Block {
         - _isColorCompletion : bool
         
         + CityBlock(int pos, BlockColor color, int price)
-        + BlockAction(GameController game)
-        + UpgradeProperty(PropertyType p)
-        + AquireCity(IPlayer p)
+        + BlockAction(GameController game) : void
+        + GetPropertyRent() : int
     }   
     
     class TouristBlock{
         - _countSameColor : int
 
         + TouristBlock(int pos, BlockColor color, int price)
-        + BlockAction(GameController game)
+        + BlockAction(GameController game) : void
         + GetPropertyRent() : int
     }
 
@@ -66,33 +62,34 @@ namespace Block {
         - ~readonly~ _salary : int
 
         + StartBlock(int salary)
-        + BlockAction(GameController game)
+        + GetSalary() : int
+        + BlockAction(GameController game) : void
     }
 
     class ChanceBlock{
         - _listOfCard : List<BaseChanceCard>
 
         + ChanceBlock(int pos)
-        + BlockAction(GameController game)
+        + BlockAction(GameController game) : void
         - GetRandomCard() : BaseChanceCard
     } 
 
     class PrisonBlock{
         + PrisonBlock(int pos)
         %% choice method : get double dice or pay fee
-        + BlockAction(GameController game, int choice)
+        + BlockAction(GameController game) : void
     }
 
     class FestivalBlock{
-        + BlockAction(GameController game, BuildableBlock building)
+        + BlockAction(GameController game) : void
     }
 
     class TravelingBlock{
-        + BlockAction(GameController game, BuildableBlock building)
+        + BlockAction(GameController game) : void
     }
 
     class TaxBlock{
-        + BlockAction(GameController game)
+        + BlockAction(GameController game) : void
     }
      
 }
@@ -123,60 +120,58 @@ namespace ChanceCard{
     class IDeffenseCard{
         <<interface>>
 
-        + UseCard(IPlayer player)
+        + UseCard(Player player) : void
     }
 
     %% Attack Card
     class StormCard{
         + StormCard() 
-        + ChanceAction(GameController game, BuildableBlock building)
+        + ChanceAction(GameController game) : void
     }
     class BlackoutCard{
         + BlackoutCard()
-        + ChanceAction(GameController game, BuildableBlock building)
+        + ChanceAction(GameController game) : void
     }
     class TornadoCard{
         + TornadoCard()
-        + ChanceAction(GameController game, BuildableBlock building)
+        + ChanceAction(GameController game) : void
     }
     class StealCard{
         + StealCard()
-        + ChanceAction(GameController game, BuildableBlock building)
+        + ChanceAction(GameController game) : void
     }
     
     %% Deffense Card
     class FreeChargeCard{
         + FreeChargeCard()
-        + ChanceAction(GameController game)
+        + ChanceAction(GameController game) : void
     }
     class FreeTaxCard{
         + FreeTaxCard()
-        + ChanceAction(GameController game)
+        + ChanceAction(GameController game) : void
     }
     class EscapeCard{
         + EscapeCard()
-        + ChanceAction(GameController game)
+        + ChanceAction(GameController game) : void
     }
 
     %% Command Card
     class GoTaxCard{
         + GoTaxCard()
-        + ChanceAction(GameController game)
+        + ChanceAction(GameController game) : void
     }
     class GoStartCard{
         + GoStartCard()
-        + ChanceAction(GameController game)
+        + ChanceAction(GameController game) : void
     }
     class GoTravelingCard{
         + GoTravelingCard()
-        + ChanceAction(GameController game, BuildableBlock building)
+        + ChanceAction(GameController game, BuildableBlock building) : void
     }
     class RipOffCard{
         + RipOffCard()
-        + ChanceAction(GameController game)
+        + ChanceAction(GameController game) : void
     }
-
-
 }
 
 IPlayer <|.. Player : Implementation
@@ -192,57 +187,77 @@ namespace PlayerNamespace{
     }
 }
 
-GameController *-- Player : Compotition
-GameController *-- PlayerData : Compotition
-GameController *-- BaseBlock : Compotition
-GameController *-- BuildableBlock : Compotition
+GameController "1" *-- "1..4" Player : Compotition
+GameController "1" *-- "1..4" PlayerData : Compotition
+GameController "1" *-- "32" BaseBlock : Compotition
 GameController .. WinningCondition : Association
 
-PlayerData *-- BaseBlock : Compotition
-PlayerData *-- IDeffenseCard : Compotition
+PlayerData "1" *-- "1" BaseBlock : Compotition
+PlayerData "1" *-- "23" BuildableBlock : Compotition
+PlayerData "1" *-- "1" IDeffenseCard : Compotition
 PlayerData .. PlayerStatus : Association
 namespace Game{
     class GameController{
         - ~readonly~ _board : BaseBlock[32]
-        - _players : Dictionary~Player.PlayerData~
-        - _currentPlayer : Player
+        - _players : Dictionary~IPlayer.PlayerData~
+        - _currentPlayer : IPlayer
         - _dices : int[2]
         - _diceDoubleCount : int
         - _winner : IPlayer
         - _winnerStatus : WinningCondition
-        - _onFinishTurn : Action
+        + onFinishTurn : Action
 
         + GameController(List~IPlayer~ players)
-        + StartGame()
+        + StartGame() : void
         + RollDice() : int
         - IsRollDiceDouble() : bool
-        - GoToPrison()
-        + PlayerMove(IPlayer player, int dice) : bool
-        + PlayerAction(IPlayer player, BaseBlock block) : bool
-        + NextTurn() : IPlayer
+        - GoToPrison() : void
+        + PlayerMove(int dice) : void
+        + PlayerAction(BaseBlock block) : void
+        + NextTurn() : Player
         + GetBoard() : BaseBlock[32]
         + GetCurrentPlayer() IPlayer
-        + GetPlayers() : IEnumerable~IPlayer~
-        + GetPlayer(int id) IPlayer
+        + GetPlayers() : IEnumerable~Player~
+        + GetPlayerData(int id) PlayerData
         + GetPlayerPosition(int id) : BaseBlock
         + GetPlayerBuildings(int id) : IEnumerable~BuildableBlock~
-        + GetWinner() : IPlayer
+        + GetWinner() : Player
         + GetWinnerStatus() : WinningCondition
-        - CheckColorCompletion()
-        - CheckLineCompletion()
-        - CheckTourismCompletion()
-        - CheckPlayerBankrupty()
+        %% Action for BuildableBlock
+        + BuyBuilding(IPlayer player, BuildableBlock block, PropertyType type=PropertyType.Land) : void
+        + Sell(IPlayer player, BuildableBlock block) : void
+        + PayRent(IPlayer player, BuildableBlock block) : void
+        + SetEffect(BuildableBlock block, BuildingEffect effect) : void
+        %% Action for CityBlock and StartBlock
+        + UpgradeProperty(IPlayer player, BuildableBlock block, PropertyType p) : void
+        + AquireCity(IPlayer player, BuildableBlock block) : void
+        %% Action for ChanceBlock
+        + AttactCity(IPlayer player, BuildableBlock block) : void
+        + UseCard(IPlayer player, IDeffenseCard card) : void
+        %% Action for PrisonBlock
+        + MakeChoice(int choice) : int
+        %% Action for FestivalBlock
+        %% SetEffect(BuildableBlock block, BuildingEffect effect) : void
+        %% Action for TravelBlock
+        %% PlayerMove()
+
+        - CheckColorCompletion() : void
+        - CheckLineCompletion() : void
+        - CheckTourismCompletion() : void
+        - CheckPlayerBankrupty() : void
     }
 
     class PlayerData{
-        - _playerBalance : int
-        - _totalAset : int
-        - _turn : int
-        - _playerStatus : PlayerStatus
-        - _playerBuildings : List~BuildableBlock~ 
-        - _playerPosition : BaseBlock
-        - _playerPrisonCount : int
-        - _deffenseCard : IDeffenseCard
+        + PlayerBalance : int
+        + TotalAset : int
+        + Turn : int
+        + PlayerStatus : PlayerStatus
+        + PlayerBuildings : List~BuildableBlock~ 
+        + PlayerPosition : BaseBlock
+        + PlayerPrisonCount : int
+        + DeffenseCard : IDeffenseCard
+
+        + PlayerData(int turn)
     }
 }
 
@@ -260,7 +275,7 @@ class BlockColor{
         <<enum>>
         Start
         City
-        Tourist
+        Tourism
         Chance
         Prison
         Festival
@@ -270,10 +285,10 @@ class BlockColor{
 
     class BlockLine{
         <<enum>>
-        first
-        second
-        third
-        fourth
+        First
+        Second
+        Third
+        Fourth
     }
     
     class BuildingEffect{

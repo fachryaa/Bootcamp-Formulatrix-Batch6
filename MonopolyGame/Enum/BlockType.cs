@@ -3,11 +3,11 @@ namespace MonopolyGame.Enum;
 public enum BlockType
 {
 	Start,
-	Property,
+	City,
 	Tourism,
 	Chance,
 	Prison,
 	Festival,
-	Flight,
+	Traveling,
 	Tax,
 }
