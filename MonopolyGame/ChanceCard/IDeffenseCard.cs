@@ -1,8 +1,9 @@
 using MonopolyGame.Players;
 
-namespace MonopolyGame.ChanceCard;
-
-public interface IDeffenseCard
+namespace MonopolyGame.ChanceCard
 {
-	public void UseCard(IPlayer player);
+    public interface IDeffenseCard
+    {
+        public void UseCard(IPlayer player);
+    }
 }

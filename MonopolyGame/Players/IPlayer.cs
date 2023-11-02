@@ -1,7 +1,8 @@
-namespace MonopolyGame.Players;
-
-public interface IPlayer
+namespace MonopolyGame.Players
 {
-	public string GetName();
-	public int GetId();
+    public interface IPlayer
+    {
+        public string GetName();
+        public int GetId();
+    }
 }

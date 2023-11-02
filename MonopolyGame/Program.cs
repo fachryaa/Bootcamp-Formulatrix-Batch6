@@ -1,15 +1,17 @@
-namespace MonopolyGame;
-
-public class Program
+namespace MonopolyGame
 {
-	Test x = new Test(1,2);
-}
-
-class Test
-{
-	public static int a;
-	public Test(int x, int y=0)
-	{
-		a = x;
-	}	
+    internal static class Program
+    {
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+            Application.Run(new GameController());
+        }
+    }
 }

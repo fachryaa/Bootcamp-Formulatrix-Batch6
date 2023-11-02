@@ -1,7 +1,8 @@
-namespace MonopolyGame.Players;
-
-public class Player
+namespace MonopolyGame.Players
 {
-	private int _id;
-	private string? _name;
+    public class Player
+    {
+        private int _id;
+        private string? _name;
+    }
 }

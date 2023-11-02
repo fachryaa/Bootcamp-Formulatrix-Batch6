@@ -1,13 +1,14 @@
-namespace MonopolyGame.Enum;
-
-public enum BlockType
+namespace MonopolyGame.Enum
 {
-	Start,
-	City,
-	Tourism,
-	Chance,
-	Prison,
-	Festival,
-	Traveling,
-	Tax,
+    public enum BlockType
+    {
+        Start,
+        City,
+        Tourism,
+        Chance,
+        Prison,
+        Festival,
+        Traveling,
+        Tax,
+    }
 }

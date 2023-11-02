@@ -1,8 +1,9 @@
-namespace MonopolyGame.Enum;
-
-public enum ChanceCardType
+namespace MonopolyGame.Enum
 {
-	Attack,
-	Deffense,
-	Command
+    public enum ChanceCardType
+    {
+        Attack,
+        Deffense,
+        Command
+    }
 }

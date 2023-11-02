@@ -1,11 +1,12 @@
-namespace MonopolyGame.Enum;
-
-public enum PropertyType
+namespace MonopolyGame.Enum
 {
-	Land = 1,
-	Villa,
-	Building,
-	Hotel,
-	Landmark
-	
+    public enum PropertyType
+    {
+        Land = 1,
+        Villa,
+        Building,
+        Hotel,
+        Landmark
+
+    }
 }

@@ -1,9 +1,10 @@
-namespace MonopolyGame.Enum;
-
-public enum PlayerStatus
+namespace MonopolyGame.Enum
 {
-	Playing,
-	Winner,
-	Loser,
-	Bankrupt
+    public enum PlayerStatus
+    {
+        Playing,
+        Winner,
+        Loser,
+        Bankrupt
+    }
 }

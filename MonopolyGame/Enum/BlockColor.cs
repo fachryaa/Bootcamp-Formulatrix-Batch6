@@ -1,9 +1,16 @@
-namespace MonopolyGame.Enum;
-
-public enum BlockColor
+namespace MonopolyGame.Enum
 {
-	Green,
-	Blue,
-	Yellow,
-	Red
+    public enum BlockColor
+    {
+        Pink,
+        Blue,
+        Yellow,
+        Red,
+        Green,
+        Cyan,
+        OceanBlue,
+        Purple,
+        Orange,
+        Brown
+    }
 }

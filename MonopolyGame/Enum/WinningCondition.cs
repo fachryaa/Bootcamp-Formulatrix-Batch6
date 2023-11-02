@@ -1,8 +1,9 @@
-namespace MonopolyGame.Enum;
-
-public enum WinningCondition
+namespace MonopolyGame.Enum
 {
-	ColorCompletion,
-	LineCompletion,
-	Bankruptcy
+    public enum WinningCondition
+    {
+        ColorCompletion,
+        LineCompletion,
+        Bankruptcy
+    }
 }
