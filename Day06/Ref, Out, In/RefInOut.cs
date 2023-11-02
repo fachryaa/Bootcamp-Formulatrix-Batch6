@@ -68,11 +68,43 @@ public class RefInOut
 	}
 }
 
-class Car
+class Vehicle
 {
-	public int price;
-	public Car(int price)
+	public VehicleType t;
+	public Vehicle(VehicleType t)
+	{
+		this.t = t;
+	}
+}
+
+class Car : Vehicle
+{
+	public int price = 1000;
+	public Car(int price) : base(VehicleType.Car)
 	{
 		this.price = price;
 	}
+}
+
+static class Test
+{
+	public static void Run()
+	{
+		Car c = new(2000);
+		
+		unboxing(c);
+	}
+	public static void unboxing(Vehicle v)
+	{
+		if (v.t == VehicleType.Car)
+		{
+			v = (Car) v;
+		}
+	}
+}
+
+enum VehicleType
+{
+	Car,
+	Bike
 }

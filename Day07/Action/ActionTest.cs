@@ -21,6 +21,7 @@ class CardCreator
 {
 	public List<Card>? cards;
 	public Action<Card>? onCardUpdate;
+	public Action? onTest;
 	
 	public void CreateCard(int id, string description)
 	{

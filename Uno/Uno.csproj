@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Player.cs" />
+    <Content Include="Card.cs" />
+    <Content Include="Enum\Enum\CardType.cs" />
+    <Content Include="Enum\Enum\Colour.cs" />
+    <Content Include="GameController.cs" />
+    <Content Include="Enum\CardType.cs" />
+    <Content Include="Enum\Status.cs" />
+    <Content Include="Enum\Colour.cs" />
+  </ItemGroup>
+</Project>
