@@ -169,7 +169,7 @@ namespace ChessWinForms
 				game.SelectPiece(position);
 				
 				// set Enable to false
-				List<Position> forEnables = game.GetLegalMove(position);
+				// List<Position> forEnables = game.GetLegalMove(position);
 				// foreach (var b in buttons)
 				// {
 				// 	b.Value.Enabled = false;
