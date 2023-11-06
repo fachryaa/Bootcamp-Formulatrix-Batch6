@@ -28,5 +28,7 @@
 - Thread priority adalah sebuah nilai yang digunakan untuk menentukan prioritas sebuah thread.
 - Thread priority memiliki nilai dari 0 sampai 4.
 - Abort() digunakan untuk menghentikan sebuah thread, namun method ini sudah obsolete dan tidak disarankan untuk digunakan.
-
+- Exception ribet
+- Return value ribet
+-
 
