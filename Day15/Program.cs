@@ -6,6 +6,8 @@ class Program
 	{
 		// TaskTest.Run();
 		
-		await asyncTest.Run();
+		// await asyncTest.Run();
+		
+		ct.Run();
 	}
 }
