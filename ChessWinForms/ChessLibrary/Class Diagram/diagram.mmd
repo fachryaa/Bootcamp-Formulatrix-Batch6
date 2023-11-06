@@ -1,0 +1,131 @@
+classDiagram
+
+BasePiece .. Position
+BasePiece .. PieceType
+BasePiece .. PieceColor
+
+BasePiece <|.. Pawn
+BasePiece <|.. King
+BasePiece <|.. Queen
+BasePiece <|.. Bishop
+BasePiece <|.. Rook
+BasePiece <|.. Knight
+namespace Pieces{
+    class BasePiece{
+        <<abstract>>
+        + Id : int
+        + Position : Position
+        + Type : PieceType
+        + Color : PieceColor
+
+        + BasePiece(int Id, Position pos, Type type, Color color) : void
+        + PieceMove(GameController game) : void
+        + GetAvailableMove()* : List~Position~
+    }
+
+    class Pawn{
+        + GetAvailableMove() : List~Position~
+    }
+
+    class King{
+        + GetAvailableMove() : List~Position~
+    }
+
+    class Queen{
+        + GetAvailableMove() : List~Position~
+    }
+
+    class Rook{
+        + GetAvailableMove() : List~Position~
+    }
+
+    class Bishop{
+        + GetAvailableMove() : List~Position~
+    }
+
+    class Knight{
+        + GetAvailableMove() : List~Position~
+    }
+
+    class Position{
+        <<abstract>>
+        + X : int
+        + Y : int
+
+        + Position(int x, int y)
+    }
+}
+
+GameController "1" *-- "2" IPlayer
+GameController "1" *-- "2" PlayerData
+GameController .. PlayerColor
+GameController *-- BasePiece
+namespace GameControllers{
+    class GameController{
+        - _players : Dictionary~IPlayer.PlayerData~
+        - _firstTurn : PlayerColor
+        - _board : BasePiece[8][8]
+        - _isChecked : bool
+
+        + InitBoard() : void
+        + GetPlayerPieces(IPlayer player) : List~BasePiece~
+        + MovePiece(BasePiece piece) : bool
+        + PawnPromotion(Pawn pawn, PieceType type) : void
+    }
+
+    class Board{
+        - _board : BasePiece[8][8]
+
+        + At(Position pos) : BasePiece
+        + AttackArea(BasePiece piece) : List~Position~
+    }
+}
+
+IPlayer <|.. Player : Implementation
+
+PlayerData "1" *-- "1..16" BasePiece
+PlayerData .. PlayerColor
+namespace PlayerNamespace{
+    class IPlayer{
+    <<interface>>
+        + GetName() : string
+        + GetId() : int
+    }
+    class Player {
+        _id : int
+        _name : string
+    }
+    class PlayerData{
+        + Piece : List~BasePiece~
+        + Color : PlayerColor
+    }
+}
+
+namespace Enums{
+    class PieceType{
+        <<enum>>
+        Pawn
+        King
+        Queen
+        Rook
+        Bishop
+        Knight
+    }
+
+    class PieceColor{
+        <<enum>>
+        Black
+        White
+    }
+
+    class PlayerColor{
+        <<enum>>
+        Black
+        White
+    }
+
+    class WinningCondition{
+        Checkmate
+        Stalemate
+    }
+}
