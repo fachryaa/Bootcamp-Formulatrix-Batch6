@@ -1,5 +1,6 @@
 using MonopolyGame.Block;
 using MonopolyGame.Enum;
+using MonopolyGame.Players;
 
 namespace MonopolyGame
 {
@@ -7,6 +8,10 @@ namespace MonopolyGame
     {
         private BaseBlock[] _board = new BaseBlock[32];
         private int[] _dice = new int[2];
+        private Dictionary<Player, PlayerData> _players = new();
+
+        private int _currentTurn = 1;
+
         private Label diceLabel1 = new Label();
         private Label diceLabel2 = new Label();
         private Random random = new Random();
@@ -15,6 +20,11 @@ namespace MonopolyGame
             InitializeComponent();
             diceLabel1 = DiceLabel1;
             diceLabel2 = DiceLabel2;
+
+            SetUpBlock();
+
+            Player player1 = new Player(1, "Player1");
+            _players.Add(player1, new PlayerData(PlayerLabel1, 3000, 1));
         }
 
         public void SetUpBlock()
@@ -53,7 +63,37 @@ namespace MonopolyGame
             CityBlock cityBlock18 = new(CityButton18, 32, "Bangkik", BlockColor.Brown, 1800);
 
             _board[0] = startBlock;
-
+            _board[1] = cityBlock1;
+            _board[2] = cityBlock2;
+            _board[3] = cityBlock3;
+            _board[4] = chanceBlock1;
+            _board[5] = tourismBlock1;
+            _board[6] = cityBlock4;
+            _board[7] = cityBlock5;
+            _board[8] = prisonBlock;
+            _board[9] = tourismBlock2;
+            _board[10] = cityBlock6;
+            _board[11] = cityBlock7;
+            _board[12] = chanceBlock2;
+            _board[13] = cityBlock8;
+            _board[14] = tourismBlock3;
+            _board[15] = cityBlock9;
+            _board[16] = festivalBlock;
+            _board[17] = cityBlock10;
+            _board[18] = tourismBlock4;
+            _board[19] = cityBlock11;
+            _board[20] = chanceBlock3;
+            _board[21] = cityBlock12;
+            _board[22] = cityBlock13;
+            _board[23] = cityBlock14;
+            _board[24] = travelingBlock;
+            _board[25] = tourismBlock5;
+            _board[26] = cityBlock15;
+            _board[27] = cityBlock16;
+            _board[28] = chanceBlock4;
+            _board[29] = cityBlock17;
+            _board[30] = taxBlock;
+            _board[31] = cityBlock18;
         }
 
         private void RollDice(object sender, EventArgs e)
@@ -66,10 +106,7 @@ namespace MonopolyGame
             diceLabel1.Text = _dice[0].ToString();
             diceLabel2.Text = _dice[1].ToString();
 
-            Label player1 = Player1;
-            Point startPoint = CityButton5.Location;
-
-            player1.Location = new Point(startPoint.X - 70, startPoint.Y);
+            PlayerMove(GetDice());
         }
 
         private int GetDice()
@@ -77,9 +114,25 @@ namespace MonopolyGame
             return _dice[0] + _dice[1];
         }
 
-        private void PlayerMove()
+        private Player GetPlayerByTurn(int turn)
         {
+            return _players.FirstOrDefault(x => x.Value.Turn == turn).Key;
+        }
 
+        private void PlayerMove(int dice)
+        {
+            Player curPlayer = GetPlayerByTurn(_currentTurn);
+
+            int curPlayerPos = _players[curPlayer].Position;
+
+            // move player position
+            curPlayerPos += dice;
+            curPlayerPos = (curPlayerPos >= 32) ? curPlayerPos - 32 : curPlayerPos;
+            _players[curPlayer].Position = curPlayerPos;
+
+            // move label
+            Label curPlayerLabel = _players[curPlayer].Label;
+            curPlayerLabel.Location = _board[curPlayerPos].BaseButton.Location;
         }
     }
 }

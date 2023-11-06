@@ -88,13 +88,22 @@ public class GameController
 		isSelect = false;
 	}
 	
-	public List<Position> GetLegalMove()
+	public List<Position> GetLegalMove(Position position)
 	{
 		List<Position> result = new();
+		BasePiece piece = GetPiece(position);
 		
-		// TODO : get legal move
-		// result = piece.GetAvailableMoves();
-		return new List<Position>();
+		switch (piece.Type)
+		{
+			case PieceType.Pawn:
+				result = piece.GetAvailableMoves(position, this);
+				
+				break;
+			default :
+				break;
+		}
+		
+		return result;
 	}
 	public List<Position> GetMoveablePiecePos(Enum.Color color)
 	{

@@ -21,7 +21,7 @@ public abstract class BasePiece
 		
 	}
 	
-	public abstract List<Position> GetAvailableMoves();
+	public abstract List<Position> GetAvailableMoves(Position pos, GameController game);
 	
 	public void Capture(GameController game)
 	{

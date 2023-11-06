@@ -11,7 +11,7 @@ public class Bishop : BasePiece
 		
 	}
 
-    public override List<Position> GetAvailableMoves(GameController game)
+    public override List<Position> GetAvailableMoves(Position position, GameController game)
     {
         throw new System.NotImplementedException();
     }

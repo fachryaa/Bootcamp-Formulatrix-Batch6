@@ -63,7 +63,7 @@
             ChanceButton3 = new Button();
             DiceLabel1 = new Label();
             DiceLabel2 = new Label();
-            Player1 = new Label();
+            PlayerLabel1 = new Label();
             SuspendLayout();
             // 
             // StartButton
@@ -419,23 +419,23 @@
             DiceLabel2.TabIndex = 35;
             DiceLabel2.Text = "0";
             // 
-            // Player1
+            // PlayerLabel1
             // 
-            Player1.AutoSize = true;
-            Player1.BackColor = Color.Red;
-            Player1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            Player1.Location = new Point(164, 575);
-            Player1.Name = "Player1";
-            Player1.Size = new Size(57, 20);
-            Player1.TabIndex = 36;
-            Player1.Text = "Player1";
+            PlayerLabel1.AutoSize = true;
+            PlayerLabel1.BackColor = Color.Red;
+            PlayerLabel1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            PlayerLabel1.Location = new Point(164, 575);
+            PlayerLabel1.Name = "PlayerLabel1";
+            PlayerLabel1.Size = new Size(57, 20);
+            PlayerLabel1.TabIndex = 36;
+            PlayerLabel1.Text = "Player1";
             // 
             // GameController
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1155, 703);
-            Controls.Add(Player1);
+            Controls.Add(PlayerLabel1);
             Controls.Add(DiceLabel2);
             Controls.Add(DiceLabel1);
             Controls.Add(ChanceButton3);
@@ -514,6 +514,6 @@
         private Button ChanceButton3;
         private Label DiceLabel1;
         private Label DiceLabel2;
-        private Label Player1;
+        private Label PlayerLabel1;
     }
 }
