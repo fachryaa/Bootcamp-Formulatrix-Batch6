@@ -15,6 +15,12 @@ public abstract class BasePiece
 		Type = type;
 		Color = color;
 	}
+	public BasePiece(BasePiece promoted, PieceType type, Enum.Color color)
+	{
+		Id = promoted.Id;
+		Type = type;
+		Color = color;
+	}
 	
 	public void Move(GameController game)
 	{

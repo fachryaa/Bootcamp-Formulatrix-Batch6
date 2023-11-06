@@ -138,10 +138,10 @@ namespace ChessWinForms
 			return result;
 
 		}
-		public Button GetButtonByPos(Position pos)
+		public Button GetButtonByPos(Position position)
 		{
 			// TODO : get button by loc
-			Button result = buttons.FirstOrDefault(x => x.Key == pos).Value;
+			Button result = buttons.FirstOrDefault(x => x.Key.X == position.X && x.Key.Y == position.Y).Value;
 
 			return result;
 		}
@@ -167,26 +167,33 @@ namespace ChessWinForms
 			{
 				Position position = GetPosByButton(button);
 				game.SelectPiece(position);
-				
+
 				// set Enable to false
-				// List<Position> forEnables = game.GetLegalMove(position);
-				// foreach (var b in buttons)
-				// {
-				// 	b.Value.Enabled = false;
-				// }
-				// foreach (var pos in forEnables)
-				// {
-				// 	GetButtonByPos(pos).Enabled = true;
-				// }
-				
+				List<Position> forEnables = game.GetLegalMove(position);
+				foreach (var b in buttons)
+				{
+					b.Value.Enabled = false;
+				}
+
+				foreach (var pos in forEnables)
+				{
+					GetButtonByPos(pos).Enabled = true;
+				}
+
+				button.Enabled = false;
 				previousButton = button;
 			}
 
 			else
 			{
 				game.MovePiece(GetPosByButton(button));
-				previousButton.Enabled = true;
-			}
+				//previousButton.Enabled = true;
+
+                foreach (var b in buttons)
+                {
+                    b.Value.Enabled = true;
+                }
+            }
 
 			UpdateBoard();
 		}
