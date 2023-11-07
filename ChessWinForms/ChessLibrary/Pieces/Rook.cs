@@ -21,7 +21,6 @@ public class Rook : BasePiece
     public override List<Position> GetAvailableMoves(Position position, GameController game)
     {
         List<Position> result = new List<Position>();
-		var board = game.GetBoard();
 
 		// vertical up
 		for (int i=position.X+1; i < 8; i++)
