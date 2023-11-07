@@ -92,8 +92,70 @@
             button62 = new Button();
             button63 = new Button();
             button64 = new Button();
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            pawnWhite1 = new PictureBox();
+            pawnWhite2 = new PictureBox();
+            pawnWhite3 = new PictureBox();
+            pawnWhite4 = new PictureBox();
+            pawnWhite5 = new PictureBox();
+            pawnWhite6 = new PictureBox();
+            pawnWhite7 = new PictureBox();
+            pawnWhite8 = new PictureBox();
+            queenWhite = new PictureBox();
+            kingWhite = new PictureBox();
+            bishopWhite2 = new PictureBox();
+            bishopWhite1 = new PictureBox();
+            knightWhite2 = new PictureBox();
+            knightWhite1 = new PictureBox();
+            rookWhite2 = new PictureBox();
+            rookWhite1 = new PictureBox();
+            rookBlack1 = new PictureBox();
+            rookBlack2 = new PictureBox();
+            knightBlack1 = new PictureBox();
+            knightBlack2 = new PictureBox();
+            bishopBlack1 = new PictureBox();
+            bishopBlack2 = new PictureBox();
+            kingBlack = new PictureBox();
+            queenBlack = new PictureBox();
+            pawnBlack8 = new PictureBox();
+            pawnBlack7 = new PictureBox();
+            pawnBlack6 = new PictureBox();
+            pawnBlack5 = new PictureBox();
+            pawnBlack4 = new PictureBox();
+            pawnBlack3 = new PictureBox();
+            pawnBlack2 = new PictureBox();
+            pawnBlack1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)queenWhite).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)kingWhite).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bishopWhite2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bishopWhite1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)knightWhite2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)knightWhite1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rookWhite2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rookWhite1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rookBlack1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rookBlack2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)knightBlack1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)knightBlack2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bishopBlack1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bishopBlack2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)kingBlack).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)queenBlack).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack1).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -234,7 +296,9 @@
             // button9
             // 
             button9.BackColor = Color.White;
-            button9.ForeColor = Color.White;
+            button9.BackgroundImage = Properties.Resources._1280px_HD_transparent_picture;
+            button9.BackgroundImageLayout = ImageLayout.Center;
+            button9.ForeColor = Color.Transparent;
             button9.Location = new Point(332, 464);
             button9.Name = "button9";
             button9.Size = new Size(50, 50);
@@ -674,21 +738,396 @@
             button64.UseVisualStyleBackColor = true;
             button64.Click += ButtonClick;
             // 
-            // pictureBox1
+            // pawnWhite1
             // 
-            pictureBox1.BackColor = Color.Black;
-            pictureBox1.Location = new Point(332, 464);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(30, 30);
-            pictureBox1.TabIndex = 62;
-            pictureBox1.TabStop = false;
+            pawnWhite1.BackColor = Color.Transparent;
+            pawnWhite1.Image = Properties.Resources.Chess_plt45;
+            pawnWhite1.Location = new Point(106, 128);
+            pawnWhite1.Name = "pawnWhite1";
+            pawnWhite1.Size = new Size(31, 31);
+            pawnWhite1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnWhite1.TabIndex = 62;
+            pawnWhite1.TabStop = false;
+            // 
+            // pawnWhite2
+            // 
+            pawnWhite2.BackColor = Color.Transparent;
+            pawnWhite2.Image = Properties.Resources.Chess_plt45;
+            pawnWhite2.Location = new Point(106, 165);
+            pawnWhite2.Name = "pawnWhite2";
+            pawnWhite2.Size = new Size(31, 31);
+            pawnWhite2.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnWhite2.TabIndex = 63;
+            pawnWhite2.TabStop = false;
+            // 
+            // pawnWhite3
+            // 
+            pawnWhite3.BackColor = Color.Transparent;
+            pawnWhite3.Image = Properties.Resources.Chess_plt45;
+            pawnWhite3.Location = new Point(106, 202);
+            pawnWhite3.Name = "pawnWhite3";
+            pawnWhite3.Size = new Size(31, 31);
+            pawnWhite3.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnWhite3.TabIndex = 64;
+            pawnWhite3.TabStop = false;
+            // 
+            // pawnWhite4
+            // 
+            pawnWhite4.BackColor = Color.Transparent;
+            pawnWhite4.Image = Properties.Resources.Chess_plt45;
+            pawnWhite4.Location = new Point(106, 240);
+            pawnWhite4.Name = "pawnWhite4";
+            pawnWhite4.Size = new Size(31, 31);
+            pawnWhite4.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnWhite4.TabIndex = 65;
+            pawnWhite4.TabStop = false;
+            // 
+            // pawnWhite5
+            // 
+            pawnWhite5.BackColor = Color.Transparent;
+            pawnWhite5.Image = Properties.Resources.Chess_plt45;
+            pawnWhite5.Location = new Point(106, 277);
+            pawnWhite5.Name = "pawnWhite5";
+            pawnWhite5.Size = new Size(31, 31);
+            pawnWhite5.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnWhite5.TabIndex = 66;
+            pawnWhite5.TabStop = false;
+            // 
+            // pawnWhite6
+            // 
+            pawnWhite6.BackColor = Color.Transparent;
+            pawnWhite6.Image = Properties.Resources.Chess_plt45;
+            pawnWhite6.Location = new Point(106, 314);
+            pawnWhite6.Name = "pawnWhite6";
+            pawnWhite6.Size = new Size(31, 31);
+            pawnWhite6.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnWhite6.TabIndex = 67;
+            pawnWhite6.TabStop = false;
+            // 
+            // pawnWhite7
+            // 
+            pawnWhite7.BackColor = Color.Transparent;
+            pawnWhite7.Image = Properties.Resources.Chess_plt45;
+            pawnWhite7.Location = new Point(106, 351);
+            pawnWhite7.Name = "pawnWhite7";
+            pawnWhite7.Size = new Size(31, 31);
+            pawnWhite7.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnWhite7.TabIndex = 68;
+            pawnWhite7.TabStop = false;
+            // 
+            // pawnWhite8
+            // 
+            pawnWhite8.BackColor = Color.Transparent;
+            pawnWhite8.Image = Properties.Resources.Chess_plt45;
+            pawnWhite8.Location = new Point(106, 388);
+            pawnWhite8.Name = "pawnWhite8";
+            pawnWhite8.Size = new Size(31, 31);
+            pawnWhite8.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnWhite8.TabIndex = 69;
+            pawnWhite8.TabStop = false;
+            // 
+            // queenWhite
+            // 
+            queenWhite.BackColor = Color.Transparent;
+            queenWhite.Image = Properties.Resources.Chess_qlt45;
+            queenWhite.Location = new Point(69, 388);
+            queenWhite.Name = "queenWhite";
+            queenWhite.Size = new Size(31, 31);
+            queenWhite.SizeMode = PictureBoxSizeMode.CenterImage;
+            queenWhite.TabIndex = 71;
+            queenWhite.TabStop = false;
+            // 
+            // kingWhite
+            // 
+            kingWhite.BackColor = Color.Transparent;
+            kingWhite.Image = Properties.Resources.Chess_klt45;
+            kingWhite.Location = new Point(69, 352);
+            kingWhite.Name = "kingWhite";
+            kingWhite.Size = new Size(31, 31);
+            kingWhite.SizeMode = PictureBoxSizeMode.CenterImage;
+            kingWhite.TabIndex = 72;
+            kingWhite.TabStop = false;
+            // 
+            // bishopWhite2
+            // 
+            bishopWhite2.BackColor = Color.Transparent;
+            bishopWhite2.Image = Properties.Resources.Chess_blt45;
+            bishopWhite2.Location = new Point(69, 314);
+            bishopWhite2.Name = "bishopWhite2";
+            bishopWhite2.Size = new Size(31, 31);
+            bishopWhite2.SizeMode = PictureBoxSizeMode.CenterImage;
+            bishopWhite2.TabIndex = 73;
+            bishopWhite2.TabStop = false;
+            // 
+            // bishopWhite1
+            // 
+            bishopWhite1.BackColor = Color.Transparent;
+            bishopWhite1.Image = Properties.Resources.Chess_blt45;
+            bishopWhite1.Location = new Point(69, 277);
+            bishopWhite1.Name = "bishopWhite1";
+            bishopWhite1.Size = new Size(31, 31);
+            bishopWhite1.SizeMode = PictureBoxSizeMode.CenterImage;
+            bishopWhite1.TabIndex = 74;
+            bishopWhite1.TabStop = false;
+            // 
+            // knightWhite2
+            // 
+            knightWhite2.BackColor = Color.Transparent;
+            knightWhite2.Image = Properties.Resources.Chess_nlt45;
+            knightWhite2.Location = new Point(69, 240);
+            knightWhite2.Name = "knightWhite2";
+            knightWhite2.Size = new Size(31, 31);
+            knightWhite2.SizeMode = PictureBoxSizeMode.CenterImage;
+            knightWhite2.TabIndex = 75;
+            knightWhite2.TabStop = false;
+            // 
+            // knightWhite1
+            // 
+            knightWhite1.BackColor = Color.Transparent;
+            knightWhite1.Image = Properties.Resources.Chess_nlt45;
+            knightWhite1.Location = new Point(69, 202);
+            knightWhite1.Name = "knightWhite1";
+            knightWhite1.Size = new Size(31, 31);
+            knightWhite1.SizeMode = PictureBoxSizeMode.CenterImage;
+            knightWhite1.TabIndex = 76;
+            knightWhite1.TabStop = false;
+            // 
+            // rookWhite2
+            // 
+            rookWhite2.BackColor = Color.Transparent;
+            rookWhite2.Image = Properties.Resources.Chess_rlt45;
+            rookWhite2.Location = new Point(69, 165);
+            rookWhite2.Name = "rookWhite2";
+            rookWhite2.Size = new Size(31, 31);
+            rookWhite2.SizeMode = PictureBoxSizeMode.CenterImage;
+            rookWhite2.TabIndex = 77;
+            rookWhite2.TabStop = false;
+            // 
+            // rookWhite1
+            // 
+            rookWhite1.BackColor = Color.Transparent;
+            rookWhite1.Image = Properties.Resources.Chess_rlt45;
+            rookWhite1.Location = new Point(69, 128);
+            rookWhite1.Name = "rookWhite1";
+            rookWhite1.Size = new Size(31, 31);
+            rookWhite1.SizeMode = PictureBoxSizeMode.CenterImage;
+            rookWhite1.TabIndex = 78;
+            rookWhite1.TabStop = false;
+            // 
+            // rookBlack1
+            // 
+            rookBlack1.BackColor = Color.Transparent;
+            rookBlack1.Image = Properties.Resources.Chess_rdt45;
+            rookBlack1.Location = new Point(890, 128);
+            rookBlack1.Name = "rookBlack1";
+            rookBlack1.Size = new Size(31, 31);
+            rookBlack1.SizeMode = PictureBoxSizeMode.CenterImage;
+            rookBlack1.TabIndex = 94;
+            rookBlack1.TabStop = false;
+            // 
+            // rookBlack2
+            // 
+            rookBlack2.BackColor = Color.Transparent;
+            rookBlack2.Image = Properties.Resources.Chess_rdt45;
+            rookBlack2.Location = new Point(890, 165);
+            rookBlack2.Name = "rookBlack2";
+            rookBlack2.Size = new Size(31, 31);
+            rookBlack2.SizeMode = PictureBoxSizeMode.CenterImage;
+            rookBlack2.TabIndex = 93;
+            rookBlack2.TabStop = false;
+            // 
+            // knightBlack1
+            // 
+            knightBlack1.BackColor = Color.Transparent;
+            knightBlack1.Image = Properties.Resources.Chess_ndt45;
+            knightBlack1.Location = new Point(890, 202);
+            knightBlack1.Name = "knightBlack1";
+            knightBlack1.Size = new Size(31, 31);
+            knightBlack1.SizeMode = PictureBoxSizeMode.CenterImage;
+            knightBlack1.TabIndex = 92;
+            knightBlack1.TabStop = false;
+            // 
+            // knightBlack2
+            // 
+            knightBlack2.BackColor = Color.Transparent;
+            knightBlack2.Image = Properties.Resources.Chess_ndt45;
+            knightBlack2.Location = new Point(890, 240);
+            knightBlack2.Name = "knightBlack2";
+            knightBlack2.Size = new Size(31, 31);
+            knightBlack2.SizeMode = PictureBoxSizeMode.CenterImage;
+            knightBlack2.TabIndex = 91;
+            knightBlack2.TabStop = false;
+            // 
+            // bishopBlack1
+            // 
+            bishopBlack1.BackColor = Color.Transparent;
+            bishopBlack1.Image = Properties.Resources.Chess_bdt45;
+            bishopBlack1.Location = new Point(890, 277);
+            bishopBlack1.Name = "bishopBlack1";
+            bishopBlack1.Size = new Size(31, 31);
+            bishopBlack1.SizeMode = PictureBoxSizeMode.CenterImage;
+            bishopBlack1.TabIndex = 90;
+            bishopBlack1.TabStop = false;
+            // 
+            // bishopBlack2
+            // 
+            bishopBlack2.BackColor = Color.Transparent;
+            bishopBlack2.Image = Properties.Resources.Chess_bdt45;
+            bishopBlack2.Location = new Point(890, 314);
+            bishopBlack2.Name = "bishopBlack2";
+            bishopBlack2.Size = new Size(31, 31);
+            bishopBlack2.SizeMode = PictureBoxSizeMode.CenterImage;
+            bishopBlack2.TabIndex = 89;
+            bishopBlack2.TabStop = false;
+            // 
+            // kingBlack
+            // 
+            kingBlack.BackColor = Color.Transparent;
+            kingBlack.Image = Properties.Resources.Chess_kdt45;
+            kingBlack.Location = new Point(890, 352);
+            kingBlack.Name = "kingBlack";
+            kingBlack.Size = new Size(31, 31);
+            kingBlack.SizeMode = PictureBoxSizeMode.CenterImage;
+            kingBlack.TabIndex = 88;
+            kingBlack.TabStop = false;
+            // 
+            // queenBlack
+            // 
+            queenBlack.BackColor = Color.Transparent;
+            queenBlack.Image = Properties.Resources.Chess_qdt45;
+            queenBlack.Location = new Point(890, 388);
+            queenBlack.Name = "queenBlack";
+            queenBlack.Size = new Size(31, 31);
+            queenBlack.SizeMode = PictureBoxSizeMode.CenterImage;
+            queenBlack.TabIndex = 87;
+            queenBlack.TabStop = false;
+            // 
+            // pawnBlack8
+            // 
+            pawnBlack8.BackColor = Color.Transparent;
+            pawnBlack8.Image = Properties.Resources.Chess_pdt45;
+            pawnBlack8.Location = new Point(927, 388);
+            pawnBlack8.Name = "pawnBlack8";
+            pawnBlack8.Size = new Size(31, 31);
+            pawnBlack8.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnBlack8.TabIndex = 86;
+            pawnBlack8.TabStop = false;
+            // 
+            // pawnBlack7
+            // 
+            pawnBlack7.BackColor = Color.Transparent;
+            pawnBlack7.Image = Properties.Resources.Chess_pdt45;
+            pawnBlack7.Location = new Point(927, 351);
+            pawnBlack7.Name = "pawnBlack7";
+            pawnBlack7.Size = new Size(31, 31);
+            pawnBlack7.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnBlack7.TabIndex = 85;
+            pawnBlack7.TabStop = false;
+            // 
+            // pawnBlack6
+            // 
+            pawnBlack6.BackColor = Color.Transparent;
+            pawnBlack6.Image = Properties.Resources.Chess_pdt45;
+            pawnBlack6.Location = new Point(927, 314);
+            pawnBlack6.Name = "pawnBlack6";
+            pawnBlack6.Size = new Size(31, 31);
+            pawnBlack6.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnBlack6.TabIndex = 84;
+            pawnBlack6.TabStop = false;
+            // 
+            // pawnBlack5
+            // 
+            pawnBlack5.BackColor = Color.Transparent;
+            pawnBlack5.Image = Properties.Resources.Chess_pdt45;
+            pawnBlack5.Location = new Point(927, 277);
+            pawnBlack5.Name = "pawnBlack5";
+            pawnBlack5.Size = new Size(31, 31);
+            pawnBlack5.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnBlack5.TabIndex = 83;
+            pawnBlack5.TabStop = false;
+            // 
+            // pawnBlack4
+            // 
+            pawnBlack4.BackColor = Color.Transparent;
+            pawnBlack4.Image = Properties.Resources.Chess_pdt45;
+            pawnBlack4.Location = new Point(927, 240);
+            pawnBlack4.Name = "pawnBlack4";
+            pawnBlack4.Size = new Size(31, 31);
+            pawnBlack4.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnBlack4.TabIndex = 82;
+            pawnBlack4.TabStop = false;
+            // 
+            // pawnBlack3
+            // 
+            pawnBlack3.BackColor = Color.Transparent;
+            pawnBlack3.Image = Properties.Resources.Chess_pdt45;
+            pawnBlack3.Location = new Point(927, 202);
+            pawnBlack3.Name = "pawnBlack3";
+            pawnBlack3.Size = new Size(31, 31);
+            pawnBlack3.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnBlack3.TabIndex = 81;
+            pawnBlack3.TabStop = false;
+            // 
+            // pawnBlack2
+            // 
+            pawnBlack2.BackColor = Color.Transparent;
+            pawnBlack2.Image = Properties.Resources.Chess_pdt45;
+            pawnBlack2.Location = new Point(927, 165);
+            pawnBlack2.Name = "pawnBlack2";
+            pawnBlack2.Size = new Size(31, 31);
+            pawnBlack2.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnBlack2.TabIndex = 80;
+            pawnBlack2.TabStop = false;
+            // 
+            // pawnBlack1
+            // 
+            pawnBlack1.BackColor = Color.Transparent;
+            pawnBlack1.Image = Properties.Resources.Chess_pdt45;
+            pawnBlack1.Location = new Point(927, 128);
+            pawnBlack1.Name = "pawnBlack1";
+            pawnBlack1.Size = new Size(31, 31);
+            pawnBlack1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pawnBlack1.TabIndex = 79;
+            pawnBlack1.TabStop = false;
             // 
             // Chess
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(1105, 809);
-            Controls.Add(pictureBox1);
+            Controls.Add(rookBlack1);
+            Controls.Add(rookBlack2);
+            Controls.Add(knightBlack1);
+            Controls.Add(knightBlack2);
+            Controls.Add(bishopBlack1);
+            Controls.Add(bishopBlack2);
+            Controls.Add(kingBlack);
+            Controls.Add(queenBlack);
+            Controls.Add(pawnBlack8);
+            Controls.Add(pawnBlack7);
+            Controls.Add(pawnBlack6);
+            Controls.Add(pawnBlack5);
+            Controls.Add(pawnBlack4);
+            Controls.Add(pawnBlack3);
+            Controls.Add(pawnBlack2);
+            Controls.Add(pawnBlack1);
+            Controls.Add(rookWhite1);
+            Controls.Add(rookWhite2);
+            Controls.Add(knightWhite1);
+            Controls.Add(knightWhite2);
+            Controls.Add(bishopWhite1);
+            Controls.Add(bishopWhite2);
+            Controls.Add(kingWhite);
+            Controls.Add(queenWhite);
+            Controls.Add(pawnWhite8);
+            Controls.Add(pawnWhite7);
+            Controls.Add(pawnWhite6);
+            Controls.Add(pawnWhite5);
+            Controls.Add(pawnWhite4);
+            Controls.Add(pawnWhite3);
+            Controls.Add(pawnWhite2);
+            Controls.Add(pawnWhite1);
             Controls.Add(button64);
             Controls.Add(button63);
             Controls.Add(button62);
@@ -744,7 +1183,6 @@
             Controls.Add(button13);
             Controls.Add(button14);
             Controls.Add(button15);
-            Controls.Add(button9);
             Controls.Add(button8);
             Controls.Add(button2);
             Controls.Add(button3);
@@ -753,9 +1191,41 @@
             Controls.Add(button6);
             Controls.Add(button7);
             Controls.Add(button1);
+            Controls.Add(button9);
             Name = "Chess";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnWhite8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)queenWhite).EndInit();
+            ((System.ComponentModel.ISupportInitialize)kingWhite).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bishopWhite2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bishopWhite1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)knightWhite2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)knightWhite1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rookWhite2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rookWhite1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rookBlack1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rookBlack2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)knightBlack1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)knightBlack2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bishopBlack1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bishopBlack2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)kingBlack).EndInit();
+            ((System.ComponentModel.ISupportInitialize)queenBlack).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pawnBlack1).EndInit();
             ResumeLayout(false);
         }
 
@@ -825,6 +1295,37 @@
         private Button button62;
         private Button button63;
         private Button button64;
-        private PictureBox pictureBox1;
+        private PictureBox pawnWhite1;
+        private PictureBox pawnWhite2;
+        private PictureBox pawnWhite3;
+        private PictureBox pawnWhite4;
+        private PictureBox pawnWhite5;
+        private PictureBox pawnWhite6;
+        private PictureBox pawnWhite7;
+        private PictureBox pawnWhite8;
+        private PictureBox queenWhite;
+        private PictureBox kingWhite;
+        private PictureBox bishopWhite2;
+        private PictureBox bishopWhite1;
+        private PictureBox knightWhite2;
+        private PictureBox knightWhite1;
+        private PictureBox rookWhite2;
+        private PictureBox rookWhite1;
+        private PictureBox rookBlack1;
+        private PictureBox rookBlack2;
+        private PictureBox knightBlack1;
+        private PictureBox knightBlack2;
+        private PictureBox bishopBlack1;
+        private PictureBox bishopBlack2;
+        private PictureBox kingBlack;
+        private PictureBox queenBlack;
+        private PictureBox pawnBlack8;
+        private PictureBox pawnBlack7;
+        private PictureBox pawnBlack6;
+        private PictureBox pawnBlack5;
+        private PictureBox pawnBlack4;
+        private PictureBox pawnBlack3;
+        private PictureBox pawnBlack2;
+        private PictureBox pawnBlack1;
     }
 }

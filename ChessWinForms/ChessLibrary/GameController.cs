@@ -66,6 +66,12 @@ public class GameController
 		_board[GetPos(sidePiece, 3)] = new Queen(color);
 		_board[GetPos(sidePiece, 4)] = new King(color);
 	}
+
+	public Enum.Color GetCurrentPlayer()
+	{
+		return _players[_currentTurn];
+	}
+
 	public void SelectPiece(Position pos)
 	{
 		// TODO : select piece
@@ -116,11 +122,13 @@ public class GameController
 	{
 		List<Position> result = new();
 
-		for(int i=0; i<7; i++)
+		for(int i=0; i<8; i++)
 		{
-			for(int j=0; i<7; i++)
+			for(int j=0; j<8; j++)
 			{
-				if (GetPiece(i,j).Color == color)
+				BasePiece piece = GetPiece(i, j);
+
+                if (piece != null && piece.Color == color)
 				{
 					result.Add(new Position(i,j));
 				}
@@ -168,7 +176,7 @@ public class GameController
 	
 	public void ChangeTurn()
 	{
-		
+		_currentTurn = _currentTurn == 0 ? 1 : 0;
 	}
 	
 	public bool IsCheck()
