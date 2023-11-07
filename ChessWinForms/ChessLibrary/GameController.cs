@@ -15,6 +15,7 @@ public class GameController
 	private bool _isCheck;
 	public bool isSelect;
 	public Position selectedPos;
+	private List<BasePiece> _capturedPiece = new();
 	
 	public GameController()
 	{
@@ -31,16 +32,16 @@ public class GameController
 
 	public void InitBoard()
 	{
-        // TODO : init piece
-        // Init all board position
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                _board.Add(new Position(i, j), default);
-            }
-        }
-    }
+		// TODO : init piece
+		// Init all board position
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 8; j++)
+			{
+				_board.Add(new Position(i, j), default);
+			}
+		}
+	}
 	public void InitPiece(Enum.Color color)
 	{
 		int sidePawn = color == Enum.Color.White ? 1 : 6;
@@ -85,57 +86,40 @@ public class GameController
 		isSelect = true;
 	
 	}
+	
+	public void UnSelect()
+	{
+		selectedPos = null;
+		isSelect = false;
+	}
 	public void MovePiece(Position pos)
 	{
-        var posTo = GetPos(pos);
-        var posFrom = GetPos(selectedPos);
+		var posTo = GetPos(pos);
+		var posFrom = GetPos(selectedPos);
+		
+		BasePiece piece = GetPiece(posTo);
+		if (piece != null && piece.Color != GetPiece(posFrom).Color)
+		{
+			CapturePiece(piece);
+		}
 
-        _board[posTo] = _board[posFrom];
+		_board[posTo] = _board[posFrom];
 		_board[posFrom] = null;
 		isSelect = false;
 
-        CheckPawnPromotion(_board[posTo], posTo);
-    }
+		CheckPawnPromotion(_board[posTo], posTo);
+	}
 	
 	public void MovePiece(int x, int y)
 	{
 		var posTo = GetPos(x, y);
 		var posFrom = GetPos(selectedPos);
 
-        _board[posTo] = _board[GetPos(posFrom)];
+		_board[posTo] = _board[GetPos(posFrom)];
 		_board[posFrom] = null;
 		isSelect = false;
 
-        CheckPawnPromotion(_board[posTo], posTo);
-    }
-	
-	public List<Position> GetLegalMove(Position position)
-	{
-		List<Position> result = new();
-		BasePiece piece = GetPiece(position);
-
-        result = piece.GetAvailableMoves(position, this);
-
-        return result;
-	}
-	public List<Position> GetMoveablePiecePos(Enum.Color color)
-	{
-		List<Position> result = new();
-
-		for(int i=0; i<8; i++)
-		{
-			for(int j=0; j<8; j++)
-			{
-				BasePiece piece = GetPiece(i, j);
-
-                if (piece != null && piece.Color == color)
-				{
-					result.Add(new Position(i,j));
-				}
-			}
-		}
-
-		return result;
+		CheckPawnPromotion(_board[posTo], posTo);
 	}
 	
 	public bool MovePiece(Position from, Position to)
@@ -152,6 +136,35 @@ public class GameController
 
 		return true;
 	}
+	
+	public List<Position> GetLegalMove(Position position)
+	{
+		List<Position> result = new();
+		BasePiece piece = GetPiece(position);
+
+		result = piece.GetAvailableMoves(position, this);
+
+		return result;
+	}
+	public List<Position> GetMoveablePiecePos(Enum.Color color)
+	{
+		List<Position> result = new();
+
+		for(int i=0; i<8; i++)
+		{
+			for(int j=0; j<8; j++)
+			{
+				BasePiece piece = GetPiece(i, j);
+
+				if (piece != null && piece.Color == color)
+				{
+					result.Add(new Position(i,j));
+				}
+			}
+		}
+
+		return result;
+	}
 
 	public void CheckPawnPromotion(BasePiece piece, Position position)
 	{
@@ -165,13 +178,18 @@ public class GameController
 		
 		if (piece.Color == Enum.Color.Black && position.X == 0)
 		{
-            _board[GetPos(position)] = new Rook(piece, piece.Color);
-        }
+			_board[GetPos(position)] = new Rook(piece, piece.Color);
+		}
 	}
 	
-	public void CapturePiece(BasePiece piece)
+	private void CapturePiece(BasePiece piece)
 	{
-		
+		_capturedPiece.Add(piece);
+	}
+	
+	public List<BasePiece> GetCapturedPiece()
+	{
+		return _capturedPiece;
 	}
 	
 	public void ChangeTurn()
