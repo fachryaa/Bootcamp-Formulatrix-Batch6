@@ -5,8 +5,8 @@ public class FileHandlingTest
 	public static void Run()
 	{
 		// string escape using @
-		string fileName = "file.txt";
-		string path = $@".\File Handling\FileTest\{fileName}";
+		int fileName = 1;
+		string path = $@".\File Handling\FileTest\text{fileName}.txt";
 		try
 		{
 			using (FileStream fs = new FileStream(path, FileMode.CreateNew, FileAccess.ReadWrite))
@@ -14,11 +14,16 @@ public class FileHandlingTest
 				
 			}
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
-			Console.WriteLine($"{e}");
+			fileName++;
+			path = $@".\File Handling\FileTest\text{fileName}.txt";
+			using (FileStream fs = new FileStream(path, FileMode.CreateNew, FileAccess.ReadWrite))
+			{
+				
+			}
 			
-			throw;
+			Console.WriteLine($"{fileName} created");
 		}
 	}
 }
