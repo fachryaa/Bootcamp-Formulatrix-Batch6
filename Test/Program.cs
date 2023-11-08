@@ -4,17 +4,18 @@ class Program
 {
 	public static void Main()
 	{
-		Dictionary<Position, Piece> board = new();
-		board.Add(new Position(0, 0), new Piece("test"));
+		List<int> a = new List<int>(){1,2,3};
 		
-		// print (0,0) piece name
-		Position x = board.FirstOrDefault(x => x.Key.X == 0 && x.Key.Y == 0).Key;
-		Console.WriteLine(board[x].Name);
+		List<int> b = new List<int>(){1,2,3};
 		
-		var y = new Position(0, 0);
-		var z = new Position(0, 0);
+		List<int> c = new List<int>(){1,2,3};
 		
-		Console.WriteLine(y.Id);
+		List<int> result = new();
+		result = result.Concat(a).ToList();
+		result = result.Concat(b).ToList();
+		
+		Console.WriteLine($"{result.Count}");
+		
 	}
 }
 
