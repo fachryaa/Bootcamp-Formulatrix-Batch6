@@ -295,15 +295,11 @@
             // 
             // button9
             // 
-            button9.BackColor = Color.White;
-            button9.BackgroundImage = Properties.Resources._1280px_HD_transparent_picture;
-            button9.BackgroundImageLayout = ImageLayout.Center;
-            button9.ForeColor = Color.Transparent;
             button9.Location = new Point(332, 464);
             button9.Name = "button9";
             button9.Size = new Size(50, 50);
             button9.TabIndex = 8;
-            button9.UseVisualStyleBackColor = false;
+            button9.UseVisualStyleBackColor = true;
             button9.Click += ButtonClick;
             // 
             // button17

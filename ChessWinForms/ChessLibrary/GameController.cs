@@ -89,6 +89,19 @@ public class GameController
 	
 	public void UnSelect()
 	{
+		BasePiece selectedPiece = GetPiece(selectedPos);
+		if (selectedPiece.Type == PieceType.Pawn)
+		{
+			Pawn pawn = (Pawn) selectedPiece;
+			if (pawn.Color == Enum.Color.White && selectedPos.X == 1)
+			{
+				pawn.IsFirstMove = true;
+			}
+			if (pawn.Color == Enum.Color.Black && selectedPos.X == 6)
+			{
+				pawn.IsFirstMove = true;
+			}
+		}
 		selectedPos = null;
 		isSelect = false;
 	}
@@ -209,21 +222,21 @@ public class GameController
 
 		return result;
 	}
-	public BasePiece GetPiece(Position pos)
+	public BasePiece? GetPiece(Position pos)
 	{
 		// Find piece by position
 		BasePiece result = _board.FirstOrDefault(dict => dict.Key.X == pos.X && dict.Key.Y == pos.Y).Value;
 
 		return result;
 	}
-	public Position GetPos(int x, int y)
+	public Position? GetPos(int x, int y)
 	{
 		// Find piece by position
 		Position result = _board.FirstOrDefault(dict => dict.Key.X == x && dict.Key.Y == y).Key;
 
 		return result;
 	}
-	public Position GetPos(Position pos)
+	public Position? GetPos(Position pos)
 	{
 		// Find piece by position
 		Position result = _board.FirstOrDefault(dict => dict.Key.X == pos.X && dict.Key.Y == pos.Y).Key;

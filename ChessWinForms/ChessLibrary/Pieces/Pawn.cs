@@ -5,11 +5,11 @@ namespace ChessLibrary.Pieces;
 
 public class Pawn : BasePiece
 {
-	private bool _isFirstMove;
+	public bool IsFirstMove { get ; set; }
 	
 	public Pawn(Enum.Color color) : base(Enum.PieceType.Pawn, color)
 	{
-		_isFirstMove = true;
+		IsFirstMove = true;
 	}
 
 	public override List<Position> GetAvailableMoves(Position position, GameController game)
@@ -25,16 +25,19 @@ public class Pawn : BasePiece
 				result.Add(pos1);
 			}
 
-			if (_isFirstMove)
+			if (IsFirstMove)
 			{
-				Position pos2 = position.X < 7 ? new Position(position.X + 2, position.Y) : default;
-				BasePiece frontPos2 = game.GetPiece(pos1);
-				if (pos2 != null && frontPos2 == null)
+				Position? pos2 = position.X < 7 ? new Position(position.X + 2, position.Y) : default;
+				if (game.GetPiece(pos2) == null)
 				{
-					result.Add(pos2);
+					BasePiece frontPos2 = game.GetPiece(pos1);
+					if (pos2 != null && frontPos2 == null)
+					{
+						result.Add(pos2);
+					}
 				}
 
-				_isFirstMove = false;
+				IsFirstMove = false;
 			}
 
 			// add attack moves positions
@@ -81,16 +84,19 @@ public class Pawn : BasePiece
 				result.Add(pos1);
 			}
 
-			if (_isFirstMove)
+			if (IsFirstMove)
 			{
 				Position pos2 = position.X > 0 ? new Position(position.X - 2, position.Y) : default;
-				BasePiece frontPos2 = game.GetPiece(pos1);
-				if (pos2 != null && frontPos2 == null)
+				if (game.GetPiece(pos2) == null)
 				{
-					result.Add(pos2);
+					BasePiece frontPos2 = game.GetPiece(pos1);
+					if (pos2 != null && frontPos2 == null)
+					{
+						result.Add(pos2);
+					}
 				}
-
-				_isFirstMove = false;
+				
+				IsFirstMove = false;
 			}
 
 			if (position.Y == 0)
@@ -131,5 +137,6 @@ public class Pawn : BasePiece
 		
 		return result;
 	}
+	
 
 }
