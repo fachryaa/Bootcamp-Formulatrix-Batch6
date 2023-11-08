@@ -210,6 +210,37 @@ public class GameController
 		_currentTurn = _currentTurn == 0 ? 1 : 0;
 	}
 	
+	public List<Position> GetPieceAttackArea(Position position)
+	{		
+		BasePiece piece = GetPiece(position);
+		List<Position> result = piece.GetAvailableMoves(position, this);
+		
+		return result;
+	}
+	
+	public List<Position> GetAllAttackArea(Enum.Color color)
+	{
+		List<Position> result = new();
+				
+		foreach (var dict in _board)
+		{
+			if (dict.Value.Color == color)
+			{
+				var x = GetPieceAttackArea(dict.Key);
+				result = result.Concat(x).ToList();
+			}
+		}
+		
+		return result;
+	}
+	
+	public bool IsKingSafe()
+	{
+		bool result = true;
+		
+		
+		return result;
+	}
 	public bool IsCheck()
 	{
 		return _isCheck;
