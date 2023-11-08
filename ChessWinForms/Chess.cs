@@ -212,6 +212,7 @@ namespace ChessWinForms
 				List<Position> forEnables = game.GetLegalMove(position);
 				forEnables.Add(position);
 				SetEnabledButtons(forEnables);
+				
 			}
 
 			else

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Security.Cryptography.X509Certificates;
 using ChessLibrary.Enum;
 using ChessLibrary.Pieces;
 using ChessLibrary.Players;
@@ -135,27 +135,56 @@ public class GameController
 		CheckPawnPromotion(_board[posTo], posTo);
 	}
 	
-	public bool MovePiece(Position from, Position to)
+	public bool MovePiece(Position from, Position to, bool simulate=false)
 	{
 		var posFrom = GetPos(from.X, from.Y);
 		var posTo = GetPos(to.X, to.Y);
 		
 		_board[posTo] = _board[posFrom];
-		_board[posFrom] = default;
+		_board[posFrom] = null;
 
-		isSelect = false;
+		if (!simulate)
+		{
+			isSelect = false;
 
-		CheckPawnPromotion(_board[posTo], posTo);
+			CheckPawnPromotion(_board[posTo], posTo);
+		}
 
 		return true;
 	}
 	
+	public bool IsPiecePinned(Position piecePos, Position to)
+	{
+		bool result = false;
+		BasePiece piece = GetPiece(piecePos);
+		
+		// temp to keep piece
+		BasePiece tempPiece = GetPiece(to);
+		Position tempPos = GetPos(to);
+		
+		// move piece
+		MovePiece(piecePos, to, simulate:true);
+		
+		// cek if king is safe
+		Enum.Color color = piece.Color;
+		result = !IsKingSafe(color);
+		
+		// rewind
+		MovePiece(to, piecePos, simulate:true);
+		if (tempPiece != null)
+		{
+			_board[tempPos] = tempPiece;
+		}
+		
+		return result;
+	}
 	public List<Position> GetLegalMove(Position position)
 	{
-		List<Position> result = new();
 		BasePiece piece = GetPiece(position);
-
-		result = piece.GetAvailableMoves(position, this);
+		
+		List<Position> result = piece.GetAvailableMoves(position, this);
+		
+		result.RemoveAll(pos => IsPiecePinned(position, pos));
 
 		return result;
 	}
@@ -208,6 +237,15 @@ public class GameController
 	public void ChangeTurn()
 	{
 		_currentTurn = _currentTurn == 0 ? 1 : 0;
+		
+		if (IsKingSafe(GetCurrentPlayer()))
+		{
+			_isCheck = true;
+		}
+		else
+		{
+			_isCheck = false;
+		}
 	}
 	
 	public List<Position> GetPieceAttackArea(Position position)
@@ -221,12 +259,23 @@ public class GameController
 	public List<Position> GetAllAttackArea(Enum.Color color)
 	{
 		List<Position> result = new();
-				
+		
 		foreach (var dict in _board)
 		{
+			if (dict.Value == null) continue;
 			if (dict.Value.Color == color)
 			{
-				var x = GetPieceAttackArea(dict.Key);
+				List<Position> x = new();
+				if (dict.Value.Type == PieceType.Pawn)
+				{
+					Pawn pawn = (Pawn) dict.Value;
+					x = pawn.GetAttackMoves(dict.Key, this, false);
+				}
+				else
+				{
+					x = GetPieceAttackArea(dict.Key);
+				}
+				
 				result = result.Concat(x).ToList();
 			}
 		}
@@ -234,10 +283,37 @@ public class GameController
 		return result;
 	}
 	
-	public bool IsKingSafe()
+	private Position GetKingPos(Enum.Color color)
+	{
+		foreach (var piece in _board)
+		{
+			if (piece.Value == null) continue;
+			if (piece.Value.Color == color & piece.Value.Type == Enum.PieceType.King)
+			{
+				return piece.Key;
+			}
+		}
+		return null;
+	}
+	
+	public bool IsKingSafe(Enum.Color color)
 	{
 		bool result = true;
 		
+		Position kingPos = GetKingPos(color);
+		
+		Enum.Color enemyColor = color == Enum.Color.White ? Enum.Color.Black : Enum.Color.White;
+		
+		List<Position> enemyAttackArea = GetAllAttackArea(enemyColor);
+		
+		// check if king in attack area
+		foreach (var pos in enemyAttackArea)
+		{
+			if (pos.Equals(kingPos))
+			{
+				return false;
+			}
+		}
 		
 		return result;
 	}
@@ -295,5 +371,10 @@ public class Position
 	{
 		X = x;
 		Y = y;
+	}
+	
+	public bool Equals(Position pos)
+	{
+		return this.X == pos.X && this.Y == pos.Y;
 	}
 }
