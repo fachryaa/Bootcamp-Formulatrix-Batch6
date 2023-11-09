@@ -118,43 +118,52 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Chess_nlt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Chess_nlt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Chess_klt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Chess_klt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Chess_blt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Chess_blt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Chess_plt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Chess_plt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Chess_rlt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Chess_rlt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Chess_qlt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Chess_qlt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="1280px-HD_transparent_picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1280px-HD_transparent_picture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Chess_qdt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Chess_qdt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Chess_bdt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Chess_bdt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Chess_rdt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Chess_rdt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Chess_bdt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chess_bdt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Chess_nlt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chess_nlt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Chess_kdt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Chess_kdt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Chess_klt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chess_klt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1280px-HD_transparent_picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1280px-HD_transparent_picture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Chess_pdt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chess_pdt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Chess_qlt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chess_qlt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Chess_ndt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Chess_ndt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Chess_pdt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Chess_pdt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Chess_plt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chess_plt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Chess_qdt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chess_qdt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Chess_blt45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Chess_blt45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dot (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dot (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dot (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dot (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

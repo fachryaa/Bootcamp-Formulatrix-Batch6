@@ -360,6 +360,11 @@ public class GameController
 	{
 		return new List<Position>();
 	}
+
+	public void ResetGame()
+	{
+		
+	}
 }
 
 public class Position
