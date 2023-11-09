@@ -12,9 +12,9 @@ public class GameController
 	private Enum.Color[] _players = new Enum.Color[2];
 	private int _currentTurn;
 	private Dictionary<Position, BasePiece> _board = new();
-	private bool _isCheck;
-	public bool isSelect;
-	public Position selectedPos;
+	public bool IsCheck { get; private set; }
+	public bool IsSelect { get; private set; }
+	public Position SelectedPos { get; private set; }
 	private List<BasePiece> _capturedPiece = new();
 	
 	public GameController()
@@ -23,6 +23,9 @@ public class GameController
 		_players[1] = Enum.Color.Black;
 
 		_currentTurn = 0;
+		
+		IsCheck = false;
+		IsSelect = false;
 
 		InitBoard();
 
@@ -76,39 +79,39 @@ public class GameController
 	public void SelectPiece(Position pos)
 	{
 		// TODO : select piece
-		selectedPos = pos;
-		isSelect = true;
+		SelectedPos = pos;
+		IsSelect = true;
 	}
 	public void SelectPiece(int x, int y)
 	{
 		// TODO : select piece
-		selectedPos = new Position(x,y);
-		isSelect = true;
+		SelectedPos = new Position(x,y);
+		IsSelect = true;
 	
 	}
 	
 	public void UnSelect()
 	{
-		BasePiece selectedPiece = GetPiece(selectedPos);
+		BasePiece selectedPiece = GetPiece(SelectedPos);
 		if (selectedPiece.Type == PieceType.Pawn)
 		{
 			Pawn pawn = (Pawn) selectedPiece;
-			if (pawn.Color == Enum.Color.White && selectedPos.X == 1)
+			if (pawn.Color == Enum.Color.White && SelectedPos.X == 1)
 			{
 				pawn.IsFirstMove = true;
 			}
-			if (pawn.Color == Enum.Color.Black && selectedPos.X == 6)
+			if (pawn.Color == Enum.Color.Black && SelectedPos.X == 6)
 			{
 				pawn.IsFirstMove = true;
 			}
 		}
-		selectedPos = null;
-		isSelect = false;
+		SelectedPos = null;
+		IsSelect = false;
 	}
 	public void MovePiece(Position pos)
 	{
 		var posTo = GetPos(pos);
-		var posFrom = GetPos(selectedPos);
+		var posFrom = GetPos(SelectedPos);
 		
 		BasePiece piece = GetPiece(posTo);
 		if (piece != null && piece.Color != GetPiece(posFrom).Color)
@@ -118,7 +121,7 @@ public class GameController
 
 		_board[posTo] = _board[posFrom];
 		_board[posFrom] = null;
-		isSelect = false;
+		IsSelect = false;
 
 		CheckPawnPromotion(_board[posTo], posTo);
 	}
@@ -126,11 +129,11 @@ public class GameController
 	public void MovePiece(int x, int y)
 	{
 		var posTo = GetPos(x, y);
-		var posFrom = GetPos(selectedPos);
+		var posFrom = GetPos(SelectedPos);
 
 		_board[posTo] = _board[GetPos(posFrom)];
 		_board[posFrom] = null;
-		isSelect = false;
+		IsSelect = false;
 
 		CheckPawnPromotion(_board[posTo], posTo);
 	}
@@ -145,7 +148,7 @@ public class GameController
 
 		if (!simulate)
 		{
-			isSelect = false;
+			IsSelect = false;
 
 			CheckPawnPromotion(_board[posTo], posTo);
 		}
@@ -238,16 +241,8 @@ public class GameController
 	{
 		_currentTurn = _currentTurn == 0 ? 1 : 0;
 		
-		if (IsKingSafe(GetCurrentPlayer()))
-		{
-			_isCheck = true;
-		}
-		else
-		{
-			_isCheck = false;
-		}
-	}
-	
+		IsCheck = !IsKingSafe(GetCurrentPlayer());
+	}	
 	public List<Position> GetPieceAttackArea(Position position)
 	{		
 		BasePiece piece = GetPiece(position);
@@ -317,9 +312,20 @@ public class GameController
 		
 		return result;
 	}
-	public bool IsCheck()
+	
+	public bool IsCheckMate()
 	{
-		return _isCheck;
+		if (!IsCheck) return false;
+		
+		List<Position> moveablePiece = GetMoveablePiecePos(_players[_currentTurn]);
+		
+		foreach (Position piece in moveablePiece)
+		{
+			List<Position> legalMove = GetLegalMove(piece);
+			if (legalMove.Count > 0) return false;
+		}
+		
+		return true;
 	}
 	
 	public BasePiece GetPiece(int x, int y)
@@ -364,9 +370,9 @@ public class GameController
 	public void ResetGame()
 	{
 		_currentTurn = 0;
-		selectedPos = null;
+		SelectedPos = null;
 		_capturedPiece = null;
-		_isCheck = false;
+		IsCheck = false;
 
 		// InitBoard();
 
