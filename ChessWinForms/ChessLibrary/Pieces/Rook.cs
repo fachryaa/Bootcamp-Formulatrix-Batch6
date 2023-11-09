@@ -5,15 +5,15 @@ namespace ChessLibrary.Pieces;
 
 public class Rook : BasePiece
 {
-	
+	public bool IsFirstMove { get; set; }
 	public Rook(Enum.Color color) : base(Enum.PieceType.Rook, color)
 	{
-		
+		IsFirstMove = true;
 	}
 	
 	public Rook(BasePiece promoted, Enum.Color color) : base(promoted, Enum.PieceType.Rook, color)
 	{
-		
+		IsFirstMove = true;
 	}
 
 

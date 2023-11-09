@@ -105,6 +105,16 @@ public class GameController
 				pawn.IsFirstMove = true;
 			}
 		}
+		else if(selectedPiece.Type == PieceType.King)
+		{
+			King king = (King) selectedPiece;
+			if(king.IsFirstMove) king.IsFirstMove = true;
+		}
+		else if(selectedPiece.Type == PieceType.Rook)
+		{
+			Rook rook = (Rook) selectedPiece;
+			if(rook.IsFirstMove)rook.IsFirstMove = true;
+		}
 		SelectedPos = null;
 		IsSelect = false;
 	}
@@ -118,6 +128,23 @@ public class GameController
 		{
 			CapturePiece(piece);
 		}
+		
+		// cek king and rook
+		BasePiece myPiece = GetPiece(posFrom);
+		if (myPiece.Type == PieceType.King)
+		{
+			King king = (King)myPiece;
+			king.IsFirstMove = false;
+			
+			// cek if castle
+			if (posFrom.Y - posTo.Y == 2) king.CastleMove(this, isLeft:true);
+			else if (posTo.Y - posFrom.Y == 2) king.CastleMove(this, isLeft:false);
+		}
+		else if (myPiece.Type == PieceType.Rook)
+		{
+			Rook rook = (Rook)myPiece;
+			rook.IsFirstMove = false;
+		}
 
 		_board[posTo] = _board[posFrom];
 		_board[posFrom] = null;
@@ -126,18 +153,10 @@ public class GameController
 		CheckPawnPromotion(_board[posTo], posTo);
 	}
 	
-	public void MovePiece(int x, int y)
+	public bool IsUnSelect(Position from, Position to)
 	{
-		var posTo = GetPos(x, y);
-		var posFrom = GetPos(SelectedPos);
-
-		_board[posTo] = _board[GetPos(posFrom)];
-		_board[posFrom] = null;
-		IsSelect = false;
-
-		CheckPawnPromotion(_board[posTo], posTo);
+		return (from.X == to.X) && (from.Y == to.Y);
 	}
-	
 	public bool MovePiece(Position from, Position to, bool simulate=false)
 	{
 		var posFrom = GetPos(from.X, from.Y);
@@ -151,6 +170,14 @@ public class GameController
 			IsSelect = false;
 
 			CheckPawnPromotion(_board[posTo], posTo);
+			
+			// BasePiece myPiece = GetPiece(posFrom);
+			// // cek if king
+			// if (myPiece.Type == PieceType.King)
+			// {
+			// 	King king = (King)myPiece;
+			// 	king.IsFirstMove = false;
+			// }
 		}
 
 		return true;
@@ -278,7 +305,7 @@ public class GameController
 		return result;
 	}
 	
-	private Position GetKingPos(Enum.Color color)
+	public Position GetKingPos(Enum.Color color)
 	{
 		foreach (var piece in _board)
 		{
@@ -356,6 +383,14 @@ public class GameController
 
 		return result;
 	
+	}
+	
+	public Position? GetPosById(int id)
+	{
+		// Find piece by position
+		Position result = _board.FirstOrDefault(dict => dict.Value != null && dict.Value.Id == id).Key;
+
+		return result;
 	}
 	public Dictionary<Position, BasePiece> GetBoard()
 	{

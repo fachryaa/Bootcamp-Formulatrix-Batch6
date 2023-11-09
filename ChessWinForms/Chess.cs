@@ -338,13 +338,16 @@ namespace ChessWinForms
 		{
 			if (game.IsCheck)
 			{
-				statusLabel.Text = "Check";
-				statusLabel.BackColor = Color.Orange;
-			}
-			else if(game.IsCheckMate())
-			{
-				statusLabel.Text = "Checkmate";
-				statusLabel.BackColor = Color.Red;
+				if (game.IsCheckMate())
+				{
+					statusLabel.Text = "Checkmate";
+					statusLabel.BackColor = Color.Red;
+				}
+				else
+				{
+					statusLabel.Text = "Check";
+					statusLabel.BackColor = Color.Orange;
+				}
 			}
 			else
 			{
@@ -372,7 +375,7 @@ namespace ChessWinForms
 			else
 			{
 				// if Unselect piece
-				if (game.SelectedPos == GetPosByButton(button))
+				if (game.IsUnSelect(game.SelectedPos, GetPosByButton(button)))
 				{
 					game.UnSelect();
 					List<Position> moveablePiece = game.GetMoveablePiecePos(game.GetCurrentPlayer());
