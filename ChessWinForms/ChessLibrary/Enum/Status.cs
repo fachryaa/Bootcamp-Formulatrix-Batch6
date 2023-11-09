@@ -1,7 +1,9 @@
 namespace ChessLibrary.Enum;
 
-public enum WinningCondition
+public enum Status
 {
+	Playing,
+	Check,
 	Checkmate,
 	Stalemate,
 	InsufficientMaterial,

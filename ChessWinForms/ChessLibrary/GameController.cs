@@ -15,7 +15,7 @@ public class GameController
 	public bool IsCheck { get; private set; }
 	public bool IsSelect { get; private set; }
 	public Position SelectedPos { get; private set; }
-	private List<BasePiece> _capturedPiece = new();
+	public Status Status { get; private set; }
 	
 	public GameController()
 	{
@@ -26,6 +26,8 @@ public class GameController
 		
 		IsCheck = false;
 		IsSelect = false;
+		
+		Status = Status.Playing;
 
 		InitBoard();
 
@@ -122,13 +124,7 @@ public class GameController
 	{
 		var posTo = GetPos(pos);
 		var posFrom = GetPos(SelectedPos);
-		
-		BasePiece piece = GetPiece(posTo);
-		if (piece != null && piece.Color != GetPiece(posFrom).Color)
-		{
-			CapturePiece(piece);
-		}
-		
+				
 		// cek king and rook
 		BasePiece myPiece = GetPiece(posFrom);
 		if (myPiece.Type == PieceType.King)
@@ -149,8 +145,6 @@ public class GameController
 		_board[posTo] = _board[posFrom];
 		_board[posFrom] = null;
 		IsSelect = false;
-
-		CheckPawnPromotion(_board[posTo], posTo);
 	}
 	
 	public bool IsUnSelect(Position from, Position to)
@@ -168,16 +162,6 @@ public class GameController
 		if (!simulate)
 		{
 			IsSelect = false;
-
-			CheckPawnPromotion(_board[posTo], posTo);
-			
-			// BasePiece myPiece = GetPiece(posFrom);
-			// // cek if king
-			// if (myPiece.Type == PieceType.King)
-			// {
-			// 	King king = (King)myPiece;
-			// 	king.IsFirstMove = false;
-			// }
 		}
 
 		return true;
@@ -237,38 +221,46 @@ public class GameController
 
 		return result;
 	}
-
-	public void CheckPawnPromotion(BasePiece piece, Position position)
+	
+	public bool IsPawnGotPromotion(Position position)
 	{
-		if (piece.Type != PieceType.Pawn) return;
-
-		if (piece.Color == Enum.Color.White && position.X == 7)
+		var piece = GetPiece(position);
+		if (piece == null) return false;
+		
+		if (piece.Type == PieceType.Pawn)
 		{
-			_board[GetPos(position)] = new Rook(piece, piece.Color);
-			
+			if (piece.Color == Enum.Color.White && position.X == 7) return true;
+			else if (piece.Color == Enum.Color.Black && position.X == 0) return true;
 		}
 		
-		if (piece.Color == Enum.Color.Black && position.X == 0)
+		return false;
+	}
+
+	public void PawnPromotion(Position position, BasePiece promotedPiece)
+	{
+		var piece = GetPiece(position);
+		
+		if (piece.Type != PieceType.Pawn) return;
+		
+		if (IsPawnGotPromotion(position))
 		{
-			_board[GetPos(position)] = new Rook(piece, piece.Color);
+			_board[GetPos(position)] = promotedPiece;
 		}
 	}
-	
-	private void CapturePiece(BasePiece piece)
-	{
-		_capturedPiece.Add(piece);
-	}
-	
-	public List<BasePiece> GetCapturedPiece()
-	{
-		return _capturedPiece;
-	}
+
 	
 	public void ChangeTurn()
 	{
 		_currentTurn = _currentTurn == 0 ? 1 : 0;
 		
 		IsCheck = !IsKingSafe(GetCurrentPlayer());
+		
+		// confirm
+		if (IsCheck) Status = Status.Check;
+		if (IsCheckMate()) Status = Status.Checkmate;
+		if (IsStalemate()) Status = Status.Stalemate;
+		else Status = Status.Playing;
+		
 	}	
 	public List<Position> GetPieceAttackArea(Position position)
 	{		
@@ -276,6 +268,19 @@ public class GameController
 		List<Position> result = piece.GetAvailableMoves(position, this);
 		
 		return result;
+	}
+	
+	private bool IsStalemate()
+	{
+		if (IsCheck) return false;
+		List<Position> moveablePos = GetMoveablePiecePos(GetCurrentPlayer());
+		foreach (var pos in moveablePos)
+		{
+			List<Position> legalPos = GetLegalMove(pos);
+			if (legalPos.Count > 0) return false;
+		}
+		
+		return true;
 	}
 	
 	public List<Position> GetAllAttackArea(Enum.Color color)
@@ -352,6 +357,7 @@ public class GameController
 			if (legalMove.Count > 0) return false;
 		}
 		
+		Status = Status.Checkmate;
 		return true;
 	}
 	
@@ -404,12 +410,14 @@ public class GameController
 
 	public void ResetGame()
 	{
+		IsSelect = false;
 		_currentTurn = 0;
 		SelectedPos = null;
-		_capturedPiece = null;
 		IsCheck = false;
+		Status = Status.Playing;
 
-		// InitBoard();
+		_board = new();
+		InitBoard();
 
 		InitPiece(_players[0]);
 		InitPiece(_players[1]);

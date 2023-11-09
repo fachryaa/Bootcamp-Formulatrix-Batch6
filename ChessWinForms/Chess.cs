@@ -9,8 +9,8 @@ namespace ChessWinForms
 
 		public readonly Dictionary<Position, Button> buttons = new();
 		public readonly Dictionary<Position, PictureBox> dots = new();
-		public PictureBox[] pieces = new PictureBox[33];
-		private Button previousButton = new Button();
+		private BasePiece choosed;
+		private Position choosedPos;
 		public Chess()
 		{
 			InitializeComponent();
@@ -319,7 +319,7 @@ namespace ChessWinForms
 			}
 
 		}
-		
+
 		private void ChangeBackColorPlayerLabel(ChessLibrary.Enum.Color color)
 		{
 			if (color == ChessLibrary.Enum.Color.White)
@@ -336,24 +336,36 @@ namespace ChessWinForms
 
 		private void ChangeStatus()
 		{
-			if (game.IsCheck)
+			string status = game.Status.ToString();
+			statusLabel.Text = status;
+			
+			if (game.Status == ChessLibrary.Enum.Status.Check) statusLabel.BackColor = Color.Orange;
+			else if (game.Status == ChessLibrary.Enum.Status.Checkmate) statusLabel.BackColor = Color.Red;
+			else if (game.Status == ChessLibrary.Enum.Status.Stalemate) statusLabel.BackColor = Color.Green;
+			else statusLabel.BackColor = default;
+		}
+		
+		private void SetChooseButton(bool visible)
+		{
+			ChessLibrary.Enum.Color color = game.GetCurrentPlayer();
+			if (color == ChessLibrary.Enum.Color.White)
 			{
-				if (game.IsCheckMate())
-				{
-					statusLabel.Text = "Checkmate";
-					statusLabel.BackColor = Color.Red;
-				}
-				else
-				{
-					statusLabel.Text = "Check";
-					statusLabel.BackColor = Color.Orange;
-				}
+				chooseRookButton.BackgroundImage = Properties.Resources.Chess_rlt45;
+				chooseKnightButton.BackgroundImage = Properties.Resources.Chess_nlt45;
+				chooseBishopButton.BackgroundImage = Properties.Resources.Chess_blt45;
+				chooseQueenButton.BackgroundImage = Properties.Resources.Chess_qlt45;
 			}
 			else
 			{
-				statusLabel.Text = "Playing";
-				statusLabel.BackColor = default;
+				chooseRookButton.BackgroundImage = Properties.Resources.Chess_rdt45;
+				chooseKnightButton.BackgroundImage = Properties.Resources.Chess_ndt45;
+				chooseBishopButton.BackgroundImage = Properties.Resources.Chess_bdt45;
+				chooseQueenButton.BackgroundImage = Properties.Resources.Chess_qdt45;
 			}
+			chooseRookButton.Visible = visible;
+			chooseKnightButton.Visible = visible;
+			chooseBishopButton.Visible = visible;
+			chooseQueenButton.Visible = visible;
 		}
 		private void ButtonClick(object sender, EventArgs e)
 		{
@@ -385,13 +397,23 @@ namespace ChessWinForms
 				}
 				game.MovePiece(GetPosByButton(button));
 
+				// Cek promotion pawn
+				if (game.IsPawnGotPromotion(GetPosByButton(button)))
+				{
+					choosedPos = GetPosByButton(button);
+					SetChooseButton(true);
+					return;
+				}
+				
+				SetChooseButton(false);
+				
 				SetEnabledButtons(new(), true);
 
 				game.ChangeTurn();
-				
+
 				// change turn label color
 				ChangeBackColorPlayerLabel(game.GetCurrentPlayer());
-				
+
 				// change status
 				ChangeStatus();
 
@@ -404,7 +426,68 @@ namespace ChessWinForms
 
 		private void ButtonReset(object sender, EventArgs e)
 		{
+			game.ResetGame();
+			
+			
+			List<Position> changeTurnPos = game.GetMoveablePiecePos(game.GetCurrentPlayer());
+			SetEnabledButtons(new(), true);
+			SetEnabledButtons(changeTurnPos);
+			
+			ChangeStatus();
+			
+			ChangeBackColorPlayerLabel(game.GetCurrentPlayer());
 
+			UpdateBoard();
+		}
+
+		private void ChooseRook(object sender, EventArgs e)
+		{
+			Choosing(ChessLibrary.Enum.PieceType.Rook, game.GetCurrentPlayer());
+		}
+
+		private void ChooseKnight(object sender, EventArgs e)
+		{
+			Choosing(ChessLibrary.Enum.PieceType.Knight, game.GetCurrentPlayer());
+			
+		}
+
+		private void ChooseBishop(object sender, EventArgs e)
+		{
+			Choosing(ChessLibrary.Enum.PieceType.Bishop, game.GetCurrentPlayer());
+
+		}
+
+		private void ChooseQueen(object sender, EventArgs e)
+		{
+			Choosing(ChessLibrary.Enum.PieceType.Queen, game.GetCurrentPlayer());
+
+		}
+		
+		private void Choosing(ChessLibrary.Enum.PieceType type, ChessLibrary.Enum.Color color)
+		{
+			if (type == ChessLibrary.Enum.PieceType.Rook) choosed = new Rook(color);
+			else if (type == ChessLibrary.Enum.PieceType.Knight) choosed = new Knight(color);
+			else if (type == ChessLibrary.Enum.PieceType.Bishop) choosed = new Bishop(color);
+			else if (type == ChessLibrary.Enum.PieceType.Queen) choosed = new Queen(color);
+
+			game.PawnPromotion(choosedPos, choosed);
+			
+			SetChooseButton(false);
+				
+			SetEnabledButtons(new(), true);
+
+			game.ChangeTurn();
+
+			// change turn label color
+			ChangeBackColorPlayerLabel(game.GetCurrentPlayer());
+
+			// change status
+			ChangeStatus();
+
+			List<Position> changeTurnPos = game.GetMoveablePiecePos(game.GetCurrentPlayer());
+			SetEnabledButtons(changeTurnPos);
+			
+			UpdateBoard();
 		}
 	}
 

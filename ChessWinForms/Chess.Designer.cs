@@ -162,10 +162,10 @@
             statusLabel = new Label();
             resetButton = new Button();
             label1 = new Label();
-            chooseWhiteRook = new Button();
-            chooseWhiteKnight = new Button();
-            ChooseWhiteBishop = new Button();
-            chooseWhiteQueen = new Button();
+            chooseRookButton = new Button();
+            chooseKnightButton = new Button();
+            chooseBishopButton = new Button();
+            chooseQueenButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dot57).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dot58).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dot59).BeginInit();
@@ -1547,45 +1547,49 @@
             label1.Text = "Choose :";
             label1.Visible = false;
             // 
-            // chooseWhiteRook
+            // chooseRookButton
             // 
-            chooseWhiteRook.BackgroundImage = Properties.Resources.Chess_rlt45;
-            chooseWhiteRook.Location = new Point(818, 221);
-            chooseWhiteRook.Name = "chooseWhiteRook";
-            chooseWhiteRook.Size = new Size(50, 50);
-            chooseWhiteRook.TabIndex = 230;
-            chooseWhiteRook.UseVisualStyleBackColor = true;
-            chooseWhiteRook.Visible = false;
+            chooseRookButton.BackgroundImage = Properties.Resources.Chess_rlt45;
+            chooseRookButton.Location = new Point(818, 221);
+            chooseRookButton.Name = "chooseRookButton";
+            chooseRookButton.Size = new Size(50, 50);
+            chooseRookButton.TabIndex = 230;
+            chooseRookButton.UseVisualStyleBackColor = true;
+            chooseRookButton.Visible = false;
+            chooseRookButton.Click += ChooseRook;
             // 
-            // chooseWhiteKnight
+            // chooseKnightButton
             // 
-            chooseWhiteKnight.BackgroundImage = Properties.Resources.Chess_nlt45;
-            chooseWhiteKnight.Location = new Point(874, 221);
-            chooseWhiteKnight.Name = "chooseWhiteKnight";
-            chooseWhiteKnight.Size = new Size(50, 50);
-            chooseWhiteKnight.TabIndex = 231;
-            chooseWhiteKnight.UseVisualStyleBackColor = true;
-            chooseWhiteKnight.Visible = false;
+            chooseKnightButton.BackgroundImage = Properties.Resources.Chess_nlt45;
+            chooseKnightButton.Location = new Point(874, 221);
+            chooseKnightButton.Name = "chooseKnightButton";
+            chooseKnightButton.Size = new Size(50, 50);
+            chooseKnightButton.TabIndex = 231;
+            chooseKnightButton.UseVisualStyleBackColor = true;
+            chooseKnightButton.Visible = false;
+            chooseKnightButton.Click += ChooseKnight;
             // 
-            // ChooseWhiteBishop
+            // chooseBishopButton
             // 
-            ChooseWhiteBishop.BackgroundImage = Properties.Resources.Chess_blt45;
-            ChooseWhiteBishop.Location = new Point(930, 221);
-            ChooseWhiteBishop.Name = "ChooseWhiteBishop";
-            ChooseWhiteBishop.Size = new Size(50, 50);
-            ChooseWhiteBishop.TabIndex = 232;
-            ChooseWhiteBishop.UseVisualStyleBackColor = true;
-            ChooseWhiteBishop.Visible = false;
+            chooseBishopButton.BackgroundImage = Properties.Resources.Chess_blt45;
+            chooseBishopButton.Location = new Point(930, 221);
+            chooseBishopButton.Name = "chooseBishopButton";
+            chooseBishopButton.Size = new Size(50, 50);
+            chooseBishopButton.TabIndex = 232;
+            chooseBishopButton.UseVisualStyleBackColor = true;
+            chooseBishopButton.Visible = false;
+            chooseBishopButton.Click += ChooseBishop;
             // 
-            // chooseWhiteQueen
+            // chooseQueenButton
             // 
-            chooseWhiteQueen.BackgroundImage = Properties.Resources.Chess_qlt45;
-            chooseWhiteQueen.Location = new Point(988, 221);
-            chooseWhiteQueen.Name = "chooseWhiteQueen";
-            chooseWhiteQueen.Size = new Size(50, 50);
-            chooseWhiteQueen.TabIndex = 233;
-            chooseWhiteQueen.UseVisualStyleBackColor = true;
-            chooseWhiteQueen.Visible = false;
+            chooseQueenButton.BackgroundImage = Properties.Resources.Chess_qlt45;
+            chooseQueenButton.Location = new Point(988, 221);
+            chooseQueenButton.Name = "chooseQueenButton";
+            chooseQueenButton.Size = new Size(50, 50);
+            chooseQueenButton.TabIndex = 233;
+            chooseQueenButton.UseVisualStyleBackColor = true;
+            chooseQueenButton.Visible = false;
+            chooseQueenButton.Click += ChooseQueen;
             // 
             // Chess
             // 
@@ -1593,10 +1597,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1105, 809);
-            Controls.Add(chooseWhiteQueen);
-            Controls.Add(ChooseWhiteBishop);
-            Controls.Add(chooseWhiteKnight);
-            Controls.Add(chooseWhiteRook);
+            Controls.Add(chooseQueenButton);
+            Controls.Add(chooseBishopButton);
+            Controls.Add(chooseKnightButton);
+            Controls.Add(chooseRookButton);
             Controls.Add(label1);
             Controls.Add(resetButton);
             Controls.Add(statusLabel);
@@ -1937,9 +1941,9 @@
         private Label statusLabel;
         private Button resetButton;
         private Label label1;
-        private Button chooseWhiteRook;
-        private Button chooseWhiteKnight;
-        private Button ChooseWhiteBishop;
-        private Button chooseWhiteQueen;
+        private Button chooseRookButton;
+        private Button chooseKnightButton;
+        private Button chooseBishopButton;
+        private Button chooseQueenButton;
     }
 }
