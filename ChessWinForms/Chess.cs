@@ -16,7 +16,6 @@ namespace ChessWinForms
 
             InitializeComponent();
             InitButtonsAndDots();
-            InitPictureBox();
 
             UpdateBoard();
             // TODO : selected piece, isSelect
@@ -182,42 +181,6 @@ namespace ChessWinForms
             }
         }
 
-        public void InitPictureBox()
-        {
-            pieces[1] = pawnWhite1;
-            pieces[2] = pawnWhite2;
-            pieces[3] = pawnWhite3;
-            pieces[4] = pawnWhite4;
-            pieces[5] = pawnWhite5;
-            pieces[6] = pawnWhite6;
-            pieces[7] = pawnWhite7;
-            pieces[8] = pawnWhite8;
-            pieces[9] = rookWhite1;
-            pieces[10] = rookWhite2;
-            pieces[11] = knightWhite1;
-            pieces[12] = knightWhite2;
-            pieces[13] = bishopWhite1;
-            pieces[14] = bishopWhite2;
-            pieces[15] = queenWhite;
-            pieces[16] = kingWhite;
-            pieces[17] = pawnBlack1;
-            pieces[18] = pawnBlack2;
-            pieces[19] = pawnBlack3;
-            pieces[20] = pawnBlack4;
-            pieces[21] = pawnBlack5;
-            pieces[22] = pawnBlack6;
-            pieces[23] = pawnBlack7;
-            pieces[24] = pawnBlack8;
-            pieces[25] = rookBlack1;
-            pieces[26] = rookBlack2;
-            pieces[27] = knightBlack1;
-            pieces[28] = knightBlack2;
-            pieces[29] = bishopBlack1;
-            pieces[30] = bishopBlack2;
-            pieces[31] = queenBlack;
-            pieces[32] = kingBlack;
-        }
-
         public Position GetPosByButton(Button button)
         {
             // TODO : get loc by button
@@ -256,20 +219,78 @@ namespace ChessWinForms
             return result;
         }
 
+        private Bitmap GetPieceImg(Position position)
+        {
+            var piece = game.GetPiece(position);
+            if (piece == null) return null;
+
+            Bitmap result = null;
+
+            if (piece.Color == ChessLibrary.Enum.Color.White)
+            {
+                if (piece.Type == ChessLibrary.Enum.PieceType.Pawn)
+                {
+                    result = Properties.Resources.Chess_plt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.Rook)
+                {
+                    result = Properties.Resources.Chess_rlt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.Knight)
+                {
+                    result = Properties.Resources.Chess_nlt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.Bishop)
+                {
+                    result = Properties.Resources.Chess_blt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.Queen)
+                {
+                    result = Properties.Resources.Chess_qlt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.King)
+                {
+                    result = Properties.Resources.Chess_klt45;
+                }
+            }
+            else if (piece.Color == ChessLibrary.Enum.Color.Black)
+            {
+                if (piece.Type == ChessLibrary.Enum.PieceType.Pawn)
+                {
+                    result = Properties.Resources.Chess_pdt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.Rook)
+                {
+                    result = Properties.Resources.Chess_rdt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.Knight)
+                {
+                    result = Properties.Resources.Chess_ndt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.Bishop)
+                {
+                    result = Properties.Resources.Chess_bdt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.Queen)
+                {
+                    result = Properties.Resources.Chess_qdt45;
+                }
+                else if (piece.Type == ChessLibrary.Enum.PieceType.King)
+                {
+                    result = Properties.Resources.Chess_kdt45;
+                }
+            }
+
+            return result;
+        }
+
         public void UpdateBoard()
         {
             // TODO : update board
             Dictionary<Position, BasePiece> board = game.GetBoard();
             foreach (var piece in board)
             {
-                if (piece.Value == null) continue;
-                pieces[piece.Value.Id].Location = buttons[GetPosXY(piece.Key)].Location;
-            }
-
-            List<BasePiece> toRemove = game.GetCapturedPiece();
-            foreach (BasePiece piece in toRemove)
-            {
-                pieces[piece.Id].Visible = false;
+                buttons[GetPosXY(piece.Key)].BackgroundImage = GetPieceImg(piece.Key);
             }
         }
 
@@ -343,9 +364,7 @@ namespace ChessWinForms
 
         private void ButtonReset(object sender, EventArgs e)
         {
-            game = new GameController();
 
-            UpdateBoard();
         }
     }
 

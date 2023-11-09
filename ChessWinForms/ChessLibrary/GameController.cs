@@ -363,7 +363,15 @@ public class GameController
 
 	public void ResetGame()
 	{
-		
+		_currentTurn = 0;
+		selectedPos = null;
+		_capturedPiece = null;
+		_isCheck = false;
+
+		// InitBoard();
+
+		InitPiece(_players[0]);
+		InitPiece(_players[1]);
 	}
 }
 
