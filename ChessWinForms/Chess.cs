@@ -317,7 +317,6 @@ namespace ChessWinForms
 					GetDotByPos(pos).Visible = true;
 				}
 			}
-
 		}
 
 		private void ChangeBackColorPlayerLabel(ChessLibrary.Enum.Color color)
@@ -339,9 +338,21 @@ namespace ChessWinForms
 			string status = game.Status.ToString();
 			statusLabel.Text = status;
 			
-			if (game.Status == ChessLibrary.Enum.Status.Check) statusLabel.BackColor = Color.Orange;
-			else if (game.Status == ChessLibrary.Enum.Status.Checkmate) statusLabel.BackColor = Color.Red;
-			else if (game.Status == ChessLibrary.Enum.Status.Stalemate) statusLabel.BackColor = Color.Green;
+			if (game.Status == ChessLibrary.Enum.Status.Check) 
+			{
+				statusLabel.BackColor = Color.Orange;
+			}
+			else if (game.Status == ChessLibrary.Enum.Status.Checkmate) 
+			{
+				string winner = game.Winner == ChessLibrary.Enum.Color.White ? "Player 1 Win" : "Player 2 Win";
+				statusLabel.Text += $" - {winner}";
+				statusLabel.BackColor = Color.Red;
+			}
+			else if (game.Status == ChessLibrary.Enum.Status.Stalemate) 
+			{
+				statusLabel.Text += " - Draw";
+				statusLabel.BackColor = Color.Green;
+			}
 			else statusLabel.BackColor = default;
 		}
 		

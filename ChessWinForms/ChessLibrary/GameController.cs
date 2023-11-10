@@ -16,6 +16,7 @@ public class GameController
 	public bool IsSelect { get; private set; }
 	public Position SelectedPos { get; private set; }
 	public Status Status { get; private set; }
+	public Enum.Color Winner { get; private set; }
 	
 	public GameController()
 	{
@@ -256,10 +257,18 @@ public class GameController
 		IsCheck = !IsKingSafe(GetCurrentPlayer());
 		
 		// confirm
+		Status = Status.Playing;
+		Winner = default;
 		if (IsCheck) Status = Status.Check;
-		if (IsCheckMate()) Status = Status.Checkmate;
-		if (IsStalemate()) Status = Status.Stalemate;
-		else Status = Status.Playing;
+		if (IsCheckMate())
+		{
+			Winner = GetCurrentPlayer() == Enum.Color.White ? Enum.Color.Black : Enum.Color.White;
+			Status = Status.Checkmate;
+		}
+		if (IsStalemate())
+		{
+			Status = Status.Stalemate;
+		}
 		
 	}	
 	public List<Position> GetPieceAttackArea(Position position)
