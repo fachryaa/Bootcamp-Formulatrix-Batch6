@@ -121,6 +121,42 @@ public class GameController
 		SelectedPos = null;
 		IsSelect = false;
 	}
+	
+	private bool IsEnPassantMove(Position posFrom, Position posTo)
+	{		
+		// if not attack
+		if (posFrom.Y == posTo.Y) return false;
+		
+		BasePiece enemy = GetPiece(posTo);
+		if (enemy != null) return false;
+				
+		BasePiece myPiece = GetPiece(posFrom);
+		Pawn pawn = (Pawn) myPiece;
+		Enum.Color colorPawn = pawn.Color;
+		
+		int dir = colorPawn == Enum.Color.White ? -1 : 1;
+		
+		BasePiece enemyPiece = GetPiece(posTo.X + (1*dir), posTo.Y);
+		if (enemyPiece.Type != PieceType.Pawn) return false;
+		Pawn enemyPawn = (Pawn) enemyPiece;
+		
+		if (enemyPawn.IsDoubleMove) return true;
+		
+		return false;
+	}
+	
+	private void DisableAllPawnDoubleMove(Enum.Color color)
+	{
+		foreach (var kvp in _board)
+		{
+			if (kvp.Value == null) continue;
+			if (kvp.Value.Type == PieceType.Pawn && kvp.Value.Color == color)
+			{
+				Pawn pawn = (Pawn) kvp.Value;
+				pawn.IsDoubleMove = false;
+			}
+		}
+	}
 	public void MovePiece(Position pos)
 	{
 		var posTo = GetPos(pos);
@@ -136,11 +172,43 @@ public class GameController
 			// cek if castle
 			if (posFrom.Y - posTo.Y == 2) king.CastleMove(this, isLeft:true);
 			else if (posTo.Y - posFrom.Y == 2) king.CastleMove(this, isLeft:false);
+			
+			// disable pawn double move
+			DisableAllPawnDoubleMove(GetCurrentPlayer());
 		}
 		else if (myPiece.Type == PieceType.Rook)
 		{
 			Rook rook = (Rook)myPiece;
 			rook.IsFirstMove = false;
+			
+			DisableAllPawnDoubleMove(GetCurrentPlayer());
+		}
+		else if (myPiece.Type == PieceType.Pawn)
+		{
+			// cek if pawn is double move
+			Pawn pawn = (Pawn)myPiece;
+			if (pawn.IsFirstMove && !pawn.IsDoubleMove && Math.Abs(posFrom.X - posTo.X) == 2)
+			{
+				pawn.IsDoubleMove = true;
+			}
+			else
+			{
+				DisableAllPawnDoubleMove(GetCurrentPlayer());
+			}
+			
+			// if attack en passant
+			if (IsEnPassantMove(posFrom, posTo))
+			{
+				int dir = pawn.Color == Enum.Color.White ? -1 : 1;
+				Position enemyPos = GetPos(posTo.X + (1*dir), posTo.Y);
+				_board[enemyPos] = null;
+			}
+			
+			pawn.IsFirstMove = false;
+		}
+		else 
+		{
+			DisableAllPawnDoubleMove(GetCurrentPlayer());
 		}
 
 		_board[posTo] = _board[posFrom];
@@ -240,6 +308,8 @@ public class GameController
 	public void PawnPromotion(Position position, BasePiece promotedPiece)
 	{
 		var piece = GetPiece(position);
+		
+		if (piece is null) return;
 		
 		if (piece.Type != PieceType.Pawn) return;
 		
@@ -463,8 +533,8 @@ public class GameController
 
 public class Position
 {
-	public int X;
-	public int Y;
+	public int X{ get; private set; }
+	public int Y{ get; private set; }
 
 	public Position(int x, int y)
 	{
@@ -476,4 +546,19 @@ public class Position
 	{
 		return this.X == pos.X && this.Y == pos.Y;
 	}
+
+	// TODO: change GetPos to this
+	// public override int GetHashCode()
+	// {
+	//     return (X | Y).GetHashCode();
+	// }
+	// public override bool Equals(object obj)
+	// {
+	//     if (obj == null || GetType() != obj.GetType())
+	//     {
+	//         return false;
+	//     }
+	//     Position other = (Position)obj;
+	//     return (X | Y) == (other.X | other.Y);
+	// }
 }

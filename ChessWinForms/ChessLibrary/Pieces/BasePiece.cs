@@ -15,6 +15,7 @@ public abstract class BasePiece
 		Type = type;
 		Color = color;
 	}
+
 	public BasePiece(BasePiece promoted, PieceType type, Enum.Color color)
 	{
 		Id = promoted.Id;
