@@ -53,7 +53,7 @@ public class Pawn : BasePiece
 		
 		return result;
 	}
-	public override List<Position> GetAvailableMoves(Position position, GameController game)
+	public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
 	{
 		List<Position> result = new();
 		int dir = Color == Enum.Color.White ? 1 : -1;

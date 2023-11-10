@@ -20,12 +20,28 @@ public class King : BasePiece
 		Position myPos = game.GetKingPos(Color);
 		
 		// cek left
-		int y = myPos.Y - 1;
+		int y = myPos.Y - 1;		
+		
 		while (y >= 0)
 		{
 			var piece = board[game.GetPos(myPos.X, y)];
 			if (piece == null) 
 			{
+				// cek if the pos is safe
+				if (y == myPos.Y-1)
+				{					
+					// simulate move piece
+					game.MovePiece(myPos, new(myPos.X, y), simulate:true);
+					// cek if king is safe
+					if (!game.IsKingSafe(Color))
+					{
+						// king not safe
+						// rewind
+						game.MovePiece(new(myPos.X, y), myPos, simulate:true);
+						break;
+					}
+					game.MovePiece(new(myPos.X, y), myPos, simulate:true);
+				}
 				y--;
 				continue;
 			}
@@ -50,6 +66,21 @@ public class King : BasePiece
 			var piece = board[game.GetPos(myPos.X, y)];
 			if (piece == null) 
 			{
+				// cek if the pos is safe
+				if (y == myPos.Y+1)
+				{					
+					// simulate move piece
+					game.MovePiece(myPos, new(myPos.X, y), simulate:true);
+					// cek if king is safe
+					if (!game.IsKingSafe(Color))
+					{
+						// king not safe
+						// rewind
+						game.MovePiece(new(myPos.X, y), myPos, simulate:true);
+						break;
+					}
+					game.MovePiece(new(myPos.X, y), myPos, simulate:true);
+				}
 				y++;
 				continue;
 			}
@@ -101,7 +132,7 @@ public class King : BasePiece
 		
 	} 
 
-	public override List<Position> GetAvailableMoves(Position position, GameController game)
+	public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
 	{
 		List<Position> result = new();
 		int x = position.X+1;
@@ -218,10 +249,13 @@ public class King : BasePiece
 		}
 		
 		// castle position
-		var castlePos = GetCastlePosition(game);
-		if (castlePos.Count != 0 && castlePos != null)
+		if (!forAttack)
 		{
-			result = result.Concat(castlePos).ToList();
+			var castlePos = GetCastlePosition(game);
+			if (castlePos.Count != 0 && castlePos != null)
+			{
+				result = result.Concat(castlePos).ToList();
+			}
 		}
 		
 		return result;

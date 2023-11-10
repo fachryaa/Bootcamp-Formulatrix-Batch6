@@ -18,7 +18,7 @@ public class Rook : BasePiece
 
 
 
-    public override List<Position> GetAvailableMoves(Position position, GameController game)
+    public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
     {
         List<Position> result = new List<Position>();
 

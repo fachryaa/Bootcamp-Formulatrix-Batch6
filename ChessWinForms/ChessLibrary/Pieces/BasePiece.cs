@@ -27,7 +27,7 @@ public abstract class BasePiece
 		
 	}
 	
-	public abstract List<Position> GetAvailableMoves(Position pos, GameController game);
+	public abstract List<Position> GetAvailableMoves(Position pos, GameController game, bool forAttack=false);
 	
 	public void Capture(GameController game)
 	{

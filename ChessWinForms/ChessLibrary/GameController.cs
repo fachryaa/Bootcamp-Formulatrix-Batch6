@@ -312,7 +312,11 @@ public class GameController
 					x = GetPieceAttackArea(dict.Key);
 				}
 				
-				result = result.Concat(x).ToList();
+				foreach (var pos in x)
+				{
+					result.Add(pos);
+				}
+				// result = result.Concat(x).ToList();
 			}
 		}
 		
@@ -373,39 +377,63 @@ public class GameController
 	public BasePiece GetPiece(int x, int y)
 	{
 		// Find piece by position
-		BasePiece result = _board.FirstOrDefault(dict => dict.Key.X == x && dict.Key.Y == y).Value;
+		foreach (var piece in _board)
+		{
+			if (piece.Key.Equals(new(x,y))) return piece.Value;
+		}
+		
+		return null;
+		// BasePiece result = _board.FirstOrDefault(dict => dict.Key.X == x && dict.Key.Y == y).Value;
 
-		return result;
 	}
 	public BasePiece? GetPiece(Position pos)
 	{
 		// Find piece by position
-		BasePiece result = _board.FirstOrDefault(dict => dict.Key.X == pos.X && dict.Key.Y == pos.Y).Value;
-
-		return result;
+		foreach (var piece in _board)
+		{
+			if (piece.Key.Equals(pos)) return piece.Value;
+		}
+		
+		return null;
+		// BasePiece result = _board.FirstOrDefault(dict => dict.Key.X == pos.X && dict.Key.Y == pos.Y).Value;
 	}
 	public Position? GetPos(int x, int y)
 	{
-		// Find piece by position
-		Position result = _board.FirstOrDefault(dict => dict.Key.X == x && dict.Key.Y == y).Key;
-
-		return result;
+		// Find pos by position
+		foreach (var piece in _board)
+		{
+			if (piece.Key.Equals(new(x,y))) return piece.Key;
+		}
+		// Position result = _board.FirstOrDefault(dict => dict.Key.X == x && dict.Key.Y == y).Key;
+		return null;
 	}
 	public Position? GetPos(Position pos)
 	{
 		// Find piece by position
-		Position result = _board.FirstOrDefault(dict => dict.Key.X == pos.X && dict.Key.Y == pos.Y).Key;
+		foreach (var piece in _board)
+		{
+			if (piece.Key.Equals(pos)) return piece.Key;
+		}
+		
+		return null;
+		// Position result = _board.FirstOrDefault(dict => dict.Key.X == pos.X && dict.Key.Y == pos.Y).Key;
 
-		return result;
+		// return result;
 	
 	}
 	
 	public Position? GetPosById(int id)
 	{
 		// Find piece by position
-		Position result = _board.FirstOrDefault(dict => dict.Value != null && dict.Value.Id == id).Key;
+		foreach (var piece in _board)
+		{
+			if (piece.Value.Id == id) return piece.Key;
+		}
+		
+		return null;
+		// Position result = _board.FirstOrDefault(dict => dict.Value != null && dict.Value.Id == id).Key;
 
-		return result;
+		// return result;
 	}
 	public Dictionary<Position, BasePiece> GetBoard()
 	{
