@@ -382,7 +382,6 @@ namespace ChessWinForms
 		{
 			Button button = (Button)sender;
 
-			// TODO : move piece
 			if (!game.IsSelect)
 			{
 				Position position = GetPosByButton(button);

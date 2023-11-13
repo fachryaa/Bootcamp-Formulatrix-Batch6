@@ -6,8 +6,8 @@ public enum Status
 	Check,
 	Checkmate,
 	Stalemate,
-	InsufficientMaterial,
-	ThreefoldRepetition,
-	Resignation,
-	Timeout,
+	InsufficientMaterial,	// not implemented
+	ThreefoldRepetition,	// not implemented
+	Resignation,			// not implemented
+	Timeout,				// not implemented
 }

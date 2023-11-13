@@ -9,6 +9,13 @@ namespace ChessLibrary;
 
 public class GameController
 {
+	// TODO: Create IBoard to store Position, BasePiece
+	// IBoard : BoardSize, Dict<IPosition, BasePiece> InitPiece
+	// TODO: In All Piece, change hardcode iteration, use variable value from BoardSize instead
+	
+	// TODO: Change Concat to AddRange
+	
+	// TODO: Use hashcode to get value
 	private Enum.Color[] _players = new Enum.Color[2];
 	private int _currentTurn;
 	private Dictionary<Position, BasePiece> _board = new();
@@ -38,7 +45,6 @@ public class GameController
 
 	public void InitBoard()
 	{
-		// TODO : init piece
 		// Init all board position
 		for (int i = 0; i < 8; i++)
 		{
@@ -48,6 +54,7 @@ public class GameController
 			}
 		}
 	}
+	
 	public void InitPiece(Enum.Color color)
 	{
 		int sidePawn = color == Enum.Color.White ? 1 : 6;
@@ -81,13 +88,12 @@ public class GameController
 
 	public void SelectPiece(Position pos)
 	{
-		// TODO : select piece
 		SelectedPos = pos;
 		IsSelect = true;
 	}
+	
 	public void SelectPiece(int x, int y)
 	{
-		// TODO : select piece
 		SelectedPos = new Position(x,y);
 		IsSelect = true;
 	
@@ -157,6 +163,7 @@ public class GameController
 			}
 		}
 	}
+	
 	public void MovePiece(Position pos)
 	{
 		var posTo = GetPos(pos);
@@ -220,6 +227,7 @@ public class GameController
 	{
 		return (from.X == to.X) && (from.Y == to.Y);
 	}
+	
 	public bool MovePiece(Position from, Position to, bool simulate=false)
 	{
 		var posFrom = GetPos(from.X, from.Y);
@@ -236,7 +244,7 @@ public class GameController
 		return true;
 	}
 	
-	public bool IsPiecePinned(Position piecePos, Position to)
+	private bool IsPiecePinned(Position piecePos, Position to)
 	{
 		bool result = false;
 		BasePiece piece = GetPiece(piecePos);
@@ -271,6 +279,7 @@ public class GameController
 
 		return result;
 	}
+	
 	public List<Position> GetMoveablePiecePos(Enum.Color color)
 	{
 		List<Position> result = new();
@@ -318,15 +327,19 @@ public class GameController
 			_board[GetPos(position)] = promotedPiece;
 		}
 	}
-
 	
 	public void ChangeTurn()
 	{
 		_currentTurn = _currentTurn == 0 ? 1 : 0;
 		
+		// Update Status
+		UpdateStatus();
+	}	
+	
+	private void UpdateStatus()
+	{
 		IsCheck = !IsKingSafe(GetCurrentPlayer());
 		
-		// confirm
 		Status = Status.Playing;
 		Winner = default;
 		if (IsCheck) Status = Status.Check;
@@ -339,12 +352,12 @@ public class GameController
 		{
 			Status = Status.Stalemate;
 		}
-		
-	}	
-	public List<Position> GetPieceAttackArea(Position position)
+	}
+	
+	private List<Position> GetPieceAttackArea(Position position)
 	{		
-		BasePiece piece = GetPiece(position);
-		List<Position> result = piece.GetAvailableMoves(position, this);
+		BasePiece? piece = GetPiece(position);
+		List<Position> result = piece.GetAvailableMoves(position, this, true);
 		
 		return result;
 	}
@@ -362,7 +375,7 @@ public class GameController
 		return true;
 	}
 	
-	public List<Position> GetAllAttackArea(Enum.Color color)
+	private List<Position> GetAllAttackArea(Enum.Color color)
 	{
 		List<Position> result = new();
 		
@@ -382,10 +395,11 @@ public class GameController
 					x = GetPieceAttackArea(dict.Key);
 				}
 				
-				foreach (var pos in x)
-				{
-					result.Add(pos);
-				}
+				// foreach (var pos in x)
+				// {
+				// 	result.Add(pos);
+				// }
+				result.AddRange(x);
 				// result = result.Concat(x).ToList();
 			}
 		}
@@ -456,6 +470,8 @@ public class GameController
 		// BasePiece result = _board.FirstOrDefault(dict => dict.Key.X == x && dict.Key.Y == y).Value;
 
 	}
+	
+	// TODO : GetPos and GetPiece by HashCode
 	public BasePiece? GetPiece(Position pos)
 	{
 		// Find piece by position
@@ -510,11 +526,6 @@ public class GameController
 		return _board;
 	}
 	
-	public List<Position> AttackAreaPiece(BasePiece piece)
-	{
-		return new List<Position>();
-	}
-
 	public void ResetGame()
 	{
 		IsSelect = false;
@@ -561,4 +572,6 @@ public class Position
 	//     Position other = (Position)obj;
 	//     return (X | Y) == (other.X | other.Y);
 	// }
+	
+	// TODO: 
 }

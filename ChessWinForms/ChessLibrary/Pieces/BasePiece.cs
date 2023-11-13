@@ -22,16 +22,7 @@ public abstract class BasePiece
 		Type = type;
 		Color = color;
 	}
-	
-	public void Move(GameController game)
-	{
 		
-	}
-	
 	public abstract List<Position> GetAvailableMoves(Position pos, GameController game, bool forAttack=false);
 	
-	public void Capture(GameController game)
-	{
-		
-	}
 }
