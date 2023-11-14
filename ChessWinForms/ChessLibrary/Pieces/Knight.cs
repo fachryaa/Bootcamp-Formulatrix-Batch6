@@ -15,7 +15,7 @@ public class Knight : BasePiece
 	{
 		List<Position> result = new();
 		
-		if (position.X <= 5)
+		if (position.X <= Board.BoardSize-3)
 		{
 			if (position.Y >= 1)
 			{
@@ -25,7 +25,7 @@ public class Knight : BasePiece
 				if(piece != null && piece.Color != Color) result.Add(pos);
 			}
 			
-			if (position.Y <= 6)
+			if (position.Y <= Board.BoardSize-2)
 			{
 				Position pos = new(position.X+2, position.Y+1);
 				BasePiece piece = game.GetPiece(pos);
@@ -34,7 +34,7 @@ public class Knight : BasePiece
 			}
 		}
 		
-		if (position.X <= 6)
+		if (position.X <= Board.BoardSize-2)
 		{
 			if (position.Y >=  2)
 			{
@@ -44,7 +44,7 @@ public class Knight : BasePiece
 				if(piece != null && piece.Color != Color) result.Add(pos);
 			}
 			
-			if (position.Y <= 5)
+			if (position.Y <= Board.BoardSize-3)
 			{
 				Position pos = new(position.X+1, position.Y+2);
 				BasePiece piece = game.GetPiece(pos);
@@ -63,7 +63,7 @@ public class Knight : BasePiece
 				if(piece != null && piece.Color != Color) result.Add(pos);
 			}
 			
-			if (position.Y <= 6)
+			if (position.Y <= Board.BoardSize-2)
 			{
 				Position pos = new(position.X-2, position.Y+1);
 				BasePiece piece = game.GetPiece(pos);
@@ -82,7 +82,7 @@ public class Knight : BasePiece
 				if(piece != null && piece.Color != Color) result.Add(pos);
 			}
 			
-			if (position.Y <= 5)
+			if (position.Y <= Board.BoardSize-3)
 			{
 				Position pos = new(position.X-1, position.Y+2);
 				BasePiece piece = game.GetPiece(pos);

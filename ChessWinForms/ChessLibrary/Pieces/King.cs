@@ -16,7 +16,7 @@ public class King : BasePiece
 		if (!IsFirstMove || game.IsCheck) return new();
 		
 		List<Position> result = new();
-		Dictionary<Position,BasePiece> board = game.GetBoard();
+		Dictionary<IPosition,BasePiece> board = game.GetBoard();
 		Position myPos = game.GetKingPos(Color);
 		
 		// cek left
@@ -24,7 +24,7 @@ public class King : BasePiece
 		
 		while (y >= 0)
 		{
-			var piece = board[game.GetPos(myPos.X, y)];
+			var piece = board[new Position(myPos.X, y)];
 			if (piece == null) 
 			{
 				// cek if the pos is safe
@@ -63,7 +63,7 @@ public class King : BasePiece
 		y = myPos.Y + 1;
 		while (y <= 7)
 		{
-			var piece = board[game.GetPos(myPos.X, y)];
+			var piece = board[new Position(myPos.X, y)];
 			if (piece == null) 
 			{
 				// cek if the pos is safe
@@ -109,22 +109,22 @@ public class King : BasePiece
 		{
 			if (isLeft) {
 				rookFrom = new Position(0,0);
-				rookTo = new Position(0,3);
+				rookTo = new Position(0,Board.BoardSize-5);
 			}
 			else {
-				rookFrom = new Position(0,7);
-				rookTo = new Position(0,5);
+				rookFrom = new Position(0,Board.BoardSize-1);
+				rookTo = new Position(0,Board.BoardSize-2);
 			}
 		}
 		else // black
 		{
 			if (isLeft) {
-				rookFrom = new Position(7,0);
-				rookTo = new Position(7,3);
+				rookFrom = new Position(Board.BoardSize-1,0);
+				rookTo = new Position(Board.BoardSize-1,Board.BoardSize-5);
 			}
 			else {
-				rookFrom = new Position(7,7);
-				rookTo = new Position(7,5);
+				rookFrom = new Position(Board.BoardSize-1,Board.BoardSize-1);
+				rookTo = new Position(Board.BoardSize-1,Board.BoardSize-2);
 			}	
 		}
 		
@@ -140,7 +140,7 @@ public class King : BasePiece
 		Position pos = new Position(x,y);
 		BasePiece piece = game.GetPiece(x,y);
 		
-		if (position.X < 7)
+		if (position.X < Board.BoardSize-1)
 		{
 			// up
 			if (piece != null)
@@ -150,7 +150,7 @@ public class King : BasePiece
 			else result.Add(pos);
 
 			// up right
-			if (position.Y < 7)
+			if (position.Y < Board.BoardSize-1)
 			{
 				x = position.X+1;
 				y = position.Y+1;
@@ -221,7 +221,7 @@ public class King : BasePiece
 		}
 		
 		// right
-		if (position.Y < 7)
+		if (position.Y < Board.BoardSize-1)
 		{
 			x = position.X;
 			y = position.Y+1;

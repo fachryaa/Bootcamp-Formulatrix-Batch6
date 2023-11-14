@@ -5,7 +5,7 @@ namespace ChessWinForms
 {
 	public partial class Chess : Form
 	{
-		private GameController game = new();
+		private GameController game = new GameController(new Board(boardSize : 8));
 
 		public readonly Dictionary<Position, Button> buttons = new();
 		public readonly Dictionary<Position, PictureBox> dots = new();
@@ -286,10 +286,10 @@ namespace ChessWinForms
 		public void UpdateBoard()
 		{
 			// TODO : update board
-			Dictionary<Position, BasePiece> board = game.GetBoard();
+			Dictionary<IPosition, BasePiece> board = game.GetBoard();
 			foreach (var piece in board)
 			{
-				buttons[GetPosXY(piece.Key)].BackgroundImage = GetPieceImg(piece.Key);
+				buttons[GetPosXY((Position)piece.Key)].BackgroundImage = GetPieceImg((Position)piece.Key);
 			}
 		}
 

@@ -9,24 +9,22 @@ namespace ChessLibrary;
 
 public class GameController
 {
-	// TODO: Create IBoard to store Position, BasePiece
-	// IBoard : BoardSize, Dict<IPosition, BasePiece> InitPiece
 	// TODO: In All Piece, change hardcode iteration, use variable value from BoardSize instead
 	
-	// TODO: Change Concat to AddRange
-	
-	// TODO: Use hashcode to get value
 	private Enum.Color[] _players = new Enum.Color[2];
 	private int _currentTurn;
-	private Dictionary<Position, BasePiece> _board = new();
+	// private Dictionary<Position, BasePiece> _board = new();
+	private Board _board;
 	public bool IsCheck { get; private set; }
 	public bool IsSelect { get; private set; }
-	public Position SelectedPos { get; private set; }
+	public Position? SelectedPos { get; private set; }
 	public Status Status { get; private set; }
 	public Enum.Color Winner { get; private set; }
 	
-	public GameController()
+	public GameController(Board board)
 	{
+		_board = board;
+		
 		_players[0] = Enum.Color.White;
 		_players[1] = Enum.Color.Black;
 
@@ -36,49 +34,6 @@ public class GameController
 		IsSelect = false;
 		
 		Status = Status.Playing;
-
-		InitBoard();
-
-		InitPiece(_players[0]);
-		InitPiece(_players[1]);
-	}
-
-	public void InitBoard()
-	{
-		// Init all board position
-		for (int i = 0; i < 8; i++)
-		{
-			for (int j = 0; j < 8; j++)
-			{
-				_board.Add(new Position(i, j), default);
-			}
-		}
-	}
-	
-	public void InitPiece(Enum.Color color)
-	{
-		int sidePawn = color == Enum.Color.White ? 1 : 6;
-		int sidePiece = color == Enum.Color.White ? 0 : 7;
-
-		// init pawn to board
-		for (int i=0; i<8; i++)
-		{
-			_board[GetPos(sidePawn, i)] = new Pawn(color);
-		}
-
-		// init another piece
-		// update board
-		_board[GetPos(sidePiece, 0)] = new Rook(color);
-		_board[GetPos(sidePiece, 7)] = new Rook(color);
-		
-		_board[GetPos(sidePiece, 1)] = new Knight(color);
-		_board[GetPos(sidePiece, 6)] = new Knight(color);
-		
-		_board[GetPos(sidePiece, 2)] = new Bishop(color);
-		_board[GetPos(sidePiece, 5)] = new Bishop(color);
-		
-		_board[GetPos(sidePiece, 3)] = new Queen(color);
-		_board[GetPos(sidePiece, 4)] = new King(color);
 	}
 
 	public Enum.Color GetCurrentPlayer()
@@ -101,25 +56,25 @@ public class GameController
 	
 	public void UnSelect()
 	{
-		BasePiece selectedPiece = GetPiece(SelectedPos);
-		if (selectedPiece.Type == PieceType.Pawn)
+		BasePiece? selectedPiece = GetPiece(SelectedPos);
+		if (selectedPiece?.Type == PieceType.Pawn)
 		{
 			Pawn pawn = (Pawn) selectedPiece;
-			if (pawn.Color == Enum.Color.White && SelectedPos.X == 1)
+			if (pawn.Color == Enum.Color.White && SelectedPos?.X == 1)
 			{
 				pawn.IsFirstMove = true;
 			}
-			if (pawn.Color == Enum.Color.Black && SelectedPos.X == 6)
+			if (pawn.Color == Enum.Color.Black && SelectedPos?.X == 6)
 			{
 				pawn.IsFirstMove = true;
 			}
 		}
-		else if(selectedPiece.Type == PieceType.King)
+		else if(selectedPiece?.Type == PieceType.King)
 		{
 			King king = (King) selectedPiece;
 			if(king.IsFirstMove) king.IsFirstMove = true;
 		}
-		else if(selectedPiece.Type == PieceType.Rook)
+		else if(selectedPiece?.Type == PieceType.Rook)
 		{
 			Rook rook = (Rook) selectedPiece;
 			if(rook.IsFirstMove)rook.IsFirstMove = true;
@@ -128,15 +83,18 @@ public class GameController
 		IsSelect = false;
 	}
 	
-	private bool IsEnPassantMove(Position posFrom, Position posTo)
+	private bool IsEnPassantMove(Position? posFrom, Position? posTo)
 	{		
 		// if not attack
+		if (posFrom == null || posTo == null) return false;
 		if (posFrom.Y == posTo.Y) return false;
 		
-		BasePiece enemy = GetPiece(posTo);
+		BasePiece? enemy = GetPiece(posTo);
 		if (enemy != null) return false;
 				
-		BasePiece myPiece = GetPiece(posFrom);
+		BasePiece? myPiece = GetPiece(posFrom);
+		if (myPiece is null) return false;
+		
 		Pawn pawn = (Pawn) myPiece;
 		Enum.Color colorPawn = pawn.Color;
 		
@@ -153,7 +111,7 @@ public class GameController
 	
 	private void DisableAllPawnDoubleMove(Enum.Color color)
 	{
-		foreach (var kvp in _board)
+		foreach (var kvp in _board.GetBoard())
 		{
 			if (kvp.Value == null) continue;
 			if (kvp.Value.Type == PieceType.Pawn && kvp.Value.Color == color)
@@ -166,31 +124,31 @@ public class GameController
 	
 	public void MovePiece(Position pos)
 	{
-		var posTo = GetPos(pos);
-		var posFrom = GetPos(SelectedPos);
+		var posTo = pos;
+		var posFrom = SelectedPos;
 				
 		// cek king and rook
-		BasePiece myPiece = GetPiece(posFrom);
-		if (myPiece.Type == PieceType.King)
+		BasePiece? myPiece = GetPiece(posFrom);
+		if (myPiece?.Type == PieceType.King)
 		{
 			King king = (King)myPiece;
 			king.IsFirstMove = false;
 			
 			// cek if castle
-			if (posFrom.Y - posTo.Y == 2) king.CastleMove(this, isLeft:true);
-			else if (posTo.Y - posFrom.Y == 2) king.CastleMove(this, isLeft:false);
+			if (posFrom?.Y - posTo.Y == 2) king.CastleMove(this, isLeft:true);
+			else if (posTo.Y - posFrom?.Y == 2) king.CastleMove(this, isLeft:false);
 			
 			// disable pawn double move
 			DisableAllPawnDoubleMove(GetCurrentPlayer());
 		}
-		else if (myPiece.Type == PieceType.Rook)
+		else if (myPiece?.Type == PieceType.Rook)
 		{
 			Rook rook = (Rook)myPiece;
 			rook.IsFirstMove = false;
 			
 			DisableAllPawnDoubleMove(GetCurrentPlayer());
 		}
-		else if (myPiece.Type == PieceType.Pawn)
+		else if (myPiece?.Type == PieceType.Pawn)
 		{
 			// cek if pawn is double move
 			Pawn pawn = (Pawn)myPiece;
@@ -207,8 +165,8 @@ public class GameController
 			if (IsEnPassantMove(posFrom, posTo))
 			{
 				int dir = pawn.Color == Enum.Color.White ? -1 : 1;
-				Position enemyPos = GetPos(posTo.X + (1*dir), posTo.Y);
-				_board[enemyPos] = null;
+				Position enemyPos = new Position(posTo.X + (1*dir), posTo.Y);
+				_board.SetPiece(enemyPos, null);
 			}
 			
 			pawn.IsFirstMove = false;
@@ -218,8 +176,9 @@ public class GameController
 			DisableAllPawnDoubleMove(GetCurrentPlayer());
 		}
 
-		_board[posTo] = _board[posFrom];
-		_board[posFrom] = null;
+		BasePiece? pieceFrom = _board.GetPiece(posFrom);
+		_board.SetPiece(posTo, pieceFrom);
+		_board.SetPiece(posFrom, null);
 		IsSelect = false;
 	}
 	
@@ -230,11 +189,12 @@ public class GameController
 	
 	public bool MovePiece(Position from, Position to, bool simulate=false)
 	{
-		var posFrom = GetPos(from.X, from.Y);
-		var posTo = GetPos(to.X, to.Y);
+		var posFrom = new Position(from.X, from.Y);
+		var posTo = new Position(to.X, to.Y);
 		
-		_board[posTo] = _board[posFrom];
-		_board[posFrom] = null;
+		BasePiece? pieceFrom = _board.GetPiece(posFrom);
+		_board.SetPiece(posTo, pieceFrom);
+		_board.SetPiece(posFrom, null);
 
 		if (!simulate)
 		{
@@ -247,11 +207,11 @@ public class GameController
 	private bool IsPiecePinned(Position piecePos, Position to)
 	{
 		bool result = false;
-		BasePiece piece = GetPiece(piecePos);
+		BasePiece? piece = GetPiece(piecePos);
 		
 		// temp to keep piece
-		BasePiece tempPiece = GetPiece(to);
-		Position tempPos = GetPos(to);
+		BasePiece? tempPiece = GetPiece(to);
+		Position? tempPos = to;
 		
 		// move piece
 		MovePiece(piecePos, to, simulate:true);
@@ -264,14 +224,15 @@ public class GameController
 		MovePiece(to, piecePos, simulate:true);
 		if (tempPiece != null)
 		{
-			_board[tempPos] = tempPiece;
+			_board.SetPiece(tempPos, tempPiece);
 		}
 		
 		return result;
 	}
-	public List<Position> GetLegalMove(Position position)
+	public List<Position>? GetLegalMove(Position position)
 	{
-		BasePiece piece = GetPiece(position);
+		BasePiece? piece = GetPiece(position);
+		if (piece is null) return null;
 		
 		List<Position> result = piece.GetAvailableMoves(position, this);
 		
@@ -284,9 +245,9 @@ public class GameController
 	{
 		List<Position> result = new();
 
-		for(int i=0; i<8; i++)
+		for(int i=0; i<Board.BoardSize; i++)
 		{
-			for(int j=0; j<8; j++)
+			for(int j=0; j<Board.BoardSize; j++)
 			{
 				BasePiece piece = GetPiece(i, j);
 
@@ -324,7 +285,7 @@ public class GameController
 		
 		if (IsPawnGotPromotion(position))
 		{
-			_board[GetPos(position)] = promotedPiece;
+			_board.SetPiece(position, promotedPiece);
 		}
 	}
 	
@@ -354,10 +315,10 @@ public class GameController
 		}
 	}
 	
-	private List<Position> GetPieceAttackArea(Position position)
+	private List<Position> GetPieceAttackArea(IPosition position)
 	{		
 		BasePiece? piece = GetPiece(position);
-		List<Position> result = piece.GetAvailableMoves(position, this, true);
+		List<Position> result = piece.GetAvailableMoves((Position)position, this, true);
 		
 		return result;
 	}
@@ -379,7 +340,7 @@ public class GameController
 	{
 		List<Position> result = new();
 		
-		foreach (var dict in _board)
+		foreach (var dict in _board.GetBoard())
 		{
 			if (dict.Value == null) continue;
 			if (dict.Value.Color == color)
@@ -395,26 +356,21 @@ public class GameController
 					x = GetPieceAttackArea(dict.Key);
 				}
 				
-				// foreach (var pos in x)
-				// {
-				// 	result.Add(pos);
-				// }
 				result.AddRange(x);
-				// result = result.Concat(x).ToList();
 			}
 		}
 		
 		return result;
 	}
 	
-	public Position GetKingPos(Enum.Color color)
+	public Position? GetKingPos(Enum.Color color)
 	{
-		foreach (var piece in _board)
+		foreach (var piece in _board.GetBoard())
 		{
 			if (piece.Value == null) continue;
 			if (piece.Value.Color == color & piece.Value.Type == Enum.PieceType.King)
 			{
-				return piece.Key;
+				return (Position)piece.Key;
 			}
 		}
 		return null;
@@ -424,7 +380,7 @@ public class GameController
 	{
 		bool result = true;
 		
-		Position kingPos = GetKingPos(color);
+		Position? kingPos = GetKingPos(color);
 		
 		Enum.Color enemyColor = color == Enum.Color.White ? Enum.Color.Black : Enum.Color.White;
 		
@@ -450,7 +406,7 @@ public class GameController
 		
 		foreach (Position piece in moveablePiece)
 		{
-			List<Position> legalMove = GetLegalMove(piece);
+			List<Position>? legalMove = GetLegalMove(piece);
 			if (legalMove.Count > 0) return false;
 		}
 		
@@ -461,9 +417,9 @@ public class GameController
 	public BasePiece GetPiece(int x, int y)
 	{
 		// Find piece by position
-		foreach (var piece in _board)
+		foreach (var piece in _board.GetBoard())
 		{
-			if (piece.Key.Equals(new(x,y))) return piece.Value;
+			if (piece.Key.Equals(new Position(x,y))) return piece.Value;
 		}
 		
 		return null;
@@ -472,58 +428,14 @@ public class GameController
 	}
 	
 	// TODO : GetPos and GetPiece by HashCode
-	public BasePiece? GetPiece(Position pos)
+	public BasePiece? GetPiece(IPosition? pos)
 	{
-		// Find piece by position
-		foreach (var piece in _board)
-		{
-			if (piece.Key.Equals(pos)) return piece.Value;
-		}
-		
-		return null;
-		// BasePiece result = _board.FirstOrDefault(dict => dict.Key.X == pos.X && dict.Key.Y == pos.Y).Value;
-	}
-	public Position? GetPos(int x, int y)
-	{
-		// Find pos by position
-		foreach (var piece in _board)
-		{
-			if (piece.Key.Equals(new(x,y))) return piece.Key;
-		}
-		// Position result = _board.FirstOrDefault(dict => dict.Key.X == x && dict.Key.Y == y).Key;
-		return null;
-	}
-	public Position? GetPos(Position pos)
-	{
-		// Find piece by position
-		foreach (var piece in _board)
-		{
-			if (piece.Key.Equals(pos)) return piece.Key;
-		}
-		
-		return null;
-		// Position result = _board.FirstOrDefault(dict => dict.Key.X == pos.X && dict.Key.Y == pos.Y).Key;
-
-		// return result;
-	
+		return _board.GetPiece(pos);
 	}
 	
-	public Position? GetPosById(int id)
+	public Dictionary<IPosition, BasePiece?> GetBoard()
 	{
-		// Find piece by position
-		foreach (var piece in _board)
-		{
-			if (piece.Value.Id == id) return piece.Key;
-		}
-		
-		return null;
-		// Position result = _board.FirstOrDefault(dict => dict.Value != null && dict.Value.Id == id).Key;
-
-		// return result;
-	}
-	public Dictionary<Position, BasePiece> GetBoard()
-	{
-		return _board;
+		return _board.GetBoard();
 	}
 	
 	public void ResetGame()
@@ -535,43 +447,6 @@ public class GameController
 		Status = Status.Playing;
 
 		_board = new();
-		InitBoard();
-
-		InitPiece(_players[0]);
-		InitPiece(_players[1]);
+		_board.ResetBoard();
 	}
-}
-
-public class Position
-{
-	public int X{ get; private set; }
-	public int Y{ get; private set; }
-
-	public Position(int x, int y)
-	{
-		X = x;
-		Y = y;
-	}
-	
-	public bool Equals(Position pos)
-	{
-		return this.X == pos.X && this.Y == pos.Y;
-	}
-
-	// TODO: change GetPos to this
-	// public override int GetHashCode()
-	// {
-	//     return (X | Y).GetHashCode();
-	// }
-	// public override bool Equals(object obj)
-	// {
-	//     if (obj == null || GetType() != obj.GetType())
-	//     {
-	//         return false;
-	//     }
-	//     Position other = (Position)obj;
-	//     return (X | Y) == (other.X | other.Y);
-	// }
-	
-	// TODO: 
 }

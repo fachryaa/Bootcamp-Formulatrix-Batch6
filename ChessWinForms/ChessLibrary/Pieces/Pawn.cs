@@ -30,7 +30,7 @@ public class Pawn : BasePiece
 		return true;
 	}
 
-	public List<Position> GetAttackMoves(Position position, GameController game, bool isForMoving=true)
+	public List<Position> GetAttackMoves(IPosition position, GameController game, bool isForMoving=true)
 	{
 		List<Position> result = new();
 		int dir = Color == Enum.Color.White ? 1 : -1;
@@ -52,7 +52,7 @@ public class Pawn : BasePiece
 			}
 		}
 		// if paling kanan
-		else if (position.Y == 7)
+		else if (position.Y == Board.BoardSize-1)
 		{
 			Position frontSidePos = new Position(position.X + 1*dir, position.Y - 1);
 			BasePiece enemyPiece = game.GetPiece(frontSidePos);
@@ -110,7 +110,7 @@ public class Pawn : BasePiece
 
 		if (IsFirstMove)
 		{
-			Position? pos2 = position.X < 7 ? new Position(position.X + 2*dir, position.Y) : default;
+			Position? pos2 = position.X < Board.BoardSize-1 ? new Position(position.X + 2*dir, position.Y) : default;
 			if (game.GetPiece(pos2) == null)
 			{
 				BasePiece frontPos2 = game.GetPiece(pos1);

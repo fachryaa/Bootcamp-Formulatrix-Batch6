@@ -23,7 +23,7 @@ public class Rook : BasePiece
         List<Position> result = new List<Position>();
 
 		// vertical up
-		for (int i=position.X+1; i < 8; i++)
+		for (int i=position.X+1; i < Board.BoardSize; i++)
 		{
 			Position pos = new(i, position.Y);
 			var piece = game.GetPiece(pos);
@@ -65,7 +65,7 @@ public class Rook : BasePiece
 		}
 		
 		// horizontal right
-		for (int i=position.Y+1; i < 8; i++)
+		for (int i=position.Y+1; i < Board.BoardSize; i++)
 		{
 			Position pos = new(position.X, i);
 			var piece = game.GetPiece(pos);

@@ -18,7 +18,7 @@ public class Bishop : BasePiece
 		int y = position.Y;
 		
 		// up right
-		while(x < 7 && y < 7)
+		while(x < Board.BoardSize-1 && y < Board.BoardSize-1)
 		{
 			x++;
 			y++;
@@ -35,7 +35,7 @@ public class Bishop : BasePiece
 		x = position.X;
 		y = position.Y;
 		// up left
-		while(x < 7 && y > 0)
+		while(x < Board.BoardSize-1 && y > 0)
 		{
 			x++;
 			y--;
@@ -52,7 +52,7 @@ public class Bishop : BasePiece
 		x = position.X;
 		y = position.Y;
 		// down right
-		while(x > 0 && y < 7)
+		while(x > 0 && y < Board.BoardSize-1)
 		{
 			x--;
 			y++;

@@ -20,7 +20,7 @@ public class Queen : BasePiece
 		int y = position.Y;
 		
 		// up right
-		while(x < 7 && y < 7)
+		while(x < Board.BoardSize-1 && y < Board.BoardSize-1)
 		{
 			x++;
 			y++;
@@ -37,7 +37,7 @@ public class Queen : BasePiece
 		x = position.X;
 		y = position.Y;
 		// up left
-		while(x < 7 && y > 0)
+		while(x < Board.BoardSize-1 && y > 0)
 		{
 			x++;
 			y--;
@@ -54,7 +54,7 @@ public class Queen : BasePiece
 		x = position.X;
 		y = position.Y;
 		// down right
-		while(x > 0 && y < 7)
+		while(x > 0 && y < Board.BoardSize-1)
 		{
 			x--;
 			y++;
@@ -86,8 +86,8 @@ public class Queen : BasePiece
 		}
 		
 		// rook moves
-				// vertical up
-		for (int i=position.X+1; i < 8; i++)
+		// vertical up
+		for (int i=position.X+1; i < Board.BoardSize; i++)
 		{
 			Position pos = new(i, position.Y);
 			var piece = game.GetPiece(pos);
@@ -129,7 +129,7 @@ public class Queen : BasePiece
 		}
 		
 		// horizontal right
-		for (int i=position.Y+1; i < 8; i++)
+		for (int i=position.Y+1; i < Board.BoardSize; i++)
 		{
 			Position pos = new(position.X, i);
 			var piece = game.GetPiece(pos);
