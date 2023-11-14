@@ -14,6 +14,12 @@ public class Pawn : BasePiece
 		IsDoubleMove = false;
 	}
 	
+	/// <summary>
+	/// Returns true if the pawn can do en passant move
+	/// </summary>
+	/// <param name="game"></param>
+	/// <param name="enemyPos"></param>
+	/// <returns></returns>
 	public bool IsCanEnPassant(GameController game, Position enemyPos)
 	{
 		BasePiece enemyPiece = game.GetPiece(enemyPos);
@@ -30,6 +36,13 @@ public class Pawn : BasePiece
 		return true;
 	}
 
+	/// <summary>
+	/// Returns a list of attack moves for the pawn
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="game"></param>
+	/// <param name="isForMoving"></param>
+	/// <returns></returns>
 	public List<Position> GetAttackMoves(IPosition position, GameController game, bool isForMoving=true)
 	{
 		List<Position> result = new();
@@ -96,6 +109,7 @@ public class Pawn : BasePiece
 		
 		return result;
 	}
+	
 	public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
 	{
 		List<Position> result = new();

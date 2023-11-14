@@ -11,6 +11,11 @@ public class King : BasePiece
 		IsFirstMove = true;
 	}
 	
+	/// <summary>
+	/// check and get the position of the king for castling
+	/// </summary>
+	/// <param name="game"></param>
+	/// <returns></returns>
 	private List<Position> GetCastlePosition(GameController game)
 	{
 		if (!IsFirstMove || game.IsCheck) return new();
@@ -101,6 +106,11 @@ public class King : BasePiece
 		return result;
 	}
 	
+	/// <summary>
+	/// Move the rook when castling
+	/// </summary>
+	/// <param name="game"></param>
+	/// <param name="isLeft"></param>
 	public void CastleMove(GameController game, bool isLeft)
 	{
 		Position rookFrom;

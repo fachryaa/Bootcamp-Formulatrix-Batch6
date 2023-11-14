@@ -23,6 +23,13 @@ public abstract class BasePiece
 		Color = color;
 	}
 		
+	/// <summary>
+	/// Returns a list of available moves for the piece, forAttack is used to determine if the piece is checking the king
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="game"></param>
+	/// <param name="forAttack"></param>
+	/// <returns></returns>
 	public abstract List<Position> GetAvailableMoves(Position pos, GameController game, bool forAttack=false);
 	
 }

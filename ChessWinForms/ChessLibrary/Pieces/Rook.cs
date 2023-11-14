@@ -10,13 +10,6 @@ public class Rook : BasePiece
 	{
 		IsFirstMove = true;
 	}
-	
-	public Rook(BasePiece promoted, Enum.Color color) : base(promoted, Enum.PieceType.Rook, color)
-	{
-		IsFirstMove = true;
-	}
-
-
 
     public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
     {
