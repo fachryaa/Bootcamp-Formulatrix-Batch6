@@ -3,7 +3,7 @@ using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;
 
-public class Rook : BasePiece
+public class Rook : BasePiece, IMoveable
 {
 	public bool IsFirstMove { get; set; }
 	public Rook(Enum.Color color) : base(Enum.PieceType.Rook, color)
@@ -18,40 +18,42 @@ public class Rook : BasePiece
 		// vertical up
 		for (int i=position.X+1; i < Board.BoardSize; i++)
 		{
-			AddMoveToResult(game, result, new Position(i, position.Y));
+			if (!AddMoveToResult(game, result, new Position(i, position.Y))) break;
 		}
 		
 		// vertical down
 		for (int i=position.X-1; i >= 0; i--)
 		{
-			AddMoveToResult(game, result, new Position(i, position.Y));
+			if (!AddMoveToResult(game, result, new Position(i, position.Y))) break;
 		}
 		
 		// horizontal left
 		for (int i=position.Y-1; i >= 0; i--)
 		{
-			AddMoveToResult(game, result, new Position(position.X, i));
+			if (!AddMoveToResult(game, result, new Position(position.X, i))) break;
 		}
 		
 		// horizontal right
 		for (int i=position.Y+1; i < Board.BoardSize; i++)
 		{
-			AddMoveToResult(game, result, new Position(position.X, i));
+			if (!AddMoveToResult(game, result, new Position(position.X, i))) break;
 		}
 
 		return result;
 	}
 	
-	private void AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
+	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
 	{
 		var piece = game.GetPiece(pos);
 
 		if (piece != null)
 		{
 			if (piece.Color != Color) result.Add(pos);
-			return;
+			return false;
 		}
 		else result.Add(pos);
+		
+		return true;
 	}
 
 }

@@ -3,12 +3,12 @@ using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;
 
-public class Pawn : BasePiece
+public class Pawn : BasePiece, IMoveable
 {
 	public bool IsFirstMove { get ; set; }
 	public bool IsDoubleMove { get; set; }
 	
-	public Pawn(Enum.Color color) : base(Enum.PieceType.Pawn, color)
+	public Pawn(Enum.Color color) : base(PieceType.Pawn, color)
 	{
 		IsFirstMove = true;
 		IsDoubleMove = false;
@@ -29,10 +29,6 @@ public class Pawn : BasePiece
 		
 		if (!enemyPawn.IsDoubleMove) return false;
 		
-		// TODO: Add en passant move condition -> static method return bool isEnPassantMove(from, to)
-		
-		
-		
 		return true;
 	}
 
@@ -48,64 +44,11 @@ public class Pawn : BasePiece
 		List<IPosition> result = new();
 		int dir = Color == Enum.Color.White ? 1 : -1;
 		
-		// if paling kiri
-		if (position.Y == 0)
-		{
-			IPosition frontSidePos = new Position(position.X + 1*dir, position.Y + 1);
-			BasePiece? enemyPiece = game.GetPiece(frontSidePos);
-			if ((enemyPiece != null && enemyPiece.Color != Color) || !isForMoving)
-			{
-				result.Add(frontSidePos);
-			}
-			
-			// for en passant
-			if (IsCanEnPassant(game,new Position(position.X, position.Y+1*dir)))
-			{
-				result.Add(frontSidePos);
-			}
-		}
-		// if paling kanan
-		else if (position.Y == Board.BoardSize-1)
-		{
-			IPosition frontSidePos = new Position(position.X + 1*dir, position.Y - 1);
-			BasePiece? enemyPiece = game.GetPiece(frontSidePos);
-			if ((enemyPiece != null && enemyPiece.Color != Color) || !isForMoving)
-			{
-				result.Add(frontSidePos);
-			}
-			
-			// for en passant
-			if (IsCanEnPassant(game,new Position(position.X, position.Y-1*dir)))
-			{
-				result.Add(frontSidePos);
-			}
-		}
-		else
-		{
-			IPosition frontSidePos = new Position(position.X + 1*dir, position.Y + 1*dir);
-			BasePiece? enemyPiece = game.GetPiece(frontSidePos);
-			if ((enemyPiece != null && enemyPiece.Color != Color) || !isForMoving)
-			{
-				result.Add(frontSidePos);
-			}
-			// for en passant
-			if (IsCanEnPassant(game,new Position(position.X, position.Y+1*dir)))
-			{
-				result.Add(frontSidePos);
-			}
-			
-			frontSidePos = new Position(position.X + 1*dir, position.Y - 1*dir);
-			enemyPiece = game.GetPiece(frontSidePos);
-			if ((enemyPiece != null && enemyPiece.Color != Color) || !isForMoving)
-			{
-				result.Add(frontSidePos);
-			}
-			// for en passant
-			if (IsCanEnPassant(game,new Position(position.X, position.Y-1*dir)))
-			{
-				result.Add(frontSidePos);
-			}
-		}
+		IPosition frontSidePos = new Position(position.X + 1*dir, position.Y + 1*dir);
+		AddMoveToResult(game, result, frontSidePos, dir, isForMoving);
+		
+		frontSidePos = new Position(position.X + 1*dir, position.Y - 1*dir);
+		AddMoveToResult(game, result, frontSidePos, dir, isForMoving);
 		
 		return result;
 	}
@@ -115,7 +58,7 @@ public class Pawn : BasePiece
 		List<IPosition> result = new();
 		int dir = Color == Enum.Color.White ? 1 : -1;
 
-		IPosition? pos1 = position.X < 7 ? new Position(position.X + 1*dir, position.Y) : default;
+		IPosition pos1 = new Position(position.X + 1*dir, position.Y);
 		BasePiece? frontPos1 = game.GetPiece(pos1);
 		if (pos1 != null && frontPos1 == null)
 		{
@@ -124,24 +67,40 @@ public class Pawn : BasePiece
 
 		if (IsFirstMove)
 		{
-			IPosition? pos2 = position.X < Board.BoardSize-1 ? new Position(position.X + 2*dir, position.Y) : default;
+			IPosition pos2 = new Position(position.X + 2*dir, position.Y);
 			if (game.GetPiece(pos2) == null)
 			{
-				BasePiece? frontPos2 = game.GetPiece(pos1);
+				BasePiece? frontPos2 = game.GetPiece(pos1!);
 				if (pos2 != null && frontPos2 == null)
 				{
 					result.Add(pos2);
 				}
 			}
-
-			// IsFirstMove = false;
 		}
 
 		// add attack moves positions
-		result = result.Concat(GetAttackMoves(position, game)).ToList();
+		result.AddRange(GetAttackMoves(position, game));
 		
 		return result;
 	}
-	
 
+	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
+	{
+		throw new NotImplementedException();
+	}
+	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position, int dir, bool isForMoving)
+	{
+		BasePiece? enemyPiece = game.GetPiece(position);
+		if ((enemyPiece != null && enemyPiece.Color != Color) || !isForMoving)
+		{
+			result.Add(position);
+		}
+		// for en passant
+		if (IsCanEnPassant(game,new Position(position.X-1*dir, position.Y)))
+		{
+			result.Add(position);
+		}
+		
+		return true;
+	}
 }

@@ -59,21 +59,14 @@ public class Board : IBoard
 		_board[new Position(sidePiece, BoardSize-4)] = new King(color);
 	}
 	
-	public BasePiece? GetPiece(IPosition? position)
+	public BasePiece? GetPiece(IPosition position)
 	{
-		if (position is null) return null;
-		try
-		{
-			return _board[(Position)position];
-		}
-		catch (System.Collections.Generic.KeyNotFoundException)
-		{
-			return null;
-			throw;
-		}
+		if (IsOutOfBound(position)) return null;
+		
+		return _board[(Position)position];
 	}
 	
-	public void SetPiece(IPosition? position, BasePiece? piece)
+	public void SetPiece(IPosition position, BasePiece? piece)
 	{
 		_board[position] = piece;
 	}
@@ -86,6 +79,10 @@ public class Board : IBoard
 		InitPiece(Enum.Color.Black);
 	}
 
+	private bool IsOutOfBound(IPosition position)
+	{
+		return position.X < 0 || position.Y < 0 || position.X >= BoardSize || position.Y >= BoardSize;
+	}
 	
 
 }

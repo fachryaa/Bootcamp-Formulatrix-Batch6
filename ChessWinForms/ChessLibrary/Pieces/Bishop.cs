@@ -3,7 +3,7 @@ using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;
 
-public class Bishop : BasePiece
+public class Bishop : BasePiece, IMoveable
 {
 	
 	public Bishop(Enum.Color color) : base(Enum.PieceType.Bishop, color)
@@ -22,14 +22,7 @@ public class Bishop : BasePiece
 		{
 			x++;
 			y++;
-			Position pos = new Position(x,y);
-			BasePiece? piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			if (!AddMoveToResult(game, result, new Position(x,y))) break;
 		}
 		
 		x = position.X;
@@ -39,14 +32,7 @@ public class Bishop : BasePiece
 		{
 			x++;
 			y--;
-			IPosition pos = new Position(x,y);
-			BasePiece? piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			if (!AddMoveToResult(game, result, new Position(x,y))) break;
 		}
 		
 		x = position.X;
@@ -56,14 +42,7 @@ public class Bishop : BasePiece
 		{
 			x--;
 			y++;
-			IPosition pos = new Position(x,y);
-			BasePiece? piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			if (!AddMoveToResult(game, result, new Position(x,y))) break;
 		}
 		
 		x = position.X;
@@ -73,17 +52,23 @@ public class Bishop : BasePiece
 		{
 			x--;
 			y--;
-			IPosition pos = new Position(x,y);
-			BasePiece? piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			if (!AddMoveToResult(game, result, new Position(x,y))) break;
 		}
 		
 		return result;
+	}
+	
+	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
+	{
+		BasePiece? piece = game.GetPiece(position);
+		if (piece != null)
+		{
+			if (piece.Color != Color) result.Add(position);
+			return false;
+		}
+		else result.Add(position);
+		
+		return true;
 	}
 
 }

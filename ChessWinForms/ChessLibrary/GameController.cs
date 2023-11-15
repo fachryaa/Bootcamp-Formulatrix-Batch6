@@ -24,6 +24,7 @@ public class GameController
 	public IPosition? SelectedPos { get; private set; }
 	public Status Status { get; private set; }
 	public Enum.Color Winner { get; private set; }
+	public EventHandler OnChangeTurn;
 	
 	public GameController(Board board)
 	{
@@ -36,6 +37,9 @@ public class GameController
 		
 		IsCheck = false;
 		IsSelect = false;
+		
+		OnChangeTurn += ChangeTurn;
+		OnChangeTurn += UpdateStatus;
 		
 		Status = Status.Playing;
 	}
@@ -64,7 +68,7 @@ public class GameController
 	/// </summary>
 	public void UnSelect()
 	{
-		BasePiece? selectedPiece = GetPiece(SelectedPos);
+		BasePiece? selectedPiece = GetPiece(SelectedPos!);
 		if (selectedPiece?.Type == PieceType.Pawn)
 		{
 			Pawn pawn = (Pawn) selectedPiece;
@@ -198,9 +202,9 @@ public class GameController
 			DisableAllPawnDoubleMove(GetCurrentPlayer());
 		}
 
-		BasePiece? pieceFrom = _board.GetPiece(posFrom);
+		BasePiece pieceFrom = _board.GetPiece(posFrom!)!;
 		_board.SetPiece(posTo, pieceFrom);
-		_board.SetPiece(posFrom, null);
+		_board.SetPiece(posFrom!, null);
 		IsSelect = false;
 	}
 	
@@ -285,6 +289,7 @@ public class GameController
 		
 		result.RemoveAll(pos => IsPiecePinned(position, pos));
 
+		result.Add(position);
 		return result;
 	}
 	
@@ -293,7 +298,7 @@ public class GameController
 	/// </summary>
 	/// <param name="color"></param>
 	/// <returns></returns>
-	public List<IPosition> GetMoveablePiecePos(Enum.Color color)
+	public IEnumerable<IPosition> GetMoveablePiecePos(Enum.Color color)
 	{
 		List<IPosition> result = new();
 
@@ -354,23 +359,23 @@ public class GameController
 	/// <summary>
 	/// Change turn and update status
 	/// </summary>
-	public void ChangeTurn()
+	public void ChangeTurn(object? obj, EventArgs e)
 	{
 		_currentTurn = _currentTurn == 0 ? 1 : 0;
 		
 		// Update Status
-		UpdateStatus();
+		// UpdateStatus();
 	}	
 	
 	/// <summary>
 	/// Update status of game
 	/// </summary>
-	private void UpdateStatus()
+	private void UpdateStatus(object? obj, EventArgs e)
 	{
-		IsCheck = !IsKingSafe(GetCurrentPlayer());
-		
 		Status = Status.Playing;
 		Winner = default;
+		
+		IsCheck = !IsKingSafe(GetCurrentPlayer());
 		if (IsCheck) Status = Status.Check;
 		if (IsCheckMate())
 		{
@@ -391,7 +396,7 @@ public class GameController
 	private IEnumerable<IPosition> GetPieceAttackArea(IPosition position)
 	{		
 		BasePiece? piece = GetPiece(position)!;
-		List<IPosition> result = piece.GetAvailableMoves(position, this, true).ToList();
+		IEnumerable<IPosition> result = piece.GetAvailableMoves(position, this, true);
 		
 		return result;
 	}
@@ -407,7 +412,7 @@ public class GameController
 		foreach (var pos in moveablePos)
 		{
 			IEnumerable<IPosition> legalPos = GetLegalMove(pos);
-			if (legalPos.Count() > 0) return false;
+			if (legalPos.Count() > 1) return false;
 		}
 		
 		return true;
@@ -456,7 +461,7 @@ public class GameController
 		foreach (var piece in _board.GetBoard())
 		{
 			if (piece.Value == null) continue;
-			if (piece.Value.Color == color & piece.Value.Type == Enum.PieceType.King)
+			if (piece.Value.Color == color & piece.Value.Type == PieceType.King)
 			{
 				result = piece.Key;
 			}
@@ -470,10 +475,8 @@ public class GameController
 	/// <param name="color"></param>
 	/// <returns></returns>
 	public bool IsKingSafe(Enum.Color color)
-	{
-		bool result = true;
-		
-		IPosition? kingPos = GetKingPos(color);
+	{		
+		IPosition kingPos = GetKingPos(color);
 		
 		Enum.Color enemyColor = color == Enum.Color.White ? Enum.Color.Black : Enum.Color.White;
 		
@@ -482,13 +485,13 @@ public class GameController
 		// check if king in attack area
 		foreach (var pos in enemyAttackArea)
 		{
-			if (pos.Equals(kingPos!))
+			if (pos.Equals(kingPos))
 			{
 				return false;
 			}
 		}
 		
-		return result;
+		return true;
 	}
 	
 	/// <summary>
@@ -499,12 +502,12 @@ public class GameController
 	{
 		if (!IsCheck) return false;
 		
-		List<IPosition> moveablePiece = GetMoveablePiecePos(_players[_currentTurn]);
+		IEnumerable<IPosition> moveablePiece = GetMoveablePiecePos(_players[_currentTurn]);
 		
 		foreach (IPosition piece in moveablePiece)
 		{
 			IEnumerable<IPosition>? legalMove = GetLegalMove(piece);
-			if (legalMove.Count() > 0) return false;
+			if (legalMove.Count() > 1) return false;
 		}
 		
 		Status = Status.Checkmate;
@@ -527,7 +530,7 @@ public class GameController
 	/// </summary>
 	/// <param name="pos"></param>
 	/// <returns></returns>
-	public BasePiece? GetPiece(IPosition? pos)
+	public BasePiece? GetPiece(IPosition pos)
 	{
 		return _board.GetPiece(pos);
 	}

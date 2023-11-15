@@ -1,8 +1,8 @@
-using ChessLibrary;
-
-namespace ChessWinForms.ChessLibrary.Pieces;
+namespace ChessLibrary.Pieces;
 
 public interface IMoveable
 {
-	void AddMoveToResult(GameController game, List<IPosition> result, IPosition position);
+	IEnumerable<IPosition> GetAvailableMoves(IPosition pos, GameController game, bool forAttack=false);
+
+	bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position);
 }

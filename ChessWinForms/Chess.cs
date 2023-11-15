@@ -10,20 +10,22 @@ namespace ChessWinForms
 
 		public readonly Dictionary<Position, Button> buttons = new();
 		public readonly Dictionary<Position, PictureBox> dots = new();
-		private BasePiece choosed;
-		private Position choosedPos;
-		public Chess()
-		{
-			InitializeComponent();
-			InitButtonsAndDots();
+		private BasePiece? choosed;
+		private Position? choosedPos;
+				public Chess()
+				{
+					InitializeComponent();
+					InitButtonsAndDots();
 
-			UpdateBoard();
-			// TODO : selected piece, isSelect
+					UpdateBoard();
+					// TODO : selected piece, isSelect
 
-			IEnumerable<IPosition> playerStartPiece = game.GetMoveablePiecePos(game.GetCurrentPlayer());
-			SetEnabledButtons(playerStartPiece);
+					IEnumerable<IPosition> playerStartPiece = game.GetMoveablePiecePos(game.GetCurrentPlayer());
+					SetEnabledButtons(playerStartPiece);
 
-		}
+		            choosed = null;
+		            choosedPos = null;
+				}
 
 		public void InitButtonsAndDots()
 		{
@@ -219,75 +221,46 @@ namespace ChessWinForms
 			return result;
 		}
 
-		private Bitmap GetPieceImg(IPosition position)
+		private Bitmap? GetPieceImg(IPosition position)
 		{
 			var piece = game.GetPiece(position);
 			if (piece == null) return null;
 
-			Bitmap result = null;
 
 			if (piece.Color == ChessLibrary.Enum.Color.White)
 			{
-				if (piece.Type == ChessLibrary.Enum.PieceType.Pawn)
+				switch (piece.Type)
 				{
-					result = Properties.Resources.Chess_plt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.Rook)
-				{
-					result = Properties.Resources.Chess_rlt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.Knight)
-				{
-					result = Properties.Resources.Chess_nlt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.Bishop)
-				{
-					result = Properties.Resources.Chess_blt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.Queen)
-				{
-					result = Properties.Resources.Chess_qlt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.King)
-				{
-					result = Properties.Resources.Chess_klt45;
+					case PieceType.Pawn : return Properties.Resources.Chess_plt45;
+					case PieceType.Rook : return Properties.Resources.Chess_rlt45;
+					case PieceType.Knight : return Properties.Resources.Chess_nlt45;
+					case PieceType.Bishop : return Properties.Resources.Chess_blt45;
+					case PieceType.Queen : return Properties.Resources.Chess_qlt45;
+					case PieceType.King : return Properties.Resources.Chess_klt45;
+					default : return Properties.Resources.Chess_plt45;
 				}
 			}
 			else if (piece.Color == ChessLibrary.Enum.Color.Black)
 			{
-				if (piece.Type == ChessLibrary.Enum.PieceType.Pawn)
+				switch (piece.Type)
 				{
-					result = Properties.Resources.Chess_pdt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.Rook)
-				{
-					result = Properties.Resources.Chess_rdt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.Knight)
-				{
-					result = Properties.Resources.Chess_ndt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.Bishop)
-				{
-					result = Properties.Resources.Chess_bdt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.Queen)
-				{
-					result = Properties.Resources.Chess_qdt45;
-				}
-				else if (piece.Type == ChessLibrary.Enum.PieceType.King)
-				{
-					result = Properties.Resources.Chess_kdt45;
+					case PieceType.Pawn : return Properties.Resources.Chess_pdt45;
+					case PieceType.Rook : return Properties.Resources.Chess_rdt45;
+					case PieceType.Knight : return Properties.Resources.Chess_ndt45;
+					case PieceType.Bishop : return Properties.Resources.Chess_bdt45;
+					case PieceType.Queen : return Properties.Resources.Chess_qdt45;
+					case PieceType.King : return Properties.Resources.Chess_kdt45;
+					default : return Properties.Resources.Chess_plt45;
 				}
 			}
-
-			return result;
+			
+			return null;
 		}
 
 		public void UpdateBoard()
 		{
 			// TODO : update board
-			Dictionary<IPosition, BasePiece> board = game.GetBoard();
+			Dictionary<IPosition, BasePiece?> board = game.GetBoard();
 			foreach (var piece in board)
 			{
 				buttons[GetPosXY((Position)piece.Key)].BackgroundImage = GetPieceImg((Position)piece.Key);
@@ -324,12 +297,12 @@ namespace ChessWinForms
 		{
 			if (color == ChessLibrary.Enum.Color.White)
 			{
-				player1Label.BackColor = Color.SkyBlue;
+				player1Label.BackColor = System.Drawing.Color.SkyBlue;
 				player2Label.BackColor = default;
 			}
 			else
 			{
-				player2Label.BackColor = Color.SkyBlue;
+				player2Label.BackColor = System.Drawing.Color.SkyBlue;
 				player1Label.BackColor = default;
 			}
 		}
@@ -339,20 +312,20 @@ namespace ChessWinForms
 			string status = game.Status.ToString();
 			statusLabel.Text = status;
 			
-			if (game.Status == ChessLibrary.Enum.Status.Check) 
+			if (game.Status == Status.Check) 
 			{
-				statusLabel.BackColor = Color.Orange;
+				statusLabel.BackColor = System.Drawing.Color.Orange;
 			}
-			else if (game.Status == ChessLibrary.Enum.Status.Checkmate) 
+			else if (game.Status == Status.Checkmate) 
 			{
 				string winner = game.Winner == ChessLibrary.Enum.Color.White ? "Player 1 Win" : "Player 2 Win";
 				statusLabel.Text += $" - {winner}";
-				statusLabel.BackColor = Color.Red;
+				statusLabel.BackColor = System.Drawing.Color.Red;
 			}
-			else if (game.Status == ChessLibrary.Enum.Status.Stalemate) 
+			else if (game.Status == Status.Stalemate) 
 			{
 				statusLabel.Text += " - Draw";
-				statusLabel.BackColor = Color.Green;
+				statusLabel.BackColor = System.Drawing.Color.Green;
 			}
 			else statusLabel.BackColor = default;
 		}
@@ -398,7 +371,7 @@ namespace ChessWinForms
 			else
 			{
 				// if Unselect piece
-				if (game.IsUnSelect(game.SelectedPos, GetPosByButton(button)))
+				if (game.IsUnSelect(game.SelectedPos!, GetPosByButton(button)))
 				{
 					game.UnSelect();
 					IEnumerable<IPosition> moveablePiece = game.GetMoveablePiecePos(game.GetCurrentPlayer());
@@ -420,7 +393,7 @@ namespace ChessWinForms
 				
 				SetEnabledButtons(Enumerable.Empty<IPosition>(), true);
 
-				game.ChangeTurn();
+				game.OnChangeTurn.Invoke(sender,e);
 
 				// change turn label color
 				ChangeBackColorPlayerLabel(game.GetCurrentPlayer());
@@ -481,13 +454,13 @@ namespace ChessWinForms
 			else if (type == ChessLibrary.Enum.PieceType.Bishop) choosed = new Bishop(color);
 			else if (type == ChessLibrary.Enum.PieceType.Queen) choosed = new Queen(color);
 
-			game.PawnPromotion(choosedPos, choosed);
+			game.PawnPromotion(choosedPos!, choosed!);
 			
 			SetChooseButton(false);
 				
 			SetEnabledButtons(Enumerable.Empty<IPosition>(), true);
 
-			game.ChangeTurn();
+			game.OnChangeTurn.Invoke(null, EventArgs.Empty);
 
 			// change turn label color
 			ChangeBackColorPlayerLabel(game.GetCurrentPlayer());

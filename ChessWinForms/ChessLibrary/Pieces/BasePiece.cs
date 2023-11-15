@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;

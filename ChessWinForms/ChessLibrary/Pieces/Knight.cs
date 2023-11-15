@@ -3,7 +3,7 @@ using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;
 
-public class Knight : BasePiece
+public class Knight : BasePiece, IMoveable
 {
 	
 	public Knight(Enum.Color color) : base(Enum.PieceType.Knight, color)
@@ -11,12 +11,13 @@ public class Knight : BasePiece
 		
 	}
 
-	private void AddMoveToResult(GameController game, List<IPosition> result, int posX, int posY)
+	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
 	{
-		IPosition pos = new Position(posX, posY);
-		BasePiece? piece = game.GetPiece(pos);
-		if (piece == null) result.Add(pos);
-		if(piece != null && piece.Color != Color) result.Add(pos);
+		BasePiece? piece = game.GetPiece(position);
+		if (piece == null) result.Add(position);
+		if(piece != null && piece.Color != Color) result.Add(position);
+		
+		return true;
 	}
 
 	public override IEnumerable<IPosition> GetAvailableMoves(IPosition position, GameController game, bool forAttack=false)
@@ -27,12 +28,12 @@ public class Knight : BasePiece
 		{
 			if (position.Y >= 1)
 			{	
-				AddMoveToResult(game, result, position.X+2, position.Y-1);
+				AddMoveToResult(game, result, new Position(position.X+2, position.Y-1));
 			}
 			
 			if (position.Y <= Board.BoardSize-2)
 			{
-				AddMoveToResult(game, result, position.X+2, position.Y+1);
+				AddMoveToResult(game, result, new Position(position.X+2, position.Y+1));
 			}
 		}
 		
@@ -40,12 +41,12 @@ public class Knight : BasePiece
 		{
 			if (position.Y >=  2)
 			{
-				AddMoveToResult(game, result, position.X+1, position.Y-2);
+				AddMoveToResult(game, result, new Position(position.X+1, position.Y-2));
 			}
 			
 			if (position.Y <= Board.BoardSize-3)
 			{
-				AddMoveToResult(game, result, position.X+1, position.Y+2);
+				AddMoveToResult(game, result, new Position(position.X+1, position.Y+2));
 			}
 		}
 		
@@ -53,12 +54,12 @@ public class Knight : BasePiece
 		{
 			if (position.Y >= 1)
 			{
-				AddMoveToResult(game, result, position.X-2, position.Y-1);
+				AddMoveToResult(game, result, new Position(position.X-2, position.Y-1));
 			}
 			
 			if (position.Y <= Board.BoardSize-2)
 			{
-				AddMoveToResult(game, result, position.X-2, position.Y+1);
+				AddMoveToResult(game, result, new Position(position.X-2, position.Y+1));
 			}
 		}
 		
@@ -66,12 +67,12 @@ public class Knight : BasePiece
 		{
 			if (position.Y >= 2)
 			{
-				AddMoveToResult(game, result, position.X-1, position.Y-2);
+				AddMoveToResult(game, result, new Position(position.X-1, position.Y-2));
 			}
 			
 			if (position.Y <= Board.BoardSize-3)
 			{
-				AddMoveToResult(game, result, position.X-1, position.Y+2);
+				AddMoveToResult(game, result, new Position(position.X-1, position.Y+2));
 			}
 		}
 		

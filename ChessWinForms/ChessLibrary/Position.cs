@@ -20,7 +20,7 @@ public class Position : IPosition
 		return this.X == pos.X && this.Y == pos.Y;
 	}
 	
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj == null || GetType() != obj.GetType())
 			return false;

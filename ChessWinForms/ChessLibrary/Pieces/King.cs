@@ -3,7 +3,7 @@ using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;
 
-public class King : BasePiece
+public class King : BasePiece, IMoveable
 {
 	public bool IsFirstMove;
 	public King(Enum.Color color) : base(Enum.PieceType.King, color)
@@ -123,7 +123,7 @@ public class King : BasePiece
 			}
 			else {
 				rookFrom = new Position(0,Board.BoardSize-1);
-				rookTo = new Position(0,Board.BoardSize-2);
+				rookTo = new Position(0,Board.BoardSize-3);
 			}
 		}
 		else // black
@@ -134,7 +134,7 @@ public class King : BasePiece
 			}
 			else {
 				rookFrom = new Position(Board.BoardSize-1,Board.BoardSize-1);
-				rookTo = new Position(Board.BoardSize-1,Board.BoardSize-2);
+				rookTo = new Position(Board.BoardSize-1,Board.BoardSize-3);
 			}	
 		}
 		
@@ -164,13 +164,7 @@ public class King : BasePiece
 			{
 				x = position.X+1;
 				y = position.Y+1;
-				pos = new Position(x,y);
-				piece = game.GetPiece(x,y);
-				if (piece != null)
-				{
-					if (piece.Color != Color) result.Add(pos);
-				}
-				else result.Add(pos);
+				AddMoveToResult(game, result, new Position(x,y));
 			}
 			
 			// up left
@@ -178,13 +172,7 @@ public class King : BasePiece
 			{
 				x = position.X+1;
 				y = position.Y-1;
-				pos = new Position(x,y);
-				piece = game.GetPiece(x,y);
-				if (piece != null)
-				{
-					if (piece.Color != Color) result.Add(pos);
-				}
-				else result.Add(pos);
+				AddMoveToResult(game, result, new Position(x,y));
 			}
 		}
 		
@@ -193,26 +181,14 @@ public class King : BasePiece
 			// down
 			x = position.X-1;
 			y = position.Y;
-			pos = new Position(x,y);
-			piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(x,y));
 			
 			// down right
 			if (position.Y < 7)
 			{
 				x = position.X-1;
 				y = position.Y+1;
-				pos = new Position(x,y);
-				piece = game.GetPiece(x,y);
-				if (piece != null)
-				{
-					if (piece.Color != Color) result.Add(pos);
-				}
-				else result.Add(pos);
+				AddMoveToResult(game, result, new Position(x,y));
 			}
 			
 			// down left
@@ -220,13 +196,7 @@ public class King : BasePiece
 			{
 				x = position.X-1;
 				y = position.Y-1;
-				pos = new Position(x,y);
-				piece = game.GetPiece(x,y);
-				if (piece != null)
-				{
-					if (piece.Color != Color) result.Add(pos);
-				}
-				else result.Add(pos);
+				AddMoveToResult(game, result, new Position(x,y));
 			}
 		}
 		
@@ -235,13 +205,7 @@ public class King : BasePiece
 		{
 			x = position.X;
 			y = position.Y+1;
-			pos = new Position(x,y);
-			piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(x,y));
 		}
 		
 		// left
@@ -249,13 +213,7 @@ public class King : BasePiece
 		{
 			x = position.X;
 			y = position.Y-1;
-			pos = new Position(x,y);
-			piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(x,y));
 		}
 		
 		// castle position
@@ -271,4 +229,15 @@ public class King : BasePiece
 		return result;
 	}
 
+	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
+	{
+		BasePiece? piece = game.GetPiece(position);
+		if (piece != null)
+		{
+			if (piece.Color != Color) result.Add(position);
+		}
+		else result.Add(position);
+		
+		return true;
+	}
 }

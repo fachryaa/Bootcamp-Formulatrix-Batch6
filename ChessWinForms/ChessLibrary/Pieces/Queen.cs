@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using ChessLibrary.Enum;
-using ChessWinForms.ChessLibrary.Pieces;
-
 namespace ChessLibrary.Pieces;
 
 public class Queen : BasePiece, IMoveable
@@ -25,7 +21,7 @@ public class Queen : BasePiece, IMoveable
 		{
 			x++;
 			y++;
-			AddMoveToResult(game, result, new Position(x,y));
+			if (!AddMoveToResult(game, result, new Position(x,y))) break;
 		}
 		
 		x = position.X;
@@ -35,7 +31,7 @@ public class Queen : BasePiece, IMoveable
 		{
 			x++;
 			y--;
-			AddMoveToResult(game, result, new Position(x,y));
+			if (!AddMoveToResult(game, result, new Position(x,y))) break;
 		}
 		
 		x = position.X;
@@ -45,7 +41,7 @@ public class Queen : BasePiece, IMoveable
 		{
 			x--;
 			y++;
-			AddMoveToResult(game, result, new Position(x,y));
+			if (!AddMoveToResult(game, result, new Position(x,y))) break;
 		}
 		
 		x = position.X;
@@ -55,48 +51,50 @@ public class Queen : BasePiece, IMoveable
 		{
 			x--;
 			y--;
-			AddMoveToResult(game, result, new Position(x,y));
+			if (!AddMoveToResult(game, result, new Position(x,y))) break;
 		}
 		
 		// rook moves
 		// vertical up
 		for (int i=position.X+1; i < Board.BoardSize; i++)
 		{
-			AddMoveToResult(game, result, new Position(i, position.Y));
+			if (!AddMoveToResult(game, result, new Position(i, position.Y))) break;
 		}
 		
 		// vertical down
 		for (int i=position.X-1; i >= 0; i--)
 		{
-			AddMoveToResult(game, result, new Position(i, position.Y));
+			if (!AddMoveToResult(game, result, new Position(i, position.Y))) break;
 		}
 		
 		// horizontal left
 		for (int i=position.Y-1; i >= 0; i--)
 		{
-			AddMoveToResult(game, result, new Position(position.X, i));
+			if (!AddMoveToResult(game, result, new Position(position.X, i))) break;
 		}
 		
 		// horizontal right
 		for (int i=position.Y+1; i < Board.BoardSize; i++)
 		{
-			AddMoveToResult(game, result, new Position(position.X, i));	
+			if (!AddMoveToResult(game, result, new Position(position.X, i))) break;
 		}		
 		
 		return result;
 		
 	}
 	
-	public void AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
+	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
 	{
 		var piece = game.GetPiece(pos);
 
 		if (piece != null)
 		{
 			if (piece.Color != Color) result.Add(pos);
-			return;
+			return false;
 		}
 		else result.Add(pos);
+		
+		return true;
 	}
 
 }
