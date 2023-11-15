@@ -30,6 +30,6 @@ public abstract class BasePiece
 	/// <param name="game"></param>
 	/// <param name="forAttack"></param>
 	/// <returns></returns>
-	public abstract List<Position> GetAvailableMoves(Position pos, GameController game, bool forAttack=false);
+	public abstract IEnumerable<IPosition> GetAvailableMoves(IPosition pos, GameController game, bool forAttack=false);
 	
 }

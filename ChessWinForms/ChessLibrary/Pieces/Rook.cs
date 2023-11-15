@@ -11,68 +11,47 @@ public class Rook : BasePiece
 		IsFirstMove = true;
 	}
 
-    public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
-    {
-        List<Position> result = new List<Position>();
+	public override IEnumerable<IPosition> GetAvailableMoves(IPosition position, GameController game, bool forAttack=false)
+	{
+		List<IPosition> result = new List<IPosition>();
 
 		// vertical up
 		for (int i=position.X+1; i < Board.BoardSize; i++)
 		{
-			Position pos = new(i, position.Y);
-			var piece = game.GetPiece(pos);
-
-            if (piece != null)
-            {
-                if (piece.Color != Color) result.Add(pos);
-                break;
-            }
-            else result.Add(pos);
+			AddMoveToResult(game, result, new Position(i, position.Y));
 		}
 		
 		// vertical down
 		for (int i=position.X-1; i >= 0; i--)
 		{
-			Position pos = new(i, position.Y);
-			var piece = game.GetPiece(pos);
-
-            if (piece != null)
-            {
-                if (piece.Color != Color) result.Add(pos);
-                break;
-            }
-            else result.Add(pos);
+			AddMoveToResult(game, result, new Position(i, position.Y));
 		}
 		
 		// horizontal left
 		for (int i=position.Y-1; i >= 0; i--)
 		{
-			Position pos = new(position.X, i);
-			var piece = game.GetPiece(pos);
-
-			if (piece != null)
-			{
-				if(piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(position.X, i));
 		}
 		
 		// horizontal right
 		for (int i=position.Y+1; i < Board.BoardSize; i++)
 		{
-			Position pos = new(position.X, i);
-			var piece = game.GetPiece(pos);
-
-            if (piece != null)
-            {
-                if (piece.Color != Color) result.Add(pos);
-                break;
-            }
-            else result.Add(pos);
+			AddMoveToResult(game, result, new Position(position.X, i));
 		}
 
-
 		return result;
-    }
+	}
+	
+	private void AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
+	{
+		var piece = game.GetPiece(pos);
+
+		if (piece != null)
+		{
+			if (piece.Color != Color) result.Add(pos);
+			return;
+		}
+		else result.Add(pos);
+	}
 
 }

@@ -16,13 +16,13 @@ public class King : BasePiece
 	/// </summary>
 	/// <param name="game"></param>
 	/// <returns></returns>
-	private List<Position> GetCastlePosition(GameController game)
+	private IEnumerable<IPosition> GetCastlePosition(GameController game)
 	{
-		if (!IsFirstMove || game.IsCheck) return new();
+		if (!IsFirstMove || game.IsCheck) return Enumerable.Empty<IPosition>();
 		
-		List<Position> result = new();
-		Dictionary<IPosition,BasePiece> board = game.GetBoard();
-		Position myPos = game.GetKingPos(Color);
+		List<IPosition> result = new();
+		Dictionary<IPosition,BasePiece?> board = game.GetBoard();
+		IPosition myPos = game.GetKingPos(Color);
 		
 		// cek left
 		int y = myPos.Y - 1;		
@@ -36,16 +36,16 @@ public class King : BasePiece
 				if (y == myPos.Y-1)
 				{					
 					// simulate move piece
-					game.MovePiece(myPos, new(myPos.X, y), simulate:true);
+					game.MovePiece(myPos, new Position(myPos.X, y), simulate:true);
 					// cek if king is safe
 					if (!game.IsKingSafe(Color))
 					{
 						// king not safe
 						// rewind
-						game.MovePiece(new(myPos.X, y), myPos, simulate:true);
+						game.MovePiece(new Position(myPos.X, y), myPos, simulate:true);
 						break;
 					}
-					game.MovePiece(new(myPos.X, y), myPos, simulate:true);
+					game.MovePiece(new Position(myPos.X, y), myPos, simulate:true);
 				}
 				y--;
 				continue;
@@ -75,16 +75,16 @@ public class King : BasePiece
 				if (y == myPos.Y+1)
 				{					
 					// simulate move piece
-					game.MovePiece(myPos, new(myPos.X, y), simulate:true);
+					game.MovePiece(myPos, new Position(myPos.X, y), simulate:true);
 					// cek if king is safe
 					if (!game.IsKingSafe(Color))
 					{
 						// king not safe
 						// rewind
-						game.MovePiece(new(myPos.X, y), myPos, simulate:true);
+						game.MovePiece(new Position(myPos.X, y), myPos, simulate:true);
 						break;
 					}
-					game.MovePiece(new(myPos.X, y), myPos, simulate:true);
+					game.MovePiece(new Position(myPos.X, y), myPos, simulate:true);
 				}
 				y++;
 				continue;
@@ -142,13 +142,13 @@ public class King : BasePiece
 		
 	} 
 
-	public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
+	public override IEnumerable<IPosition> GetAvailableMoves(IPosition position, GameController game, bool forAttack=false)
 	{
-		List<Position> result = new();
+		List<IPosition> result = new();
 		int x = position.X+1;
 		int y = position.Y;
 		Position pos = new Position(x,y);
-		BasePiece piece = game.GetPiece(x,y);
+		BasePiece? piece = game.GetPiece(x,y);
 		
 		if (position.X < Board.BoardSize-1)
 		{
@@ -261,10 +261,10 @@ public class King : BasePiece
 		// castle position
 		if (!forAttack)
 		{
-			var castlePos = GetCastlePosition(game);
+			var castlePos = GetCastlePosition(game).ToList();
 			if (castlePos.Count != 0 && castlePos != null)
 			{
-				result = result.Concat(castlePos).ToList();
+				result.AddRange(castlePos);
 			}
 		}
 		

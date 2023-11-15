@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using ChessLibrary.Enum;
+using ChessWinForms.ChessLibrary.Pieces;
 
 namespace ChessLibrary.Pieces;
 
-public class Queen : BasePiece
+public class Queen : BasePiece, IMoveable
 {
 	
 	public Queen(Enum.Color color) : base(Enum.PieceType.Queen, color)
@@ -11,9 +12,9 @@ public class Queen : BasePiece
 		
 	}
 
-	public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
+	public override IEnumerable<IPosition> GetAvailableMoves(IPosition position, GameController game, bool forAttack=false)
 	{
-		List<Position> result = new();
+		List<IPosition> result = new();
 		
 		// bishop moves
 		int x = position.X;
@@ -24,14 +25,7 @@ public class Queen : BasePiece
 		{
 			x++;
 			y++;
-			Position pos = new Position(x,y);
-			BasePiece piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(x,y));
 		}
 		
 		x = position.X;
@@ -41,14 +35,7 @@ public class Queen : BasePiece
 		{
 			x++;
 			y--;
-			Position pos = new Position(x,y);
-			BasePiece piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(x,y));
 		}
 		
 		x = position.X;
@@ -58,14 +45,7 @@ public class Queen : BasePiece
 		{
 			x--;
 			y++;
-			Position pos = new Position(x,y);
-			BasePiece piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(x,y));
 		}
 		
 		x = position.X;
@@ -75,74 +55,48 @@ public class Queen : BasePiece
 		{
 			x--;
 			y--;
-			Position pos = new Position(x,y);
-			BasePiece piece = game.GetPiece(x,y);
-			if (piece != null)
-			{
-				if (piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(x,y));
 		}
 		
 		// rook moves
 		// vertical up
 		for (int i=position.X+1; i < Board.BoardSize; i++)
 		{
-			Position pos = new(i, position.Y);
-			var piece = game.GetPiece(pos);
-
-            if (piece != null)
-            {
-                if (piece.Color != Color) result.Add(pos);
-                break;
-            }
-            else result.Add(pos);
+			AddMoveToResult(game, result, new Position(i, position.Y));
 		}
 		
 		// vertical down
 		for (int i=position.X-1; i >= 0; i--)
 		{
-			Position pos = new(i, position.Y);
-			var piece = game.GetPiece(pos);
-
-            if (piece != null)
-            {
-                if (piece.Color != Color) result.Add(pos);
-                break;
-            }
-            else result.Add(pos);
+			AddMoveToResult(game, result, new Position(i, position.Y));
 		}
 		
 		// horizontal left
 		for (int i=position.Y-1; i >= 0; i--)
 		{
-			Position pos = new(position.X, i);
-			var piece = game.GetPiece(pos);
-
-			if (piece != null)
-			{
-				if(piece.Color != Color) result.Add(pos);
-				break;
-			}
-			else result.Add(pos);
+			AddMoveToResult(game, result, new Position(position.X, i));
 		}
 		
 		// horizontal right
 		for (int i=position.Y+1; i < Board.BoardSize; i++)
 		{
-			Position pos = new(position.X, i);
-			var piece = game.GetPiece(pos);
-
-            if (piece != null)
-            {
-                if (piece.Color != Color) result.Add(pos);
-                break;
-            }
-            else result.Add(pos);
+			AddMoveToResult(game, result, new Position(position.X, i));	
 		}		
 		
 		return result;
+		
+	}
+	
+	public void AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
+	{
+		var piece = game.GetPiece(pos);
+
+		if (piece != null)
+		{
+			if (piece.Color != Color) result.Add(pos);
+			return;
+		}
+		else result.Add(pos);
 	}
 
 }

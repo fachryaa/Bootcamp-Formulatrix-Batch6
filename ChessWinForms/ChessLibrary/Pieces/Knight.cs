@@ -11,26 +11,28 @@ public class Knight : BasePiece
 		
 	}
 
-	public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
+	private void AddMoveToResult(GameController game, List<IPosition> result, int posX, int posY)
 	{
-		List<Position> result = new();
+		IPosition pos = new Position(posX, posY);
+		BasePiece? piece = game.GetPiece(pos);
+		if (piece == null) result.Add(pos);
+		if(piece != null && piece.Color != Color) result.Add(pos);
+	}
+
+	public override IEnumerable<IPosition> GetAvailableMoves(IPosition position, GameController game, bool forAttack=false)
+	{
+		List<IPosition> result = new();
 		
 		if (position.X <= Board.BoardSize-3)
 		{
 			if (position.Y >= 1)
-			{
-				Position pos = new(position.X+2, position.Y-1);
-				BasePiece piece = game.GetPiece(pos);
-				if (piece == null) result.Add(pos);
-				if(piece != null && piece.Color != Color) result.Add(pos);
+			{	
+				AddMoveToResult(game, result, position.X+2, position.Y-1);
 			}
 			
 			if (position.Y <= Board.BoardSize-2)
 			{
-				Position pos = new(position.X+2, position.Y+1);
-				BasePiece piece = game.GetPiece(pos);
-				if (piece == null) result.Add(pos);
-				if(piece != null && piece.Color != Color) result.Add(pos);
+				AddMoveToResult(game, result, position.X+2, position.Y+1);
 			}
 		}
 		
@@ -38,18 +40,12 @@ public class Knight : BasePiece
 		{
 			if (position.Y >=  2)
 			{
-				Position pos = new(position.X+1, position.Y-2);
-				BasePiece piece = game.GetPiece(pos);
-				if (piece == null) result.Add(pos);
-				if(piece != null && piece.Color != Color) result.Add(pos);
+				AddMoveToResult(game, result, position.X+1, position.Y-2);
 			}
 			
 			if (position.Y <= Board.BoardSize-3)
 			{
-				Position pos = new(position.X+1, position.Y+2);
-				BasePiece piece = game.GetPiece(pos);
-				if (piece == null) result.Add(pos);
-				if(piece != null && piece.Color != Color) result.Add(pos);
+				AddMoveToResult(game, result, position.X+1, position.Y+2);
 			}
 		}
 		
@@ -57,18 +53,12 @@ public class Knight : BasePiece
 		{
 			if (position.Y >= 1)
 			{
-				Position pos = new(position.X-2, position.Y-1);
-				BasePiece piece = game.GetPiece(pos);
-				if (piece == null) result.Add(pos);
-				if(piece != null && piece.Color != Color) result.Add(pos);
+				AddMoveToResult(game, result, position.X-2, position.Y-1);
 			}
 			
 			if (position.Y <= Board.BoardSize-2)
 			{
-				Position pos = new(position.X-2, position.Y+1);
-				BasePiece piece = game.GetPiece(pos);
-				if (piece == null) result.Add(pos);
-				if(piece != null && piece.Color != Color) result.Add(pos);
+				AddMoveToResult(game, result, position.X-2, position.Y+1);
 			}
 		}
 		
@@ -76,18 +66,12 @@ public class Knight : BasePiece
 		{
 			if (position.Y >= 2)
 			{
-				Position pos = new(position.X-1, position.Y-2);
-				BasePiece piece = game.GetPiece(pos);
-				if (piece == null) result.Add(pos);
-				if(piece != null && piece.Color != Color) result.Add(pos);
+				AddMoveToResult(game, result, position.X-1, position.Y-2);
 			}
 			
 			if (position.Y <= Board.BoardSize-3)
 			{
-				Position pos = new(position.X-1, position.Y+2);
-				BasePiece piece = game.GetPiece(pos);
-				if (piece == null) result.Add(pos);
-				if(piece != null && piece.Color != Color) result.Add(pos);
+				AddMoveToResult(game, result, position.X-1, position.Y+2);
 			}
 		}
 		

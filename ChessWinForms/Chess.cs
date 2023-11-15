@@ -1,5 +1,6 @@
 using ChessLibrary;
 using ChessLibrary.Pieces;
+using ChessLibrary.Enum;
 
 namespace ChessWinForms
 {
@@ -19,7 +20,7 @@ namespace ChessWinForms
 			UpdateBoard();
 			// TODO : selected piece, isSelect
 
-			List<Position> playerStartPiece = game.GetMoveablePiecePos(game.GetCurrentPlayer());
+			IEnumerable<IPosition> playerStartPiece = game.GetMoveablePiecePos(game.GetCurrentPlayer());
 			SetEnabledButtons(playerStartPiece);
 
 		}
@@ -202,7 +203,7 @@ namespace ChessWinForms
 			return result;
 
 		}
-		public Button GetButtonByPos(Position position)
+		public Button GetButtonByPos(IPosition position)
 		{
 			// TODO : get button by loc
 			Button result = buttons.FirstOrDefault(x => x.Key.X == position.X && x.Key.Y == position.Y).Value;
@@ -210,7 +211,7 @@ namespace ChessWinForms
 			return result;
 		}
 
-		public PictureBox GetDotByPos(Position position)
+		public PictureBox GetDotByPos(IPosition position)
 		{
 			// TODO : get button by loc
 			PictureBox result = dots.FirstOrDefault(x => x.Key.X == position.X && x.Key.Y == position.Y).Value;
@@ -218,7 +219,7 @@ namespace ChessWinForms
 			return result;
 		}
 
-		private Bitmap GetPieceImg(Position position)
+		private Bitmap GetPieceImg(IPosition position)
 		{
 			var piece = game.GetPiece(position);
 			if (piece == null) return null;
@@ -293,7 +294,7 @@ namespace ChessWinForms
 			}
 		}
 
-		private void SetEnabledButtons(List<Position> positions, bool isMoveTo = false)
+		private void SetEnabledButtons(IEnumerable<IPosition> positions, bool isMoveTo = false)
 		{
 			foreach (var b in buttons)
 			{
@@ -388,8 +389,8 @@ namespace ChessWinForms
 				game.SelectPiece(position);
 
 				// set Enable to false
-				List<Position> forEnables = game.GetLegalMove(position);
-				forEnables.Add(position);
+				IEnumerable<IPosition> forEnables = game.GetLegalMove(position);
+				forEnables.ToList().Add(position);
 				SetEnabledButtons(forEnables, isMoveTo: true);
 
 			}
@@ -400,8 +401,8 @@ namespace ChessWinForms
 				if (game.IsUnSelect(game.SelectedPos, GetPosByButton(button)))
 				{
 					game.UnSelect();
-					List<Position> moveablePiece = game.GetMoveablePiecePos(game.GetCurrentPlayer());
-					SetEnabledButtons(new(), true);
+					IEnumerable<IPosition> moveablePiece = game.GetMoveablePiecePos(game.GetCurrentPlayer());
+					SetEnabledButtons(Enumerable.Empty<IPosition>(), true);
 					SetEnabledButtons(moveablePiece);
 					return;
 				}
@@ -417,7 +418,7 @@ namespace ChessWinForms
 				
 				SetChooseButton(false);
 				
-				SetEnabledButtons(new(), true);
+				SetEnabledButtons(Enumerable.Empty<IPosition>(), true);
 
 				game.ChangeTurn();
 
@@ -427,7 +428,7 @@ namespace ChessWinForms
 				// change status
 				ChangeStatus();
 
-				List<Position> changeTurnPos = game.GetMoveablePiecePos(game.GetCurrentPlayer());
+				IEnumerable<IPosition> changeTurnPos = game.GetMoveablePiecePos(game.GetCurrentPlayer());
 				SetEnabledButtons(changeTurnPos);
 			}
 
@@ -439,8 +440,8 @@ namespace ChessWinForms
 			game.ResetGame();
 			
 			
-			List<Position> changeTurnPos = game.GetMoveablePiecePos(game.GetCurrentPlayer());
-			SetEnabledButtons(new(), true);
+			IEnumerable<IPosition> changeTurnPos = game.GetMoveablePiecePos(game.GetCurrentPlayer());
+			SetEnabledButtons(Enumerable.Empty<IPosition>(), true);
 			SetEnabledButtons(changeTurnPos);
 			
 			ChangeStatus();
@@ -484,7 +485,7 @@ namespace ChessWinForms
 			
 			SetChooseButton(false);
 				
-			SetEnabledButtons(new(), true);
+			SetEnabledButtons(Enumerable.Empty<IPosition>(), true);
 
 			game.ChangeTurn();
 
@@ -494,7 +495,7 @@ namespace ChessWinForms
 			// change status
 			ChangeStatus();
 
-			List<Position> changeTurnPos = game.GetMoveablePiecePos(game.GetCurrentPlayer());
+			IEnumerable<IPosition> changeTurnPos = game.GetMoveablePiecePos(game.GetCurrentPlayer());
 			SetEnabledButtons(changeTurnPos);
 			
 			UpdateBoard();

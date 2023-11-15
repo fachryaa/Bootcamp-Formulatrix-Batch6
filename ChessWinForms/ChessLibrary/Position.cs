@@ -10,6 +10,10 @@ public class Position : IPosition
 		X = x;
 		Y = y;
 	}
+	public Position()
+	{
+		
+	}
 
 	public bool Equals(IPosition pos)
 	{

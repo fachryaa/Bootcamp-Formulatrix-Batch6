@@ -20,9 +20,9 @@ public class Pawn : BasePiece
 	/// <param name="game"></param>
 	/// <param name="enemyPos"></param>
 	/// <returns></returns>
-	public bool IsCanEnPassant(GameController game, Position enemyPos)
+	public bool IsCanEnPassant(GameController game, IPosition enemyPos)
 	{
-		BasePiece enemyPiece = game.GetPiece(enemyPos);
+		BasePiece? enemyPiece = game.GetPiece(enemyPos);
 		if (enemyPiece == null || enemyPiece.Type != PieceType.Pawn || enemyPiece.Color == Color) return false;
 		
 		Pawn enemyPawn = (Pawn) enemyPiece;
@@ -43,16 +43,16 @@ public class Pawn : BasePiece
 	/// <param name="game"></param>
 	/// <param name="isForMoving"></param>
 	/// <returns></returns>
-	public List<Position> GetAttackMoves(IPosition position, GameController game, bool isForMoving=true)
+	public List<IPosition> GetAttackMoves(IPosition position, GameController game, bool isForMoving=true)
 	{
-		List<Position> result = new();
+		List<IPosition> result = new();
 		int dir = Color == Enum.Color.White ? 1 : -1;
 		
 		// if paling kiri
 		if (position.Y == 0)
 		{
-			Position frontSidePos = new Position(position.X + 1*dir, position.Y + 1);
-			BasePiece enemyPiece = game.GetPiece(frontSidePos);
+			IPosition frontSidePos = new Position(position.X + 1*dir, position.Y + 1);
+			BasePiece? enemyPiece = game.GetPiece(frontSidePos);
 			if ((enemyPiece != null && enemyPiece.Color != Color) || !isForMoving)
 			{
 				result.Add(frontSidePos);
@@ -67,8 +67,8 @@ public class Pawn : BasePiece
 		// if paling kanan
 		else if (position.Y == Board.BoardSize-1)
 		{
-			Position frontSidePos = new Position(position.X + 1*dir, position.Y - 1);
-			BasePiece enemyPiece = game.GetPiece(frontSidePos);
+			IPosition frontSidePos = new Position(position.X + 1*dir, position.Y - 1);
+			BasePiece? enemyPiece = game.GetPiece(frontSidePos);
 			if ((enemyPiece != null && enemyPiece.Color != Color) || !isForMoving)
 			{
 				result.Add(frontSidePos);
@@ -82,8 +82,8 @@ public class Pawn : BasePiece
 		}
 		else
 		{
-			Position frontSidePos = new Position(position.X + 1*dir, position.Y + 1*dir);
-			BasePiece enemyPiece = game.GetPiece(frontSidePos);
+			IPosition frontSidePos = new Position(position.X + 1*dir, position.Y + 1*dir);
+			BasePiece? enemyPiece = game.GetPiece(frontSidePos);
 			if ((enemyPiece != null && enemyPiece.Color != Color) || !isForMoving)
 			{
 				result.Add(frontSidePos);
@@ -110,13 +110,13 @@ public class Pawn : BasePiece
 		return result;
 	}
 	
-	public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
+	public override IEnumerable<IPosition> GetAvailableMoves(IPosition position, GameController game, bool forAttack=false)
 	{
-		List<Position> result = new();
+		List<IPosition> result = new();
 		int dir = Color == Enum.Color.White ? 1 : -1;
 
-		Position pos1 = position.X < 7 ? new Position(position.X + 1*dir, position.Y) : default;
-		BasePiece frontPos1 = game.GetPiece(pos1);
+		IPosition? pos1 = position.X < 7 ? new Position(position.X + 1*dir, position.Y) : default;
+		BasePiece? frontPos1 = game.GetPiece(pos1);
 		if (pos1 != null && frontPos1 == null)
 		{
 			result.Add(pos1);
@@ -124,10 +124,10 @@ public class Pawn : BasePiece
 
 		if (IsFirstMove)
 		{
-			Position? pos2 = position.X < Board.BoardSize-1 ? new Position(position.X + 2*dir, position.Y) : default;
+			IPosition? pos2 = position.X < Board.BoardSize-1 ? new Position(position.X + 2*dir, position.Y) : default;
 			if (game.GetPiece(pos2) == null)
 			{
-				BasePiece frontPos2 = game.GetPiece(pos1);
+				BasePiece? frontPos2 = game.GetPiece(pos1);
 				if (pos2 != null && frontPos2 == null)
 				{
 					result.Add(pos2);

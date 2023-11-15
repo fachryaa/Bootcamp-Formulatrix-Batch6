@@ -11,9 +11,9 @@ public class Bishop : BasePiece
 		
 	}
 
-	public override List<Position> GetAvailableMoves(Position position, GameController game, bool forAttack=false)
+	public override IEnumerable<IPosition> GetAvailableMoves(IPosition position, GameController game, bool forAttack=false)
 	{
-		List<Position> result = new();
+		List<IPosition> result = new();
 		int x = position.X;
 		int y = position.Y;
 		
@@ -23,7 +23,7 @@ public class Bishop : BasePiece
 			x++;
 			y++;
 			Position pos = new Position(x,y);
-			BasePiece piece = game.GetPiece(x,y);
+			BasePiece? piece = game.GetPiece(x,y);
 			if (piece != null)
 			{
 				if (piece.Color != Color) result.Add(pos);
@@ -39,8 +39,8 @@ public class Bishop : BasePiece
 		{
 			x++;
 			y--;
-			Position pos = new Position(x,y);
-			BasePiece piece = game.GetPiece(x,y);
+			IPosition pos = new Position(x,y);
+			BasePiece? piece = game.GetPiece(x,y);
 			if (piece != null)
 			{
 				if (piece.Color != Color) result.Add(pos);
@@ -56,8 +56,8 @@ public class Bishop : BasePiece
 		{
 			x--;
 			y++;
-			Position pos = new Position(x,y);
-			BasePiece piece = game.GetPiece(x,y);
+			IPosition pos = new Position(x,y);
+			BasePiece? piece = game.GetPiece(x,y);
 			if (piece != null)
 			{
 				if (piece.Color != Color) result.Add(pos);
@@ -73,8 +73,8 @@ public class Bishop : BasePiece
 		{
 			x--;
 			y--;
-			Position pos = new Position(x,y);
-			BasePiece piece = game.GetPiece(x,y);
+			IPosition pos = new Position(x,y);
+			BasePiece? piece = game.GetPiece(x,y);
 			if (piece != null)
 			{
 				if (piece.Color != Color) result.Add(pos);

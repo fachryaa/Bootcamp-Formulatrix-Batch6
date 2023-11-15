@@ -9,7 +9,7 @@ namespace ChessLibrary;
 
 public class GameController
 {
-	// XTODO: Create IBoard to store Position, BasePiece
+	// XTODO: Create IBoard to store IPosition, BasePiece
 	// XIBoard : BoardSize, Dict<IPosition, BasePiece> InitPiece
 	// XTODO: In All Piece, change hardcode iteration, use variable value from BoardSize instead
 	
@@ -17,11 +17,11 @@ public class GameController
 	
 	private Enum.Color[] _players = new Enum.Color[2];
 	private int _currentTurn;
-	// private Dictionary<Position, BasePiece> _board = new();
+	// private Dictionary<IPosition, BasePiece> _board = new();
 	private Board _board;
 	public bool IsCheck { get; private set; }
 	public bool IsSelect { get; private set; }
-	public Position? SelectedPos { get; private set; }
+	public IPosition? SelectedPos { get; private set; }
 	public Status Status { get; private set; }
 	public Enum.Color Winner { get; private set; }
 	
@@ -53,7 +53,7 @@ public class GameController
 	/// Select piece to move
 	/// </summary>
 	/// <param name="pos"></param>
-	public void SelectPiece(Position pos)
+	public void SelectPiece(IPosition pos)
 	{
 		SelectedPos = pos;
 		IsSelect = true;
@@ -97,7 +97,7 @@ public class GameController
 	/// <param name="posFrom"></param>
 	/// <param name="posTo"></param>
 	/// <returns></returns>
-	private bool IsEnPassantMove(Position? posFrom, Position? posTo)
+	private bool IsEnPassantMove(IPosition? posFrom, IPosition? posTo)
 	{		
 		// if not attack
 		if (posFrom == null || posTo == null) return false;
@@ -114,8 +114,8 @@ public class GameController
 		
 		int dir = colorPawn == Enum.Color.White ? -1 : 1;
 		
-		BasePiece enemyPiece = GetPiece(posTo.X + (1*dir), posTo.Y);
-		if (enemyPiece.Type != PieceType.Pawn) return false;
+		BasePiece? enemyPiece = GetPiece(posTo.X + (1*dir), posTo.Y);
+		if (enemyPiece is null || enemyPiece.Type != PieceType.Pawn) return false;
 		Pawn enemyPawn = (Pawn) enemyPiece;
 		
 		if (enemyPawn.IsDoubleMove) return true;
@@ -144,10 +144,10 @@ public class GameController
 	/// Move piece to position based on selected piece
 	/// </summary>
 	/// <param name="pos"></param>
-	public void MovePiece(Position pos)
+	public void MovePiece(IPosition pos)
 	{
 		var posTo = pos;
-		var posFrom = SelectedPos;
+		var posFrom = SelectedPos!;
 				
 		// cek king and rook
 		BasePiece? myPiece = GetPiece(posFrom);
@@ -157,7 +157,7 @@ public class GameController
 			king.IsFirstMove = false;
 			
 			// cek if castle
-			if (posFrom?.Y - posTo.Y == 2) king.CastleMove(this, isLeft:true);
+			if (posFrom.Y - posTo.Y == 2) king.CastleMove(this, isLeft:true);
 			else if (posTo.Y - posFrom?.Y == 2) king.CastleMove(this, isLeft:false);
 			
 			// disable pawn double move
@@ -187,7 +187,7 @@ public class GameController
 			if (IsEnPassantMove(posFrom, posTo))
 			{
 				int dir = pawn.Color == Enum.Color.White ? -1 : 1;
-				Position enemyPos = new Position(posTo.X + (1*dir), posTo.Y);
+				IPosition enemyPos = new Position(posTo.X + (1*dir), posTo.Y);
 				_board.SetPiece(enemyPos, null);
 			}
 			
@@ -210,7 +210,7 @@ public class GameController
 	/// <param name="from"></param>
 	/// <param name="to"></param>
 	/// <returns></returns>
-	public bool IsUnSelect(Position from, Position to)
+	public bool IsUnSelect(IPosition from, IPosition to)
 	{
 		return (from.X == to.X) && (from.Y == to.Y);
 	}
@@ -222,7 +222,7 @@ public class GameController
 	/// <param name="to"></param>
 	/// <param name="simulate"></param>
 	/// <returns></returns>
-	public bool MovePiece(Position from, Position to, bool simulate=false)
+	public bool MovePiece(IPosition from, IPosition to, bool simulate=false)
 	{
 		var posFrom = new Position(from.X, from.Y);
 		var posTo = new Position(to.X, to.Y);
@@ -245,14 +245,14 @@ public class GameController
 	/// <param name="piecePos"></param>
 	/// <param name="to"></param>
 	/// <returns></returns>
-	private bool IsPiecePinned(Position piecePos, Position to)
+	private bool IsPiecePinned(IPosition piecePos, IPosition to)
 	{
 		bool result = false;
-		BasePiece? piece = GetPiece(piecePos);
+		BasePiece piece = GetPiece(piecePos)!;
 		
 		// temp to keep piece
 		BasePiece? tempPiece = GetPiece(to);
-		Position? tempPos = to;
+		IPosition? tempPos = to;
 		
 		// move piece
 		MovePiece(piecePos, to, simulate:true);
@@ -276,12 +276,12 @@ public class GameController
 	/// </summary>
 	/// <param name="position"></param>
 	/// <returns></returns>
-	public List<Position>? GetLegalMove(Position position)
+	public IEnumerable<IPosition> GetLegalMove(IPosition position)
 	{
 		BasePiece? piece = GetPiece(position);
-		if (piece is null) return null;
+		if (piece is null) return Enumerable.Empty<IPosition>();
 		
-		List<Position> result = piece.GetAvailableMoves(position, this);
+		List<IPosition> result = piece.GetAvailableMoves(position, this).ToList();
 		
 		result.RemoveAll(pos => IsPiecePinned(position, pos));
 
@@ -293,15 +293,15 @@ public class GameController
 	/// </summary>
 	/// <param name="color"></param>
 	/// <returns></returns>
-	public List<Position> GetMoveablePiecePos(Enum.Color color)
+	public List<IPosition> GetMoveablePiecePos(Enum.Color color)
 	{
-		List<Position> result = new();
+		List<IPosition> result = new();
 
 		for(int i=0; i<Board.BoardSize; i++)
 		{
 			for(int j=0; j<Board.BoardSize; j++)
 			{
-				BasePiece piece = GetPiece(i, j);
+				BasePiece piece = GetPiece(i, j)!;
 
 				if (piece != null && piece.Color == color)
 				{
@@ -318,7 +318,7 @@ public class GameController
 	/// </summary>
 	/// <param name="position"></param>
 	/// <returns></returns>
-	public bool IsPawnGotPromotion(Position position)
+	public bool IsPawnGotPromotion(IPosition position)
 	{
 		var piece = GetPiece(position);
 		if (piece == null) return false;
@@ -337,7 +337,7 @@ public class GameController
 	/// </summary>
 	/// <param name="position"></param>
 	/// <param name="promotedPiece"></param>
-	public void PawnPromotion(Position position, BasePiece promotedPiece)
+	public void PawnPromotion(IPosition position, BasePiece promotedPiece)
 	{
 		var piece = GetPiece(position);
 		
@@ -388,10 +388,10 @@ public class GameController
 	/// </summary>
 	/// <param name="position"></param>
 	/// <returns></returns>
-	private List<Position> GetPieceAttackArea(IPosition position)
+	private IEnumerable<IPosition> GetPieceAttackArea(IPosition position)
 	{		
-		BasePiece? piece = GetPiece(position);
-		List<Position> result = piece.GetAvailableMoves((Position)position, this, true);
+		BasePiece? piece = GetPiece(position)!;
+		List<IPosition> result = piece.GetAvailableMoves(position, this, true).ToList();
 		
 		return result;
 	}
@@ -403,11 +403,11 @@ public class GameController
 	private bool IsStalemate()
 	{
 		if (IsCheck) return false;
-		List<Position> moveablePos = GetMoveablePiecePos(GetCurrentPlayer());
+		IEnumerable<IPosition> moveablePos = GetMoveablePiecePos(GetCurrentPlayer());
 		foreach (var pos in moveablePos)
 		{
-			List<Position> legalPos = GetLegalMove(pos);
-			if (legalPos.Count > 0) return false;
+			IEnumerable<IPosition> legalPos = GetLegalMove(pos);
+			if (legalPos.Count() > 0) return false;
 		}
 		
 		return true;
@@ -418,16 +418,16 @@ public class GameController
 	/// </summary>
 	/// <param name="color"></param>
 	/// <returns></returns>
-	private List<Position> GetAllAttackArea(Enum.Color color)
+	private IEnumerable<IPosition> GetAllAttackArea(Enum.Color color)
 	{
-		List<Position> result = new();
+		List<IPosition> result = new();
 		
 		foreach (var dict in _board.GetBoard())
 		{
 			if (dict.Value == null) continue;
 			if (dict.Value.Color == color)
 			{
-				List<Position> x = new();
+				List<IPosition> x = new();
 				if (dict.Value.Type == PieceType.Pawn)
 				{
 					Pawn pawn = (Pawn) dict.Value;
@@ -435,7 +435,7 @@ public class GameController
 				}
 				else
 				{
-					x = GetPieceAttackArea(dict.Key);
+					x = GetPieceAttackArea(dict.Key).ToList();
 				}
 				
 				result.AddRange(x);
@@ -450,17 +450,18 @@ public class GameController
 	/// </summary>
 	/// <param name="color"></param>
 	/// <returns></returns>
-	public Position? GetKingPos(Enum.Color color)
+	public IPosition GetKingPos(Enum.Color color)
 	{
+		IPosition result = new Position();
 		foreach (var piece in _board.GetBoard())
 		{
 			if (piece.Value == null) continue;
 			if (piece.Value.Color == color & piece.Value.Type == Enum.PieceType.King)
 			{
-				return (Position)piece.Key;
+				result = piece.Key;
 			}
 		}
-		return null;
+		return result;
 	}
 	
 	/// <summary>
@@ -472,16 +473,16 @@ public class GameController
 	{
 		bool result = true;
 		
-		Position? kingPos = GetKingPos(color);
+		IPosition? kingPos = GetKingPos(color);
 		
 		Enum.Color enemyColor = color == Enum.Color.White ? Enum.Color.Black : Enum.Color.White;
 		
-		List<Position> enemyAttackArea = GetAllAttackArea(enemyColor);
+		IEnumerable<IPosition> enemyAttackArea = GetAllAttackArea(enemyColor);
 		
 		// check if king in attack area
 		foreach (var pos in enemyAttackArea)
 		{
-			if (pos.Equals(kingPos))
+			if (pos.Equals(kingPos!))
 			{
 				return false;
 			}
@@ -498,12 +499,12 @@ public class GameController
 	{
 		if (!IsCheck) return false;
 		
-		List<Position> moveablePiece = GetMoveablePiecePos(_players[_currentTurn]);
+		List<IPosition> moveablePiece = GetMoveablePiecePos(_players[_currentTurn]);
 		
-		foreach (Position piece in moveablePiece)
+		foreach (IPosition piece in moveablePiece)
 		{
-			List<Position>? legalMove = GetLegalMove(piece);
-			if (legalMove.Count > 0) return false;
+			IEnumerable<IPosition>? legalMove = GetLegalMove(piece);
+			if (legalMove.Count() > 0) return false;
 		}
 		
 		Status = Status.Checkmate;
@@ -519,7 +520,6 @@ public class GameController
 	public BasePiece? GetPiece(int x, int y)
 	{
 		return _board.GetPiece(new Position(x, y));
-
 	}
 	
 	/// <summary>
