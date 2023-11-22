@@ -3,7 +3,7 @@ using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;
 
-public class Bishop : BasePiece, IMoveable
+public class Bishop : BasePiece
 {
 	
 	public Bishop(Enum.Color color) : base(Enum.PieceType.Bishop, color)
@@ -58,7 +58,7 @@ public class Bishop : BasePiece, IMoveable
 		return result;
 	}
 	
-	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
+	public override bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
 	{
 		BasePiece? piece = game.GetPiece(position);
 		if (piece != null)

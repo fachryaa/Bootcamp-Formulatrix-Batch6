@@ -3,7 +3,7 @@ using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;
 
-public class Rook : BasePiece, IMoveable
+public class Rook : BasePiece
 {
 	public bool IsFirstMove { get; set; }
 	public Rook(Enum.Color color) : base(Enum.PieceType.Rook, color)
@@ -42,7 +42,7 @@ public class Rook : BasePiece, IMoveable
 		return result;
 	}
 	
-	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
+	public override bool AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
 	{
 		var piece = game.GetPiece(pos);
 

@@ -1,4 +1,4 @@
-using ChessLibrary;
+using ChessLibrary.Enum;
 using ChessLibrary.Pieces;
 
 namespace ChessLibrary;
@@ -46,17 +46,17 @@ public class Board : IBoard
 
 		// init another piece
 		// update board
-		_board[new Position(sidePiece, 0)] = new Rook(color);
-		_board[new Position(sidePiece, BoardSize-1)] = new Rook(color);
+		_board[new Position(sidePiece, 0)] = BasePiece.Create(PieceType.Rook, color);
+		_board[new Position(sidePiece, BoardSize-1)] = BasePiece.Create(PieceType.Rook, color);
 		
-		_board[new Position(sidePiece, 1)] = new Knight(color);
-		_board[new Position(sidePiece, BoardSize-2)] = new Knight(color);
+		_board[new Position(sidePiece, 1)] = BasePiece.Create(PieceType.Knight, color);
+		_board[new Position(sidePiece, BoardSize-2)] = BasePiece.Create(PieceType.Knight, color);
 		
-		_board[new Position(sidePiece, 2)] = new Bishop(color);
-		_board[new Position(sidePiece, BoardSize-3)] = new Bishop(color);
+		_board[new Position(sidePiece, 2)] = BasePiece.Create(PieceType.Bishop, color);
+		_board[new Position(sidePiece, BoardSize-3)] = BasePiece.Create(PieceType.Bishop, color);
 		
-		_board[new Position(sidePiece, 3)] = new Queen(color);
-		_board[new Position(sidePiece, BoardSize-4)] = new King(color);
+		_board[new Position(sidePiece, 3)] = BasePiece.Create(PieceType.Queen, color);
+		_board[new Position(sidePiece, BoardSize-4)] = BasePiece.Create(PieceType.Queen, color);
 	}
 	
 	public BasePiece? GetPiece(IPosition position)

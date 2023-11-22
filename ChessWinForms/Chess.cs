@@ -449,10 +449,10 @@ namespace ChessWinForms
 		
 		private void Choosing(ChessLibrary.Enum.PieceType type, ChessLibrary.Enum.Color color)
 		{
-			if (type == ChessLibrary.Enum.PieceType.Rook) choosed = new Rook(color);
-			else if (type == ChessLibrary.Enum.PieceType.Knight) choosed = new Knight(color);
-			else if (type == ChessLibrary.Enum.PieceType.Bishop) choosed = new Bishop(color);
-			else if (type == ChessLibrary.Enum.PieceType.Queen) choosed = new Queen(color);
+			if (type == ChessLibrary.Enum.PieceType.Rook) choosed = BasePiece.Create(PieceType.Rook, color);
+			else if (type == ChessLibrary.Enum.PieceType.Knight) choosed = BasePiece.Create(PieceType.Knight, color);
+			else if (type == ChessLibrary.Enum.PieceType.Bishop) choosed = BasePiece.Create(PieceType.Bishop, color);
+			else if (type == ChessLibrary.Enum.PieceType.Queen) choosed = BasePiece.Create(PieceType.Queen, color);
 
 			game.PawnPromotion(choosedPos!, choosed!);
 			

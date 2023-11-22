@@ -11,7 +11,7 @@ public class Knight : BasePiece, IMoveable
 		
 	}
 
-	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
+	public override bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
 	{
 		BasePiece? piece = game.GetPiece(position);
 		if (piece == null) result.Add(position);

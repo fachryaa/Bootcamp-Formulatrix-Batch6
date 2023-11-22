@@ -1,6 +1,6 @@
 namespace ChessLibrary.Pieces;
 
-public class Queen : BasePiece, IMoveable
+public class Queen : BasePiece
 {
 	
 	public Queen(Enum.Color color) : base(Enum.PieceType.Queen, color)
@@ -83,7 +83,7 @@ public class Queen : BasePiece, IMoveable
 		
 	}
 	
-	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
+	public override bool AddMoveToResult(GameController game, List<IPosition> result, IPosition pos)
 	{
 		var piece = game.GetPiece(pos);
 

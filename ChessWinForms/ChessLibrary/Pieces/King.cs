@@ -229,7 +229,7 @@ public class King : BasePiece, IMoveable
 		return result;
 	}
 
-	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
+	public override bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
 	{
 		BasePiece? piece = game.GetPiece(position);
 		if (piece != null)

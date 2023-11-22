@@ -3,7 +3,7 @@ using ChessLibrary.Enum;
 
 namespace ChessLibrary.Pieces;
 
-public class Pawn : BasePiece, IMoveable
+public class Pawn : BasePiece
 {
 	public bool IsFirstMove { get ; set; }
 	public bool IsDoubleMove { get; set; }
@@ -84,8 +84,9 @@ public class Pawn : BasePiece, IMoveable
 		return result;
 	}
 
-	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
+	public override bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position)
 	{
+		// TODO: 
 		throw new NotImplementedException();
 	}
 	public bool AddMoveToResult(GameController game, List<IPosition> result, IPosition position, int dir, bool isForMoving)
