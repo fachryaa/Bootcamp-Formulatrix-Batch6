@@ -17,7 +17,7 @@ public class Queen : BasePiece
 		int y = position.Y;
 		
 		// up right
-		while(x < Board.BoardSize-1 && y < Board.BoardSize-1)
+		while(x < ChessBoard.BoardSize-1 && y < ChessBoard.BoardSize-1)
 		{
 			x++;
 			y++;
@@ -27,7 +27,7 @@ public class Queen : BasePiece
 		x = position.X;
 		y = position.Y;
 		// up left
-		while(x < Board.BoardSize-1 && y > 0)
+		while(x < ChessBoard.BoardSize-1 && y > 0)
 		{
 			x++;
 			y--;
@@ -37,7 +37,7 @@ public class Queen : BasePiece
 		x = position.X;
 		y = position.Y;
 		// down right
-		while(x > 0 && y < Board.BoardSize-1)
+		while(x > 0 && y < ChessBoard.BoardSize-1)
 		{
 			x--;
 			y++;
@@ -56,7 +56,7 @@ public class Queen : BasePiece
 		
 		// rook moves
 		// vertical up
-		for (int i=position.X+1; i < Board.BoardSize; i++)
+		for (int i=position.X+1; i < ChessBoard.BoardSize; i++)
 		{
 			if (!AddMoveToResult(game, result, new Position(i, position.Y))) break;
 		}
@@ -74,7 +74,7 @@ public class Queen : BasePiece
 		}
 		
 		// horizontal right
-		for (int i=position.Y+1; i < Board.BoardSize; i++)
+		for (int i=position.Y+1; i < ChessBoard.BoardSize; i++)
 		{
 			if (!AddMoveToResult(game, result, new Position(position.X, i))) break;
 		}		

@@ -24,27 +24,27 @@ public class Knight : BasePiece, IMoveable
 	{
 		List<IPosition> result = new();
 		
-		if (position.X <= Board.BoardSize-3)
+		if (position.X <= ChessBoard.BoardSize-3)
 		{
 			if (position.Y >= 1)
 			{	
 				AddMoveToResult(game, result, new Position(position.X+2, position.Y-1));
 			}
 			
-			if (position.Y <= Board.BoardSize-2)
+			if (position.Y <= ChessBoard.BoardSize-2)
 			{
 				AddMoveToResult(game, result, new Position(position.X+2, position.Y+1));
 			}
 		}
 		
-		if (position.X <= Board.BoardSize-2)
+		if (position.X <= ChessBoard.BoardSize-2)
 		{
 			if (position.Y >=  2)
 			{
 				AddMoveToResult(game, result, new Position(position.X+1, position.Y-2));
 			}
 			
-			if (position.Y <= Board.BoardSize-3)
+			if (position.Y <= ChessBoard.BoardSize-3)
 			{
 				AddMoveToResult(game, result, new Position(position.X+1, position.Y+2));
 			}
@@ -57,7 +57,7 @@ public class Knight : BasePiece, IMoveable
 				AddMoveToResult(game, result, new Position(position.X-2, position.Y-1));
 			}
 			
-			if (position.Y <= Board.BoardSize-2)
+			if (position.Y <= ChessBoard.BoardSize-2)
 			{
 				AddMoveToResult(game, result, new Position(position.X-2, position.Y+1));
 			}
@@ -70,7 +70,7 @@ public class Knight : BasePiece, IMoveable
 				AddMoveToResult(game, result, new Position(position.X-1, position.Y-2));
 			}
 			
-			if (position.Y <= Board.BoardSize-3)
+			if (position.Y <= ChessBoard.BoardSize-3)
 			{
 				AddMoveToResult(game, result, new Position(position.X-1, position.Y+2));
 			}

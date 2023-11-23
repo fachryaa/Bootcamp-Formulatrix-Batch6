@@ -16,7 +16,7 @@ public class Rook : BasePiece
 		List<IPosition> result = new List<IPosition>();
 
 		// vertical up
-		for (int i=position.X+1; i < Board.BoardSize; i++)
+		for (int i=position.X+1; i < ChessBoard.BoardSize; i++)
 		{
 			if (!AddMoveToResult(game, result, new Position(i, position.Y))) break;
 		}
@@ -34,7 +34,7 @@ public class Rook : BasePiece
 		}
 		
 		// horizontal right
-		for (int i=position.Y+1; i < Board.BoardSize; i++)
+		for (int i=position.Y+1; i < ChessBoard.BoardSize; i++)
 		{
 			if (!AddMoveToResult(game, result, new Position(position.X, i))) break;
 		}

@@ -119,22 +119,22 @@ public class King : BasePiece, IMoveable
 		{
 			if (isLeft) {
 				rookFrom = new Position(0,0);
-				rookTo = new Position(0,Board.BoardSize-5);
+				rookTo = new Position(0,ChessBoard.BoardSize-5);
 			}
 			else {
-				rookFrom = new Position(0,Board.BoardSize-1);
-				rookTo = new Position(0,Board.BoardSize-3);
+				rookFrom = new Position(0,ChessBoard.BoardSize-1);
+				rookTo = new Position(0,ChessBoard.BoardSize-3);
 			}
 		}
 		else // black
 		{
 			if (isLeft) {
-				rookFrom = new Position(Board.BoardSize-1,0);
-				rookTo = new Position(Board.BoardSize-1,Board.BoardSize-5);
+				rookFrom = new Position(ChessBoard.BoardSize-1,0);
+				rookTo = new Position(ChessBoard.BoardSize-1,ChessBoard.BoardSize-5);
 			}
 			else {
-				rookFrom = new Position(Board.BoardSize-1,Board.BoardSize-1);
-				rookTo = new Position(Board.BoardSize-1,Board.BoardSize-3);
+				rookFrom = new Position(ChessBoard.BoardSize-1,ChessBoard.BoardSize-1);
+				rookTo = new Position(ChessBoard.BoardSize-1,ChessBoard.BoardSize-3);
 			}	
 		}
 		
@@ -150,7 +150,7 @@ public class King : BasePiece, IMoveable
 		Position pos = new Position(x,y);
 		BasePiece? piece = game.GetPiece(x,y);
 		
-		if (position.X < Board.BoardSize-1)
+		if (position.X < ChessBoard.BoardSize-1)
 		{
 			// up
 			if (piece != null)
@@ -160,7 +160,7 @@ public class King : BasePiece, IMoveable
 			else result.Add(pos);
 
 			// up right
-			if (position.Y < Board.BoardSize-1)
+			if (position.Y < ChessBoard.BoardSize-1)
 			{
 				x = position.X+1;
 				y = position.Y+1;
@@ -201,7 +201,7 @@ public class King : BasePiece, IMoveable
 		}
 		
 		// right
-		if (position.Y < Board.BoardSize-1)
+		if (position.Y < ChessBoard.BoardSize-1)
 		{
 			x = position.X;
 			y = position.Y+1;

@@ -5,13 +5,13 @@ namespace ChessLibrary.Pieces;
 
 public abstract class BasePiece : IMoveable
 {
-	public static int count = 1;
-	public int Id;
-	public PieceType Type;
-	public Enum.Color Color;
+	public static int Count = 1;
+	public int Id { get; }
+	public PieceType Type { get; private set; }
+	public Enum.Color Color { get; private set; }
 	protected BasePiece(PieceType type, Enum.Color color)
 	{
-		Id = count++;
+		Id = Count++;
 		Type = type;
 		Color = color;
 	}
@@ -34,6 +34,7 @@ public abstract class BasePiece : IMoveable
     /// <returns></returns>
     public abstract IEnumerable<IPosition> GetAvailableMoves(IPosition pos, GameController game, bool forAttack=false);
 
+    // Abstract Product
     public static BasePiece Create(PieceType type, Color color)
     {
 	    switch (type)
@@ -41,6 +42,7 @@ public abstract class BasePiece : IMoveable
 		    case PieceType.Rook : return new Rook(color);
 		    case PieceType.Knight : return new Knight(color);
 		    case PieceType.Bishop : return new Bishop(color);
+		    case PieceType.King : return new King(color);
 		    default : return new Queen(color);
 	    }
     }

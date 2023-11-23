@@ -6,7 +6,7 @@ namespace ChessWinForms
 {
 	public partial class Chess : Form
 	{
-		private GameController game = new GameController(new Board(boardSize : 8));
+		private GameController game = new GameController(new ChessBoard(boardSize : 8));
 
 		public readonly Dictionary<Position, Button> buttons = new();
 		public readonly Dictionary<Position, PictureBox> dots = new();
